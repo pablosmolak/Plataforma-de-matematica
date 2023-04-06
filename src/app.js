@@ -1,0 +1,1 @@
+//importar sempre que vocÊ deseja se comunicar entre arquivos
