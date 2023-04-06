@@ -11,5 +11,8 @@
     "url": "ssh://git@gitlab.fslab.dev:4241/fs-ii-turma-2022-plataforma-de-ensino-de-matematica/plataforma-de-ensino-de-matematica.git"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "nodemon": "^2.0.22"
+  }
 }
