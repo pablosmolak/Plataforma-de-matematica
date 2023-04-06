@@ -1,0 +1,15 @@
+{
+  "name": "plataforma-de-ensino-de-matematica",
+  "version": "1.0.0",
+  "description": "Projeto da Plataforma de Matematica desenvolvido na matéria de Fábrica do Software II",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "ssh://git@gitlab.fslab.dev:4241/fs-ii-turma-2022-plataforma-de-ensino-de-matematica/plataforma-de-ensino-de-matematica.git"
+  },
+  "author": "",
+  "license": "ISC"
+}
