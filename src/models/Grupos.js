@@ -1,4 +1,4 @@
-mport mongoose from "mongoose";
+import mongoose from "mongoose";
 import mongoosePaginate from "mongoose-paginate";
 
 const grupoSchema = new mongoose.Schema(
