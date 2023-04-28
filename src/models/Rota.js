@@ -11,7 +11,7 @@ const rotaSchema = new mongoose.Schema(
     },
 
     {
-        versionKey: false
+        versionKey: true
     }
 );
 
