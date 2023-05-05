@@ -1,7 +1,7 @@
 import mongoose from "mongoose"
 import mongoosePaginate from "mongoose-paginate"
 
-const usuariosSchema = new mongoose.Schema(
+const usuarioSchema = new mongoose.Schema(
 
     {
         nome: {type: String, required: true, trim: true, minlength: 3, maxlength: 200},
@@ -36,6 +36,6 @@ const usuariosSchema = new mongoose.Schema(
 
 usuariosSchema.plugin(mongoosePaginate);
 
-const usuario = mongoose.model('rotas', rotaSchema);
+const usuario = mongoose.model('usuario', usuarioSchema);
 
 export default usuario

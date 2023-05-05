@@ -4,10 +4,14 @@ import mongoosePaginate from "mongoose-paginate";
 const rotaSchema = new mongoose.Schema(
 
     {
-        nome: {type: String, required: true, trim: true},
-        rota: {type: String, required: true, trim: true},
-        verbos: ['verbo', {type: String}],
-        ativo: {type: Boolean, required: true}
+        rota: {type: String, required: true, trim: true, unique: true},
+        ativo: { type: Boolean },
+        get: { type: Boolean },
+        put: { type: Boolean },
+        patch: { type: Boolean },
+        delete: { type: Boolean },
+        post: { type: Boolean }
+
     },
 
     {
@@ -17,6 +21,6 @@ const rotaSchema = new mongoose.Schema(
 
 rotaSchema.plugin(mongoosePaginate);
 
-const rotas = mongoose.model('rotas', rotaSchema);
+const rota = mongoose.model('rota', rotaSchema);
 
-export default rotas;
+export default rota;

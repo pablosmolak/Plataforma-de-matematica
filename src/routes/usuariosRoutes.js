@@ -1,9 +1,9 @@
 import express from "express"
-import AlunoController from "./controllers/AlunoController.js"
+import usuarioController from "../controllers/UsuarioController"
 
 const router = express.Router()
 
 router
-    .get("/alunos", AlunoController.listarAlunos)
+    .get("/usuario", usuarioController.listarAlunos)
 
 export default router;

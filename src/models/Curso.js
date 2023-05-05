@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 import mongoosePaginate from "mongoose-paginate";
-import rotas from "./Rota";
 
 const cursoSchema = new mongoose.Schema(
     [{
@@ -30,6 +29,6 @@ const cursoSchema = new mongoose.Schema(
 
 cursoSchema.plugin(mongoosePaginate);
 
-const rotas = mongoose.model('curso', cursoSchema);
+const curso = mongoose.model('curso', cursoSchema);
 
-export default rotas;
+export default curso;

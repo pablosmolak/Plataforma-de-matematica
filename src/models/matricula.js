@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 import mongoosePaginate from "mongoose-paginate";
-import rotas from "./Rota";
 
 const matriculaSchema = new mongoose.Schema(
     [{
@@ -20,6 +19,6 @@ const matriculaSchema = new mongoose.Schema(
 
 matriculaSchema.plugin(mongoosePaginate);
 
-const rotas = mongoose.model('matricula', matriculaSchema);
+const matricula = mongoose.model('matricula', matriculaSchema);
 
-export default rotas;
+export default matricula;
