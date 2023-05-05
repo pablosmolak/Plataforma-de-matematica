@@ -12,6 +12,7 @@ const usuarioSchema = new mongoose.Schema(
         ativo: {type: Boolean, required: true, default: true},
         rotas: [
             {
+                _id: { type: mongoose.Schema.Types.ObjectId, ref: 'rota' },
                 rota: {type: String, required: true, trim: true},
                 ativo: {type: Boolean},
                 get: {type: Boolean},

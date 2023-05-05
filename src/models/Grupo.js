@@ -6,8 +6,9 @@ const grupoSchema = new mongoose.Schema(
     {
         nome: {type: String, minlength:4, maxlength: 200, required: true, trim: true},
         descricao: {type: String, minlength: 4, maxlength: 200, reqquired: true, trim: true, index: true},
-        ativo: {type: Boolean, required: true},
+        ativo: {type: Boolean, required: true, default: true},
         rotas: [{
+            _id: { type: mongoose.Schema.Types.ObjectId, ref: 'rota' },
             rota: {type: String, required: true, trim: true, index: true},
             get:{type: Boolean},
             put: {type: Boolean},

@@ -14,7 +14,11 @@ const matriculaSchema = new mongoose.Schema(
         }],
 
         ativo: {type: Boolean, required: true}
-    }]
+    }],
+
+    {
+        versionKey: true
+    }
 );
 
 matriculaSchema.plugin(mongoosePaginate);

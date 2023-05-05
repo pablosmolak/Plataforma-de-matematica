@@ -24,7 +24,11 @@ const cursoSchema = new mongoose.Schema(
         }],
 
         ativo: {type: Boolean, required: true}
-    }]
+    }],
+
+    {
+        versionKey: true
+    }
 );
 
 cursoSchema.plugin(mongoosePaginate);
