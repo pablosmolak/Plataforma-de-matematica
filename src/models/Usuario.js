@@ -24,7 +24,7 @@ const usuarioSchema = new mongoose.Schema(
         ],
         grupos: [
             {
-                _id: {type: mongoose.Schema.Types.ObjectId, ref:'grupos'},
+                _id: {type: mongoose.Schema.Types.ObjectId, ref:'grupo'},
             }
         ]
     },
@@ -35,7 +35,7 @@ const usuarioSchema = new mongoose.Schema(
 )
 
 
-usuariosSchema.plugin(mongoosePaginate);
+usuarioSchema.plugin(mongoosePaginate);
 
 const usuario = mongoose.model('usuario', usuarioSchema);
 
