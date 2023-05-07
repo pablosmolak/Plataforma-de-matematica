@@ -30,7 +30,7 @@ const usuarioSchema = new mongoose.Schema(
     },
 
     {
-        versionKey: true
+        versionKey: 'true'
     }
 )
 
