@@ -1,9 +1,9 @@
 import express from "express"
-import gruposController from "../controllers/GruposController"
+import GruposController from "../controllers/GruposController"
 
 const router = express.Router()
 
 router
-    .get("/grupos", usuarioController.listarGrupos)
+    .get("/grupos", GruposController.listarGrupos)
 
 export default router;

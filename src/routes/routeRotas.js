@@ -1,9 +1,9 @@
 import express from "express"
-import rotasController from "../controllers/RotasController"
+import RotasController from "../controllers/RotasController"
 
 const router = express.Router()
 
 router
-    .get("/rotas", rotasController.listarAlunos)
+    .get("/rotas", RotasController.listarAlunos)
 
 export default router;
