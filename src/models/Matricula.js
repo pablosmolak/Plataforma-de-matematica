@@ -1,12 +1,13 @@
 import mongoose from "mongoose";
 import mongoosePaginate from "mongoose-paginate";
 
-const matriculaSchema = new mongoose.Schema(
+const alunoSchema = new mongoose.Schema(
     [{
         aluno: [{
-          nome: {type: String, required: true, trim: true},
+          _id: {type: mongoose.Schema.Types.ObjectId, ref:'aluno'},
         }],
         curso: [{
+            _id: {type: mongoose.Schema.Types.ObjectId, ref:'curso'},
             situacao: {type: String, required: true, trim: true},
             dataInicio: {type: Date, required: true, trim: true},
             dataConclusao: {type: Date, required: true, trim: true},
