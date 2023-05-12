@@ -4,6 +4,6 @@ import RotasController from "../controllers/RotasController"
 const router = express.Router()
 
 router
-    .get("/rotas", RotasController.listarAlunos)
+    .get("/Rotas", RotasController.listarAlunos)
 
 export default router;
