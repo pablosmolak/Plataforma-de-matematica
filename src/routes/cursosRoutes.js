@@ -4,6 +4,6 @@ import CursosController from "./controllers/CursosController.js"
 const router = express.Router();
 
 router
-    .get("/cursos",CursosController.listarCursos)
+    .get("/Cursos",CursosController.listarCursos)
 
 export default router;
