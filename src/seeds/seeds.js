@@ -34,23 +34,12 @@ const rotas = [];
 // função para retornar o nome de uma rota pela posição do array
 const rotas_array =
   [
-    'rotas',
-    'rotas:id',
+    'usuario',
+    'usuario:id',
     'grupos',
     'grupos:id',
-    'unidades',
-    'unidades:id',
-    'usuarios',
-    'usuarios:id',
-    'alunos',
-    'alunos:id',
-    'projetos',
-    'projetos:id',
-    'refeicoes',
-    'refeicoes:id',
-    'contraturnos',
-    'contraturnos:id',
-    'liberacaorefeicao'
+    'matricula',
+    'matricula:id'
   ]
 function getRotaName(i) {
   return rotas_array[i].toString();
@@ -83,7 +72,7 @@ const grupos = [];
 
 // função para retornar o nome de alguns grupos fictícios
 // criar uma constante com 100 grupos diferentes
-const grupos_array = ['Administrador', 'CAED']
+const grupos_array = ['Alunos', 'Professores']
 
 // const grupos_array = [ 'Administrador', 'Gerente', 'Supervisor', 'Operador', 'Vendedor']
 
