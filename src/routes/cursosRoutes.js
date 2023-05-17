@@ -5,5 +5,6 @@ const router = express.Router();
 
 router
     .get("/cursos",CursosController.listarCursos)
+    .get("/cursos/:id", AuthMiddleware, CursoController.listarCursoPorId);
 
 export default router;
