@@ -9,7 +9,6 @@ class CursoController {
             const {page, perPage} = req.query
 
             const options = {
-                modulo: (modulo),
                 page: parseInt(page) || 1,
                 limit: parseInt(perPage) > 5 ? 5 : parseInt(perPage) || 5
             }
@@ -20,8 +19,8 @@ class CursoController {
             }
 
             else{
-                const cursos = await cursos.paginate({ nome: new RegExp(nome, 'i') }, options);
-                return res.json(curso);
+                const cursos = await curso.paginate({ modulo: new RegExp(modulo, 'i') }, options);
+                return res.json(cursos);
             }
             
         }catch (err){
