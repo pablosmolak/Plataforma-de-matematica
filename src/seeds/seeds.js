@@ -8,7 +8,6 @@ import Rota from '../models/Rota.js';
 import Curso from '../models/Curso.js';
 import Matricula from '../models/Matricula.js';
 import mongoose from 'mongoose';
-
 // estabelecendo e testando a conexão
 db.on("error", console.log.bind(console, "Conexão com o banco falhou!"));
 db.once("open", () => {
