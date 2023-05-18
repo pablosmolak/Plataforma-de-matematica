@@ -26,4 +26,8 @@ matriculaSchema.plugin(mongoosePaginate);
 
 const matricula = mongoose.model('matricula', matriculaSchema);
 
+<<<<<<< HEAD
 export default matricula;
+=======
+export default matricula;
+>>>>>>> develop
