@@ -10,11 +10,11 @@ const grupoSchema = new mongoose.Schema(
         rotas: [{
             _id: { type: mongoose.Schema.Types.ObjectId, ref: 'rota' },
             rota: {type: String, required: true, trim: true, index: true},
-            verbo_get:{type: Boolean},
-            verbo_put: {type: Boolean},
-            verbo_delete: {type: Boolean},
-            verbo_patch: {type: Boolean},
-            verbo_post: {type: Boolean},
+            get:{type: Boolean},
+            put: {type: Boolean},
+            delete: {type: Boolean},
+            patch: {type: Boolean},
+            post: {type: Boolean},
             ativo: {type:Boolean, required: true},
         }]
     },

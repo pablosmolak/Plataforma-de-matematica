@@ -15,11 +15,11 @@ const alunoSchema = new mongoose.Schema(
                 _id: { type: mongoose.Schema.Types.ObjectId, ref: 'rota' },
                 rota: {type: String, required: true, trim: true},
                 ativo: {type: Boolean},
-                verbo_get: {type: Boolean},
-                verbo_put: {type: Boolean},
-                verbo_delete: {type: Boolean},
-                verbo_patch: {type: Boolean},
-                verbo_post: {type: Boolean} 
+                get: {type: Boolean},
+                put: {type: Boolean},
+                delete: {type: Boolean},
+                patch: {type: Boolean},
+                post: {type: Boolean} 
             }
         ],
         grupos: [
