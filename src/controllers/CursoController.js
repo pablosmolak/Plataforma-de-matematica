@@ -5,7 +5,7 @@ class CursoController {
     static listarCursos = async (req,res) => {
 
         try {
-            const modulo = req.query.modulo
+            const nome = req.query.nome
             const {page, perPage} = req.query
 
             const options = {
@@ -13,13 +13,13 @@ class CursoController {
                 limit: parseInt(perPage) > 5 ? 5 : parseInt(perPage) || 5
             }
 
-            if(!modulo){
+            if(!nome){
                 const cursos = await curso.paginate({}, options)
                 return res.json(cursos);
             }
 
             else{
-                const cursos = await curso.paginate({ modulo: new RegExp(modulo, 'i') }, options);
+                const cursos = await curso.paginate({ nome: new RegExp(nome, 'i') }, options);
                 return res.json(cursos);
             }
             

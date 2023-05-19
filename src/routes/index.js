@@ -1,6 +1,6 @@
 import express from "express";
 import usuario from "./usuariosRoutes.js";
-import cursos from "../models/Curso.js";
+import cursos from "./cursosRoutes.js";
 
 const routes = (app) => {
     app.route('/').get((rep, res) => {
