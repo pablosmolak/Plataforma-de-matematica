@@ -4,6 +4,6 @@ import MatriculaController from "./controllers/MatriculaController.js"
 const router = express.Router()
 
 router
-    .get("/matriculas", MatriculaController.listarMatriculas)
+    .get("/Matriculas", MatriculaController.listarMatriculas)
 
 export default router;

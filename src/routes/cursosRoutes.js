@@ -7,4 +7,5 @@ const router = express.Router();
 router
     .get("/cursos",CursoController.listarCursos)
 
+
 export default router;

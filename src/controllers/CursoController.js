@@ -28,9 +28,26 @@ class CursoController {
             return res.status(500).json({error: true, code: 500, message: "Erro interno do Servidor"})
 
         }
-
-
+        
     }
+
+
+    static listarCursosPorId = async (req, res) => {
+        try {
+            await cursos.findById(req.params.id).exec((err, rotas) => {
+            if (err) {
+                return res.status(500).json([{ error: true, code: 500, message: "Id da rota não localizado." }])
+            } else {
+                res.status(200).send(rotas);
+            }
+            })
+        }catch (err) {
+        // console.error(err);
+        return res.status(500).json([{ error: true, code: 500, message: "Erro interno do Servidor" }])
+        }
+  }
+
+
 }
 
 export default CursoController
