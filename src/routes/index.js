@@ -1,6 +1,7 @@
 import express from "express";
 import usuarios from "./usuariosRoutes.js"
 import rotas from "./routeRotas.js"
+import docs from "./docsRoutes.js"
 
 const routes = (app) => {
     app.route('/').get((rep, res) => {
@@ -9,6 +10,7 @@ const routes = (app) => {
 
     app.use(
         express.json(),
+        docs,
         usuarios,
         rotas
     )

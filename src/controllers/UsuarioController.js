@@ -79,19 +79,19 @@ class UsuarioController {
             let emailExiste = await usuarios.findOne({email:req.body.email})
             let userExiste = await usuarios.findOne({user: req.body.user})
 
-            if(!emailExiste){
-                let senhaHash = bcrypt.hashSync(usuario.senha,8);
-                usuario.senha = senhaHash;
+             if(!emailExiste){
+                 let senhaHash = bcrypt.hashSync(usuario.senha,8);
+                 usuario.senha = senhaHash;
 
-                await usuario.save((err) => {
-                    if(err){
-                        return res.status(500).json([{ error: true, code: 500, message: "Erro nos dados, confira e repita" }])
-                    }else{
-                         res.status(201)
-                         res.send(usuario.toJSON())
-                     }
-                })
-            }
+            //     await usuario.save((err) => {
+            //         if(err){
+            //             return res.status(500).json([{ error: true, code: 500, message: "Erro nos dados, confira e repita" }])
+            //         }else{
+            //              res.status(201)
+            //              res.send(usuario.toJSON())
+            //          }
+            //     })
+             }
 
 
 
