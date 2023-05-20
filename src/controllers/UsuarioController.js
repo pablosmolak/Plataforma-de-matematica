@@ -22,7 +22,7 @@ class UsuarioController {
                 user.grupos = await grupos.find({_id : {$in: user.grupos }}).lean()
 
                 for (let i = 0; i < user.docs.length; i++) {
-                   user.docs[i].grupos = await grupos.find({ _id: { $in: user.docs[i].grupos } }).lean();
+                    user.docs[i].grupos = await grupos.find({ _id: { $in: user.docs[i].grupos } }).lean();
                 }
                 
                 return res.json(user)
@@ -53,20 +53,17 @@ class UsuarioController {
         try{
             const id = req.params.id
 
-            usuarios.findById(id)
-                .exec((err,usuarios) => {
-                    if (err) {
-                        return res.status(400).json({ error: true, code: 400, message: "ID inválido" })
-                      }
-                      if (!usuarios) {
-                        return res.status(404).json({ code: 404, message: "Usuário não encontrado" })
-                      } else {
-                        return res.status(200).send(usuarios);
-                      }
-          
-                })
+            usuarios.findById(id).then(async (usuario) => {
+                let user =JSON.parse(JSON.stringify(usuario))
+                user.grupos = await grupos.find({_id: {$in: user.grupos}}).lean()
+
+                return res.status(200).send(user)
+            })
+            .catch((err) => {
+                return res.status(400).json([{error: true, code: 400, message: "ID invalido ou não encontrado"}])
+            })
         }catch (err){
-            //console.error(err)
+            console.error(err)
             return res.status(500).json({error: true, code: 500, message: "Erro interno do Servidor"})
 
         }
@@ -79,26 +76,55 @@ class UsuarioController {
             let emailExiste = await usuarios.findOne({email:req.body.email})
             let userExiste = await usuarios.findOne({user: req.body.user})
 
-             if(!emailExiste){
-                 let senhaHash = bcrypt.hashSync(usuario.senha,8);
-                 usuario.senha = senhaHash;
+            if(!emailExiste && !userExiste){
+                let senhaHash = bcrypt.hashSync(usuario.senha,8);
+                usuario.senha = senhaHash;
 
-            //     await usuario.save((err) => {
-            //         if(err){
-            //             return res.status(500).json([{ error: true, code: 500, message: "Erro nos dados, confira e repita" }])
-            //         }else{
-            //              res.status(201)
-            //              res.send(usuario.toJSON())
-            //          }
-            //     })
-             }
+                usuario.save().then(() => {
+                    res.status(201).send(usuario.toJSON())
+                })
+                .catch((err) =>{
+                    return res.status(500).json([{ error: true, code: 500, message: "Erro nos dados, confira e repita" }])
+                })
+            }
+            else if(emailExiste){
+                return res.status(400).json([{ code: 400, message: "E-mail já cadastrado!" }])
 
-
-
+            }
+            else if(userExiste){
+                return res.status(400).json([{ code: 400, message: "Usuario já cadastrado!" }])
+            }
+                
         }catch (err){
-            console.error(err)
+            //console.error(err)
             return res.status(500).json({error: true, code: 500, message: "Erro interno do Servidor"})
 
+        }
+    }
+
+    static atualizarUsuario = async (req,res) =>{
+        try{
+            var id = req.params.id
+            var usuario = new usuarios(req.body)
+
+            if(usuario.senha){
+                var senhaHash = await bcrypt.hash(usuario.senha, 8)
+                req.body.senha = senhaHash
+            }
+
+            usuarios.findByIdAndUpdate(id, {$set: req.body}).then(()=>{
+                res.status(201).json([{ code: 201, message: 'Cadastro atualizado com sucesso' }])
+            })
+            .catch((err) => {
+                console.log(err)
+                return res.status(500).json([{ error: true, code: 500, message: "Erro nos dados, confira e repita" }])
+            })
+
+        }
+
+        catch(err){
+            console.error(err)
+            return res.status(500).json({error: true, code: 500, message: "Erro interno do Servidor"})
         }
     }
 }

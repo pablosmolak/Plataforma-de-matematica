@@ -7,5 +7,6 @@ router
     .get("/usuarios", UsuarioController.listarUsuario)
     .get("/usuarios/:id", UsuarioController.listarUsuarioId)
     .post("/usuarios", UsuarioController.cadastrarUsuario)
+    .patch("/usuarios/:id", UsuarioController.atualizarUsuario)
 
 export default router;
