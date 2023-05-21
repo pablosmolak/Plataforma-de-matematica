@@ -120,6 +120,7 @@ function seedUsuario(qtdusuarios) {
   const usuarioFixo =
   {
     nome: 'Dev oliveira',
+    user: 'dev',
     email: 'dev@gmail.com',
     senha: senhaHash(),
     link_foto: faker.image.avatar(),
@@ -139,6 +140,7 @@ function seedUsuario(qtdusuarios) {
     const seedUsuarios =
     {
       nome: nome + ' ' + nome_meio + ' ' + sobrenome,
+      user: nome + '.' + sobrenome,
       email: email.toLowerCase(),
       senha: senhaHash(),
       link_foto: faker.image.avatar(),
@@ -149,11 +151,13 @@ function seedUsuario(qtdusuarios) {
     }
     usuarios.push(seedUsuarios);
     // console.log('Usuários ' + i + ' inseridos!');
+    console.log(usuarios.values)
   }
+
   return usuarios;
 }
 
-seedUsuario(10);
+seedUsuario(20);
 
 // insertmany com ignore duplicates
 await Usuario.collection.insertMany(usuarios, { ordered: false });
