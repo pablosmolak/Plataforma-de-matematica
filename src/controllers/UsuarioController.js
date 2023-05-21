@@ -127,6 +127,27 @@ class UsuarioController {
             return res.status(500).json({error: true, code: 500, message: "Erro interno do Servidor"})
         }
     }
+    
+    static excluirUsuario = async (req,res) => {
+        try{
+            let id = req.params.id
+            const usuario = await usuarios.findById(id)
+
+            if(!usuario){
+                return res.status(400).json([{code: 400, mensage:"Usuario não Localizado!"}])
+            }
+
+            usuarios.findByIdAndDelete(id).then(() => {
+                    return res.status(200).json([{ error: true, code: 200, message: "Usuário excluído com sucesso." }])
+            }).catch((err) =>{
+                    console.log(err)
+                })
+                
+        } catch(err){
+            console.error(err)
+            return res.status(500).json({error: true, code: 500, message: "Erro interno do Servidor"})
+        }
+    }
 }
 
 export default UsuarioController
