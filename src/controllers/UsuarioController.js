@@ -29,12 +29,12 @@ class UsuarioController {
             }
 
             else{
-                const usuario = await usuario.paginate({nome: new RegExp(nome, i)}, options)
+                const usuario = await usuarios.paginate({nome: new RegExp(nome, 'i')}, options)
                 let user = JSON.parse(JSON.stringify(usuario))
-                user.grupo = await grupo.find({ _id: { $in: user.grupo } }).lean()
+                user.grupos = await grupos.find({ _id: { $in: user.grupos } }).lean()
 
                 for (let i = 0; i < user.docs.length; i++) {
-                    user.docs[i].grupo = await grupo.find({ _id: { $in: user.docs[i].grupo } }).lean()
+                    user.docs[i].grupos = await grupos.find({ _id: { $in: user.docs[i].grupos } }).lean()
                 }
 
                 return res.json(user)
@@ -54,7 +54,7 @@ class UsuarioController {
             const id = req.params.id
 
             usuarios.findById(id).then(async (usuario) => {
-                let user =JSON.parse(JSON.stringify(usuario))
+                let user = JSON.parse(JSON.stringify(usuario))
                 user.grupos = await grupos.find({_id: {$in: user.grupos}}).lean()
 
                 return res.status(200).send(user)
@@ -84,6 +84,7 @@ class UsuarioController {
                     res.status(201).send(usuario.toJSON())
                 })
                 .catch((err) =>{
+                    //console.log(err)
                     return res.status(500).json([{ error: true, code: 500, message: "Erro nos dados, confira e repita" }])
                 })
             }
@@ -123,6 +124,26 @@ class UsuarioController {
         }
 
         catch(err){
+            console.error(err)
+            return res.status(500).json({error: true, code: 500, message: "Erro interno do Servidor"})
+        }
+    }
+    
+    static excluirUsuario = async (req,res) => {
+        try{
+            let id = req.params.id
+            const usuario = await usuarios.findById(id)
+
+            if(!usuario){
+                return res.status(400).json([{code: 400, mensage:"Usuario não Localizado!"}])
+            }
+
+            usuarios.findByIdAndDelete(id).then(() => {
+                    return res.status(200).json([{ error: true, code: 200, message: "Usuário excluído com sucesso." }])
+            }).catch((err) =>{
+                    console.log(err)
+                })
+        } catch(err){
             console.error(err)
             return res.status(500).json({error: true, code: 500, message: "Erro interno do Servidor"})
         }
