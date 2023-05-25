@@ -1,5 +1,5 @@
 import {describe, expect, it, jest, beforeEach, afterAll, afterEach } from "@jest/globals"
-import supertest from "supertest"
+import request from "supertest"
 import mongoose from "mongoose"
 import app from "../../app.js"
 
@@ -20,12 +20,13 @@ afterAll(() => {
 
 describe ('/GET em Usuarios', () => {
     it("Deve Retornar uma Lista de Pessoas", async () =>{
-        const dados = await supertest(app)
+        const dados = await request(app)
         .get('/usuarios')
         .set('accept', 'aplication/json')
         .expect('content-type', /json/)
         .expect(200)
-        //console.log(dados.body)
-        //.expect(dados.body).toContain('pablo smolak')
+        //const nomes = dados._body.docs[0].nome
+        //console.log(nomes)
+        .expect(dados._body.docs[0].nome).toContain('Pablo Smolak')
     })
 })
