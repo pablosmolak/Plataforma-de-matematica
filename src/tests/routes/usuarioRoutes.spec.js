@@ -24,9 +24,37 @@ describe ('/GET em Usuarios', () => {
         .get('/usuarios')
         .set('accept', 'aplication/json')
         .expect('content-type', /json/)
-        .expect(200)
-        //const nomes = dados._body.docs[0].nome
-        //console.log(nomes)
-        .expect(dados._body.docs[0].nome).toContain('Pablo Smolak')
+        .expect(200);
+        expect(dados._body.docs[0].nome).toEqual('Dev oliveira');
     })
 })
+
+describe('/GET/ID em Usuarios', () =>{
+    it("Deve Retornar um Usuario pelo id", async () => {
+        const dados = await request(app)
+        .get('/usuarios/647018d44693478cff31b66f')
+        .set('accept', 'aplication/json')
+        .expect('content-type', /json/)
+        .expect(200);
+        expect(dados._body.nome).toEqual('Dev oliveira');
+
+    })
+})
+
+describe ('/POST em Usuarios', () => {
+    it.skip("Deve cadastrar um Usuario", async () => {
+        const dados = await request(app)
+        .post('/usuarios')
+        .set('Accept', 'aplication/json')
+        .send({           
+            nome: 'pablo Gabriel',
+            user: 'pablo21gabriel',
+            email: 'pablo21@gmail.com',
+            senha: '12325554',
+            telefone: '984227163'
+        })
+        .expect(201);
+        const idPessoa = dados._body._id;
+        
+    });
+});
