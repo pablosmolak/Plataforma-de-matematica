@@ -1,12 +1,12 @@
 // importando express(req, res)
 import faker from 'faker-br';
 import bcrypt from 'bcryptjs';
-import db from "./config/dbConect.js";
-import Grupo from './models/Grupo.js';
-import Usuario from './models/Usuario.js';
-import Rota from './models/Rota.js';
-import Curso from './models/Curso.js';
-import Matricula from './models/Matricula.js';
+import db from "../config/dbConect.js";
+import Grupo from '../models/Grupo.js';
+import Usuario from '../models/Usuario.js';
+import Rota from '../models/Rota.js';
+import Curso from '../models/Curso.js';
+import Matricula from '../models/Matricula.js';
 import mongoose from 'mongoose';
 
 // estabelecendo e testando a conexão
