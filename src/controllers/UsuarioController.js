@@ -60,7 +60,7 @@ class UsuarioController {
                 return res.status(200).send(user)
             })
             .catch((err) => {
-                return res.status(400).json([{error: true, code: 400, message: "ID invalido ou não encontrado"}])
+                return res.status(400).json({error: true, code: 400, message: "ID invalido ou não encontrado"})
             })
         }catch (err){
             console.error(err)
@@ -89,11 +89,11 @@ class UsuarioController {
                 })
             }
             else if(emailExiste){
-                return res.status(400).json([{ code: 400, message: "E-mail já cadastrado!" }])
+                return res.status(422).json({ code: 422, message: "E-mail já cadastrado!" })
 
             }
             else if(userExiste){
-                return res.status(400).json([{ code: 400, message: "Usuario já cadastrado!" }])
+                return res.status(422).json({ code: 422, message: "Usuario já cadastrado!"})
             }
                 
         }catch (err){
