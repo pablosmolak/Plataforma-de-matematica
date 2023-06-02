@@ -1,14 +1,13 @@
 // importando express(req, res)
 import faker from 'faker-br';
 import bcrypt from 'bcryptjs';
-import db from "./config/dbConect.js";
-import Grupo from './models/Grupo.js';
-import Usuario from './models/Usuario.js';
-import Rota from './models/Rota.js';
-import Curso from './models/Curso.js';
-import Matricula from './models/Matricula.js';
+import db from "../config/dbConect.js";
+import Grupo from '../models/Grupo.js';
+import Usuario from '../models/Usuario.js';
+import Rota from '../models/Rota.js';
+import Curso from '../models/Curso.js';
+import Matricula from '../models/Matricula.js';
 import mongoose from 'mongoose';
-
 // estabelecendo e testando a conexão
 db.on("error", console.log.bind(console, "Conexão com o banco falhou!"));
 db.once("open", () => {
@@ -34,23 +33,12 @@ const rotas = [];
 // função para retornar o nome de uma rota pela posição do array
 const rotas_array =
   [
-    'rotas',
-    'rotas:id',
+    'usuario',
+    'usuario:id',
     'grupos',
     'grupos:id',
-    'unidades',
-    'unidades:id',
-    'usuarios',
-    'usuarios:id',
-    'alunos',
-    'alunos:id',
-    'projetos',
-    'projetos:id',
-    'refeicoes',
-    'refeicoes:id',
-    'contraturnos',
-    'contraturnos:id',
-    'liberacaorefeicao'
+    'matricula',
+    'matricula:id'
   ]
 function getRotaName(i) {
   return rotas_array[i].toString();
@@ -83,7 +71,7 @@ const grupos = [];
 
 // função para retornar o nome de alguns grupos fictícios
 // criar uma constante com 100 grupos diferentes
-const grupos_array = ['Administrador', 'CAED']
+const grupos_array = ['Alunos', 'Professores']
 
 // const grupos_array = [ 'Administrador', 'Gerente', 'Supervisor', 'Operador', 'Vendedor']
 
@@ -132,6 +120,7 @@ function seedUsuario(qtdusuarios) {
   const usuarioFixo =
   {
     nome: 'Dev oliveira',
+    user: 'dev',
     email: 'dev@gmail.com',
     senha: senhaHash(),
     link_foto: faker.image.avatar(),
@@ -151,6 +140,7 @@ function seedUsuario(qtdusuarios) {
     const seedUsuarios =
     {
       nome: nome + ' ' + nome_meio + ' ' + sobrenome,
+      user: nome + '.' + sobrenome,
       email: email.toLowerCase(),
       senha: senhaHash(),
       link_foto: faker.image.avatar(),
@@ -160,12 +150,13 @@ function seedUsuario(qtdusuarios) {
       grupos: removerChaves(grupos)
     }
     usuarios.push(seedUsuarios);
-    // console.log('Usuários ' + i + ' inseridos!');
+    console.log('Usuário ' + i + ' inserido!');
   }
+
   return usuarios;
 }
 
-seedUsuario(10);
+seedUsuario(200);
 
 // insertmany com ignore duplicates
 await Usuario.collection.insertMany(usuarios, { ordered: false });
