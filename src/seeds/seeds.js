@@ -162,13 +162,12 @@ function seedUsuario(qtdusuarios) {
       grupos: removerChaves(grupos)
     }
     usuarios.push(seedUsuarios);
-    console.log('Usuário ' + i + ' inserido!');
   }
 
   return usuarios;
 }
 
-seedUsuario(200);
+seedUsuario(10);
 
 // insertmany com ignore duplicates
 await Usuario.collection.insertMany(usuarios, { ordered: false });
