@@ -25,7 +25,7 @@ const cursoSchema = new mongoose.Schema(
     }],
 
     {
-        versionKey: 'true'
+        versionKey: "true"
     }
 );
 
