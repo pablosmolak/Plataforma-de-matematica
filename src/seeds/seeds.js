@@ -42,8 +42,8 @@ const rotas_array =
     'unidades:id',
     'usuarios',
     'usuarios:id',
-    'alunos',
-    'alunos:id',
+    'usuarios',
+    'usuarios:id',
     'projetos',
     'projetos:id',
     'refeicoes',
@@ -282,7 +282,7 @@ function removerChavesCurso(obj) {
 }
 
 // Remover todas as chaves de um array de objetos cursos
-function removerChavesAluno(obj) {
+function removerChavesUsuario(obj) {
   for (let i = 0; i < obj.length; i++) {
     delete obj[i].nome,
     delete obj[i].email,
@@ -296,18 +296,18 @@ function removerChavesAluno(obj) {
   return obj;
 }
 
-// array de alunos que serão inseridos no banco de dados e função para  retornar 3 alunos aleatorios
-const alunos = []
-// função inserir 3 alunos no array alunos
-function gerarAlunos() {
+// array de usuarios que serão inseridos no banco de dados e função para  retornar 3 usuarios aleatorios
+const Usuarios = []
+// função inserir 3 usuarios no array usuarios
+function gerarUsuarios() {
   for (let i = 0; i < 3; i++) {
-    alunos.push(usuarios[getRandomInt(10)]);
+    usuarios.push(usuarios[getRandomInt(10)]);
   }
-  return alunos;
+  return usuarios;
 }
 
 // Remover todas as chaves de um array de objetos cursos
-function removerChavesAlunoCurso(obj) {
+function removerChavesUsuarioCurso(obj) {
   for (let i = 0; i < obj.length; i++) {
     delete obj[i].modulo
     delete obj[i].nivel;
@@ -318,13 +318,13 @@ function removerChavesAlunoCurso(obj) {
   return obj;
 }
 
-function getAlunos() {
-  const alunos = [];
+function getUsuarios() {
+  const usuarios = [];
 
   for (let i = 0; i < 3; i++) {
-    alunos.push(removerChavesAluno(usuarios)[getRandomInt(10)]);
+    usuarios.push(removerChavesUsuario(usuarios)[getRandomInt(10)]);
   }
-  return alunos;
+  return usuarios;
 }
 
 const arraySituacao = ["Em andamento", "Concluido"]
@@ -339,7 +339,7 @@ function seedMatricula(qtd) {
   for (let i = 1; i <= qtd; i++) {
     const matricula =
     {
-      aluno: getAlunos(),
+      usuario: getUsuarios(),
       curso: removerChavesCurso(cursos),
       situacao: getSituacao(),
       dataInicio: faker.date.past(),
