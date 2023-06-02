@@ -8,6 +8,7 @@ import Rota from '../models/Rota.js';
 import Curso from '../models/Curso.js';
 import Matricula from '../models/Matricula.js';
 import mongoose from 'mongoose';
+
 // estabelecendo e testando a conexão
 db.on("error", console.log.bind(console, "Conexão com o banco falhou!"));
 db.once("open", () => {
@@ -33,12 +34,23 @@ const rotas = [];
 // função para retornar o nome de uma rota pela posição do array
 const rotas_array =
   [
-    'usuario',
-    'usuario:id',
+    'rotas',
+    'rotas:id',
     'grupos',
     'grupos:id',
-    'matricula',
-    'matricula:id'
+    'unidades',
+    'unidades:id',
+    'usuarios',
+    'usuarios:id',
+    'alunos',
+    'alunos:id',
+    'projetos',
+    'projetos:id',
+    'refeicoes',
+    'refeicoes:id',
+    'contraturnos',
+    'contraturnos:id',
+    'liberacaorefeicao'
   ]
 function getRotaName(i) {
   return rotas_array[i].toString();
@@ -71,7 +83,7 @@ const grupos = [];
 
 // função para retornar o nome de alguns grupos fictícios
 // criar uma constante com 100 grupos diferentes
-const grupos_array = ['Alunos', 'Professores']
+const grupos_array = ['Administrador', 'CAED']
 
 // const grupos_array = [ 'Administrador', 'Gerente', 'Supervisor', 'Operador', 'Vendedor']
 
@@ -181,8 +193,12 @@ function getNivel() {
 
 // função para retornar um array de professores com 3 professores aleatorios
 const professor = ["Professor 1", "Professor 2", "Professor 3", "Professor 4", "Professor 5", "Professor 6", "Professor 7", "Professor 8", "Professor 9", "Professor 10"]
-function getProfessor() {
-  return professor[getRandomInt(10)];
+function getProfessores() {
+  const professores = [];
+  for (let i = 0; i < 3; i++) {
+    professores.push(professor[getRandomInt(10)]);
+  }
+  return professores;
 }
 
 // função para retornar um array de videos com 3 videos aleatorios
@@ -216,7 +232,6 @@ function getAulas() {
       videos: getVideos(),
       arquivos: getArquivos(),
       comentarios: faker.lorem.sentence(),
-      nomeProfessor: getProfessor(),
     }
     aulas_array.push(aula);
   }
@@ -232,6 +247,7 @@ function seedCursos(qtd) {
     {
       modulo: getModulo(i),
       nivel: getNivel(),
+      professor: getProfessores(),
       aulas: getAulas(),
       ativo: true
     }

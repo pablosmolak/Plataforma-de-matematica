@@ -3,15 +3,15 @@ import mongoosePaginate from "mongoose-paginate-v2";
 
 const matriculaSchema = new mongoose.Schema(
     [{
-        aluno: [{
+        alunos: [{
             nome: { type: String, required: true, trim: true },
         }],
-        curso: [
+        cursos: [
             {
                 _id: {type: mongoose.Schema.Types.ObjectId, ref:'curso'},
             }
         ],
-        situacao: { type: String, required: true, trim: true },
+        situacao: { type: String, required: true, trim: true }, //em andamento ou concluido
         dataInicio: { type: Date, required: true, trim: true },
         dataConclusao: { type: Date, required: true, trim: true },
         ativo: { type: Boolean, required: true }
