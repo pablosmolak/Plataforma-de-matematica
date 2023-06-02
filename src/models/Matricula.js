@@ -3,8 +3,8 @@ import mongoosePaginate from "mongoose-paginate-v2";
 
 const matriculaSchema = new mongoose.Schema(
     [{
-        alunos: [{
-            nome: { type: String, required: true, trim: true },
+        usuarios: [{
+            _id: { type: mongoose.Schema.Types.ObjectId, ref: 'usuario' },
         }],
         cursos: [
             {
