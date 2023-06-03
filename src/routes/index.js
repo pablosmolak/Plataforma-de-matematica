@@ -4,6 +4,7 @@ import cursos from "./cursosRoutes.js";
 import usuarios from "./usuariosRoutes.js"
 import rotas from "./routeRotas.js"
 import docs from "./docsRoutes.js"
+import autenticacao from "./AutenticacaoRoutes.js"
 
 
 const routes = (app) => {
@@ -17,7 +18,8 @@ const routes = (app) => {
         cursos,
         docs,
         usuarios,
-        rotas
+        rotas,
+        autenticacao
     )
 }
 
