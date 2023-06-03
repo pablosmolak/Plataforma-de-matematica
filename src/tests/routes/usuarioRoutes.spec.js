@@ -4,6 +4,7 @@ import mongoose from "mongoose"
 import app from "../../app.js"
 
 let server
+let idPessoa
 
 beforeEach(() => {
     const port = 3001
@@ -56,13 +57,13 @@ describe ('/POST em Usuários', () => {
         .set('Accept', 'aplication/json')
         .send({           
             nome: 'Pablo Smolak',
-            user: 'pablosmolak',
-            email: 'pablosmolak@gmail.com',
+            user: 'smolaktest',
+            email: 'smolaktest@gmail.com',
             senha: '12325554',
             telefone: '984227163'
         })
         .expect(201);
-        const idPessoa = dados._body._id;
+        idPessoa = dados._body._id;
         
     });
 
@@ -72,8 +73,8 @@ describe ('/POST em Usuários', () => {
         .set('Accept', 'aplication/json')
         .send({
             nome: 'Pablo Smolak',
-            user: 'pablosmolak1',
-            email: 'pablosmolak@gmail.com',
+            user: 'smolaktest1',
+            email: 'smolaktest@gmail.com',
             senha: '12325554',
             telefone: '984227163'
         })
@@ -86,8 +87,8 @@ describe ('/POST em Usuários', () => {
         .set('Accept', 'aplication/json')
         .send({
             nome: 'Pablo Smolak',
-            user: 'pablosmolak',
-            email: 'pablosmolak1@gmail.com',
+            user: 'smolaktest',
+            email: 'smolaktest1@gmail.com',
             senha: '12325554',
             telefone: '984227163'
         })
@@ -99,7 +100,7 @@ describe ('/POST em Usuários', () => {
 describe("/DELETE/ID em Usuários", () =>{
     it("Deve Excluir um Usuário!", async () =>{
         const dados = await request(app)
-        .delete('/usuarios/6476d5c8900ad134fbcd18c5')
+        .delete('/usuarios/'+ idPessoa)
         .set('Accept', 'aplication/json')
         .expect('content-type', /json/)
         expect(dados._body.message).toEqual("Usuário excluído com sucesso.")
