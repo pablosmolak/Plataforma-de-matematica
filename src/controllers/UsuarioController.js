@@ -139,7 +139,7 @@ class UsuarioController {
             }
 
             usuarios.findByIdAndDelete(id).then(() => {
-                    return res.status(200).json([{ error: true, code: 200, message: "Usuário excluído com sucesso." }])
+                    return res.status(200).json({code: 200, message: "Usuário excluído com sucesso." })
             }).catch((err) =>{
                     console.log(err)
                 })

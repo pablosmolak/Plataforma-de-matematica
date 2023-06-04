@@ -4,6 +4,7 @@ import mongoose from "mongoose"
 import app from "../../app.js"
 
 let server
+let idPessoa
 
 beforeEach(() => {
     const port = 3001
@@ -18,8 +19,8 @@ afterAll(() => {
     mongoose.connection.close()
 })
 
-describe ('/GET em Usuarios', () => {
-    it("Deve Retornar uma Lista de Pessoas", async () =>{
+describe ('/GET em Usuários', () => {
+    it("Deve retornar uma lista de Usuários", async () =>{
         const dados = await request(app)
         .get('/usuarios')
         .set('accept', 'aplication/json')
@@ -29,10 +30,10 @@ describe ('/GET em Usuarios', () => {
     })
 })
 
-describe('/GET/ID em Usuarios', () =>{
-    it("Deve Retornar um Usuario pelo id", async () => {
+describe('/GET/ID em Usuários', () =>{
+    it("Deve retornar um Usuário pelo id", async () => {
         const dados = await request(app)
-        .get('/usuarios/647018d44693478cff31b66f')
+        .get('/usuarios/6476d5c8900ad134fbcd18bc')
         .set('accept', 'aplication/json')
         .expect('content-type', /json/)
         .expect(200);
@@ -41,7 +42,7 @@ describe('/GET/ID em Usuarios', () =>{
     })
     it("Deve retornar erro de ID invalido", async () => {
         const dados = await request(app)
-        .get('/usuarios/647018d44693478cff31b66')
+        .get('/usuarios/64723ab40d64bff37ee0a0e74e4')
         .set('accept', 'aplication/json')
         .expect('content-type', /json/)
         .expect(400);
@@ -49,31 +50,31 @@ describe('/GET/ID em Usuarios', () =>{
     })
 })
 
-describe ('/POST em Usuarios', () => {
-    it.skip("Deve cadastrar um Usuario", async () => {
+describe ('/POST em Usuários', () => {
+    it("Deve cadastrar um Usuário", async () => {
         const dados = await request(app)
         .post('/usuarios')
         .set('Accept', 'aplication/json')
         .send({           
-            nome: 'pablo Gabriel',
-            user: 'pablo21gabriel',
-            email: 'pablo21@gmail.com',
+            nome: 'Pablo Smolak',
+            user: 'smolaktest',
+            email: 'smolaktest@gmail.com',
             senha: '12325554',
             telefone: '984227163'
         })
         .expect(201);
-        const idPessoa = dados._body._id;
+        idPessoa = dados._body._id;
         
     });
 
-    it("Deve retornar erro de email ja cadastrado", async () =>{
+    it("Deve retornar erro de E-mail já cadastrado", async () =>{
         const dados = await request(app)
         .post('/usuarios')
         .set('Accept', 'aplication/json')
         .send({
-            nome: 'pablo Gabriel',
-            user: 'pablo21gabriel',
-            email: 'pablo21@gmail.com',
+            nome: 'Pablo Smolak',
+            user: 'smolaktest1',
+            email: 'smolaktest@gmail.com',
             senha: '12325554',
             telefone: '984227163'
         })
@@ -85,13 +86,24 @@ describe ('/POST em Usuarios', () => {
         .post('/usuarios')
         .set('Accept', 'aplication/json')
         .send({
-            nome: 'pablo Gabriel',
-            user: 'pablo21gabriel',
-            email: 'pablo211@gmail.com',
+            nome: 'Pablo Smolak',
+            user: 'smolaktest',
+            email: 'smolaktest1@gmail.com',
             senha: '12325554',
             telefone: '984227163'
         })
         .expect(422)
         expect(dados._body.message).toEqual('Usuario já cadastrado!')
     })
-});
+})
+
+describe("/DELETE/ID em Usuários", () =>{
+    it("Deve Excluir um Usuário!", async () =>{
+        const dados = await request(app)
+        .delete('/usuarios/'+ idPessoa)
+        .set('Accept', 'aplication/json')
+        .expect('content-type', /json/)
+        expect(dados._body.message).toEqual("Usuário excluído com sucesso.")
+    })
+})
+
