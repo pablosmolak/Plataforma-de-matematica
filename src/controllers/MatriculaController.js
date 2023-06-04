@@ -1,11 +1,12 @@
-import matricula from "../models/Matricula";
-import aluno from "../models/Aluno.js";
-import curso from "../models/Curso.js"
+import matricula from "../models/Matricula.js"
+//import aluno from "../models/Aluno.js";
+//import curso from "../models/Curso.js"
 
 class MatriculaController {
+
     static listarMatricula = async (req, res) => {
         try {
-            const nome = req.query.aluno.nome
+            const nome = req.query.nome
             console.log(nome)
             const { page, perPage } = req.query
 
@@ -31,3 +32,5 @@ class MatriculaController {
 
     }
 }
+
+export default MatriculaController
