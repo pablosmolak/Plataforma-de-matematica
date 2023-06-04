@@ -1,9 +1,10 @@
 import express from "express"
-import MatriculaController from "./controllers/MatriculaController.js"
+import matriculaController from "../controllers/MatriculaController.js"
+
 
 const router = express.Router()
 
 router
-    .get("/Matriculas", MatriculaController.listarMatriculas)
+    .get("/matriculas", matriculaController.listarMatricula)
 
 export default router;
