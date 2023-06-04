@@ -6,6 +6,8 @@ import rotas from "./routeRotas.js"
 import docs from "./docsRoutes.js"
 import matricula from "./matriculaRoutes.js"
 import grupos from "./gruposRoutes.js"
+import autenticacao from "./AutenticacaoRoutes.js"
+
 
 
 const routes = (app) => {
@@ -21,7 +23,9 @@ const routes = (app) => {
         usuarios,
         rotas,
         matricula,
-        grupos
+        grupos,
+        autenticacao
+
     )
 }
 
