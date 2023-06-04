@@ -1,6 +1,9 @@
 import rotas from "../models/Rota.js";
+
 class RotaController {
+
   static listarRotas = async (req, res) => {
+    
     try {
 
         const nome = req.query.nome;
