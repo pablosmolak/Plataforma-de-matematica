@@ -22,7 +22,7 @@ class AutenticacaoController {
             res.status(400).json({code:400, message:"Usuário inativo!"})
         }
 
-        return res.status(200).json([{
+        return res.status(200).json({
             token: jwt.sign(
                 {   
                     id: userExist._id,
@@ -42,7 +42,7 @@ class AutenticacaoController {
                 user: userExist.user,
                 ativo: userExist.ativo
             }   
-        }])
+        })
     }
 }
 
