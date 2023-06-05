@@ -7,7 +7,7 @@ const usuarioSchema = new mongoose.Schema(
         nome: {type: String, required: true, trim: true, minlength: 3, maxlength: 200},
         user: {type: String, required: true, trim: true, minlength: 3, maxlength: 200, unique: true},
         email: {type: String, required: true, trim: true, minlength: 3, unique: true},
-        senha : {type: String, required: true, minlength: 8},
+        senha : {type: String, required: true, minlength: 8, select: false},
         telefone: {type: String, required: true, trim: true},
         link_foto: { type: String, trim: true },
         ativo: {type: Boolean, required: true, default: true},
