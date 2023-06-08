@@ -1,12 +1,11 @@
-FROM node:18.14.0
+FROM node:20-alpine
 
 WORKDIR /app-node
-ENV PORT=3459
-ENV DB_URL = mongodb+srv://smolak:pablo123@bddoscrias.v9neqx8.mongodb.net/plataforma
-EXPOSE 3459
+
+EXPOSE 3001
 
 COPY . .
 
 RUN npm install
 
-ENTRYPOINT npm run start
+ENTRYPOINT npm start

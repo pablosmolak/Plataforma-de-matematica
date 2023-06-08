@@ -1,0 +1,18 @@
+version: '3.8'
+services: 
+  matebanco:
+    image: mongo:4.4.6
+    volumes:
+      - vol-banco:/data/db
+  plataforma:
+    build: .
+    ports:
+      - 3001:3001
+    environment:
+      - PORT=3001
+      - DB_URL=mongodb://matebanco:27017
+      - SECRET=dsdfvds4f65s4g6aw54gf6w54DG86A486G54S86F56AF56AE54FEFADGFHhagfduydsgfugs
+      - EXPIREIN=1m
+
+volumes:
+  vol-banco:
