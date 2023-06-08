@@ -1,0 +1,11 @@
+version: '3.8'
+services: 
+  plataforma:
+    build: .
+    ports:
+      - 3001:3001
+    environment:
+      - PORT=3001
+      - DB_URL=mongodb+srv://smolak:pablim123@bddoscrias.v9neqx8.mongodb.net/plataforma
+      - SECRET=dsdfvds4f65s4g6aw54gf6w54DG86A486G54S86F56AF56AE54FEFADGFHhagfduydsgfugs
+      - EXPIREIN=1m
