@@ -1,5 +1,5 @@
 import matriculas from "../models/Matricula.js"
-import matriculas from "../models/Usuario.js";
+import usuarios from "../models/Usuario.js";
 import cursos from "../models/Curso.js"
 
 class MatriculaController {
@@ -27,7 +27,7 @@ class MatriculaController {
 
                 const matricula = await matriculas.paginate({}, options)
                 let matri = JSON.parse(JSON.stringify(matricula))
-                matri.usuarios = await matriculas.find({_id : {$in: matri.usuarios }}).lean()
+                matri.usuarios = await usuarios.find({_id : {$in: matri.usuarios }}).lean()
                 matri.cursos = await cursos.find({_id : {$in: matri.cursos }}).lean()
 
                 for (let i = 0; i < matri.docs.length; i++) {
