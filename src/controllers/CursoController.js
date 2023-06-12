@@ -1,4 +1,5 @@
 import curso from "../models/Curso.js"
+import rotas from "../models/Rota.js";
 
 class CursoController {
 
@@ -47,7 +48,54 @@ class CursoController {
         }
   }
 
+  static cadastrarCurso = async (req, res) => {
+    try {
+      
+        let grupo = new cursos(req.body);
+        grupo.save((err) => {
+          if (err) {
+            res.status(500).send({ message: `${err.message} - falha ao cadastrar curso.` })
+          } else {
+            res.status(201).send(curso.toJSON())
+          }
+        })
+      } catch (err) {
+      // console.error(err);
+      return res.status(500).json({ error: true, code: 500, message: "Erro interno do Servidor" })
+    }
+   // 
+    try {
+        const id = req.params.id;
+        await cursos.findByIdAndUpdate(id, { $set: req.body }, (err) => {
+          if (!err) {
+            res.status(200).send({ message: 'Curso atualizado com sucesso' })
+          } else {
+            res.status(500).send({ message: err.message })
+          }
+        }).clone().catch((err) => { console.log(err) })
+      } catch (err) {
+      // console.error(err);
+      return res.status(500).json({ error: true, code: 500, message: "Erro interno do Servidor" })
+    }
+  }
+
+  static excluirCurso = async (req, res) => {
+    try {
+        const id = req.params.id;
+        await cursos.findByIdAndDelete(id, (err) => {
+          if (!err) {
+            res.status(200).send({ message: 'Curso removido com sucesso' })
+          } else {
+            res.status(500).send({ message: err.message })
+          }
+        })
+      } catch (err) {
+      // console.error(err);
+      return res.status(500).json({ error: true, code: 500, message: "Erro interno do Servidor" })
+    }
+  }
+
 
 }
 
-export default CursoController
+export default CursoController;

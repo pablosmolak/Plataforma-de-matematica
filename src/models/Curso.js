@@ -20,11 +20,21 @@ const cursoSchema = new mongoose.Schema(
             }],
             comentarios: {type: String, required: true, trim: true},
         }],
-
-        ativo: {type: Boolean, required: true}
+        rotas: [{
+        _id: { type: mongoose.Schema.Types.ObjectId, ref: 'rota' },
+        rota: {type: String, required: true, trim: true, index: true},
+        verbo_get: { type: Boolean, required: true, index: true, default: true },
+        verbo_put: { type: Boolean, required: true, index: true, default: true },
+        verbo_patch: { type: Boolean, required: true, index: true, default: true },
+        verbo_delete: { type: Boolean, required: true, index: true, default: true },
+        verbo_post: { type: Boolean, required: true, index: true, default: true },
+        ativo: {type:Boolean, required: true},
+    }]
     }],
-
+    
     {
+
+    
         versionKey: "true"
     }
 );
