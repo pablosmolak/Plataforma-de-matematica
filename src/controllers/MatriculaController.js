@@ -1,6 +1,7 @@
 import matriculas from "../models/Matricula.js"
 import usuarios from "../models/Usuario.js";
 import cursos from "../models/Curso.js"
+import usuario from "../models/Usuario.js";
 
 class MatriculaController {
 
@@ -27,11 +28,11 @@ class MatriculaController {
 
                 const matricula = await matriculas.paginate({}, options)
                 let matri = JSON.parse(JSON.stringify(matricula))
-                matri.usuarios = await usuarios.find({_id : {$in: matri.usuarios }}).lean()
+                matri.usuario = await usuarios.find({_id : {$in: matri.usuario }}).lean()
                 matri.cursos = await cursos.find({_id : {$in: matri.cursos }}).lean()
 
                 for (let i = 0; i < matri.docs.length; i++) {
-                    matri.docs[i].usuarios = await matriculas.find({ _id: { $in: matri.docs[i].usuarios } }).lean();
+                    matri.docs[i].usuario = await usuarios.find({ _id: { $in: matri.docs[i].usuario } }).lean();
                 }
 
                 for (let i = 0; i < matri.docs.length; i++) {
@@ -45,19 +46,19 @@ class MatriculaController {
             else{
                 const matricula = await matriculas.paginate({nome: new RegExp(nome, 'i')}, options)
                 let matri = JSON.parse(JSON.stringify(matricula))
-                matri.usuarios = await matriculas.find({ _id: { $in: matri.usuarios } }).lean()
+                matri.usuarios = await usuario.find({ _id: { $in: matri.usuarios } }).lean()
                 matri.cursos = await cursos.find({ _id: { $in: matri.cursos } }).lean()
 
                 for (let i = 0; i < matri.docs.length; i++) {
-                    matri.docs[i].usuarios = await matriculas.find({ _id: { $in: matri.docs[i].usuarios } }).lean()
-                }
+                    matri.docs[i].usuario = await usuarios.find({ _id: { $in: matri.docs[i].usuario } }).lean()
+                
 
                 for (let i = 0; i < matri.docs.length; i++) {
                     matri.docs[i].cursos = await matriculas.find({ _id: { $in: matri.docs[i].cursos } }).lean()
                 }
 
                 return res.json(matri)
-            }
+            }}
 
         } catch (err) {
             console.error(err)
@@ -71,10 +72,8 @@ class MatriculaController {
 
             matriculas.findById(id).then(async (matricula) => {
                 let matri = JSON.parse(JSON.stringify(matricula))
-                matri.usuarios = await matriculas.find({_id: {$in: matri.usuarios}}).lean()
+                matri.usuario = await usuario.find({_id: {$in: matri.usuario}}).lean()
                 matri.cursos = await cursos.find({_id: {$in: matri.cursos}}).lean()
-                
-
                 return res.status(200).send(matri)
             })
             .catch((err) => {
@@ -89,33 +88,23 @@ class MatriculaController {
 
     static cadastrarMatricula = async (req,res) => {
         try{
-            let matricula = new matriculas(req.body)//criação do usuario
+            let matricula = new matriculas(req.body)
+            
+            const timeElapsed = Date.now();
+            const dataInicio = new Date(timeElapsed)
 
-            let emailExiste = await matriculas.findOne({email:req.body.email})
-            let matriExiste = await matriculas.findOne({matri: req.body.matri})
-
-            if(!emailExiste && !matriExiste){
-                let senhaHash = bcrypt.hashSync(matricula.senha,8);
-                matricula.senha = senhaHash;
-
-                matricula.save().then(() => {
-                    res.status(201).send(matricula.toJSON())
-                })
-                .catch((err) =>{
-                    //console.log(err)
-                    return res.status(500).json([{ error: true, code: 500, message: "Erro nos dados, confira e repita" }])
-                })
-            }
-            else if(emailExiste){
-                return res.status(422).json({ code: 422, message: "E-mail já cadastrado!" })
-
-            }
-            else if(matriExiste){
-                return res.status(422).json({ code: 422, message: "Matricula já cadastrado!"})
-            }
+           
+            matricula.cursos[0].dataInicio = dataInicio
+            matricula.save().then(() => {
+                 res.status(201).send(matricula.toJSON())
+            }).catch((err) =>{
+                console.log(err)
+                return res.status(500).json([{ error: true, code: 500, message: "Erro nos dados, confira e repita" }])
+            })
+            
                 
         }catch (err){
-            //console.error(err)
+            console.error(err)
             return res.status(500).json({error: true, code: 500, message: "Erro interno do Servidor"})
 
         }
@@ -125,11 +114,6 @@ class MatriculaController {
         try{
             var id = req.params.id
             var matricula = new matriculas(req.body)
-
-            if(usuario.senha){
-                var senhaHash = await bcrypt.hash(usuario.senha, 8)
-                req.body.senha = senhaHash
-            }
 
             matricula.findByIdAndUpdate(id, {$set: req.body}).then(()=>{
                 res.status(201).json([{ code: 201, message: 'Matricula atualizado com sucesso' }])
@@ -157,7 +141,7 @@ class MatriculaController {
             }
 
             matriculas.findByIdAndDelete(id).then(() => {
-                    return res.status(200).json({code: 200, message: "Matricula excluído com sucesso." })
+                    return res.status(200).json({code: 200, message: "Matricula excluída com sucesso." })
             }).catch((err) =>{
                     console.log(err)
                 })
