@@ -25,7 +25,6 @@ const routes = (app) => {
         matricula,
         grupos,
         autenticacao
-
     )
 }
 
