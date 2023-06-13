@@ -1,103 +1,136 @@
 import grupos from "../models/Grupo.js";
+import usuarios from "../models/Usuario.js";
 import rotas from "../models/Rota.js";
 
-
-// classe para controlar operações 
 class GrupoController {
-  static listarGrupos = async (req, res) => {
-    try {
-        const nome = req.query.nome;
-        const { page, perPage } = req.query;
-        const options = { // limitar a quantidade máxima por requisição
-          page: parseInt(page) || 1,
-          limit: parseInt(perPage) > 3 ? 3 : parseInt(perPage) || 3
+
+    static listarGrupo = async (req,res) => {
+
+        try {
+            const nome = req.query.nome
+            const {page, perPage} = req.query
+
+            const options = {
+                nome: (nome),
+                page: parseInt(page) || 1,
+                limit: parseInt(perPage) > 5 ? 5 : parseInt(perPage) || 5
+            }
+
+            if(!nome){
+                const grupo = await grupos.paginate({}, options)
+                let gpo = JSON.parse(JSON.stringify(grupo))
+                
+                //for (let i = 0; i < gpo.docs.length; i++) {
+                 //   gpo.docs[i].usuarios = await usuarios.find({ _id: { $in: gpo.docs[i].usuarios } }).lean();
+                //}
+                
+                return res.json(gpo)
+            }
+
+            else{
+                const grupo = await grupos.paginate({nome: new RegExp(nome, 'i')}, options)
+                let gpo = JSON.parse(JSON.stringify(grupo))
+               // gpo.grupos = await grupos.find({ _id: { $in: gpo.grupos } }).lean()
+
+               // for (let i = 0; i < gpo.docs.length; i++) {
+                //    gpo.docs[i].grupos = await grupos.find({ _id: { $in: gpo.docs[i].grupos } }).lean()
+               // }
+
+                return res.json(gpo)
+            }
+            
+        }catch (err){
+            console.error(err)
+            return res.status(500).json({error: true, code: 500, message: "Erro interno do Servidor"})
+
         }
 
-        if (!nome) {
-          let grupo = await grupos.paginate({}, options);
-          let gpo = JSON.parse(JSON.stringify(grupo));
 
-         
-          res.status(200).send(gpo);
+    }
 
-          
-        } else {
-          const grupo = await grupos.paginate({ nome: new RegExp(nome, 'i') }, options);
-          let gpo = JSON.parse(JSON.stringify(grupo));
-          
-          res.status(200).send(gpo);
+    static listarGrupoId = async (req,res) => {
+        try{
+            const id = req.params.id
+
+            grupos.findById(id).then(async (grupo) => {
+                let gpo = JSON.parse(JSON.stringify(grupo))
+
+                return res.status(200).send(gpo)
+            })
+            
+        } catch (err){
+            console.error(err)
+            return res.status(500).json({error: true, code: 500, message: "Erro interno do Servidor"})
+
         }
-      } catch (err) {
-      // console.error(err);
-      return res.status(500).json({ error: true, code: 500, message: "Erro interno do Servidor" })
     }
-  }
 
-  /*static listarGrupoPorId = async (req, res) => {
-    try {
-        // carregar o grupo pelo ID e recuperar 
-        grupos.findById(id, async (err, grupo) => {
-          if (err) {
-            return res.status(400).json({ error: true, code: 400, message: "ID inválido ou não encontrado" })
-          }
-          if (!grupo) {
-            return res.status(404).json({ error: true, code: 404, message: "Grupo não encontrado" })
-          }
+    static cadastrarGrupo = async (req,res) => {
+        try{
+            let grupo = new grupos(req.body)//criação do grupo
+            
+            let grupoExiste = await grupos.findOne({nome:req.body.nome})
+            
+            if(!grupoExiste){
+                grupo.save().then(()=>{
+                    res.status(201).send(grupo.toJSON())
+                }).catch((err)=>{
+                    return res.status(500).json({ error: true, code: 500, message: "Erro nos dados, confira e repita" })
+                })
+            }
+            
+            else if(grupoExiste){
+                return res.status(422).json({ code: 422, message: "Nome de Grupo já cadastrado!" })
+            }
+            
+        }catch (err) {
+            console.error(err);
+            return res.status(500).json({ error: true, code: 500, message: "Erro interno do Servidor" })
         }
-        )
-      } catch (err) {
-      // console.error(err);
-      return res.status(500).json({ error: true, code: 500, message: "Erro interno do Servidor" })
-    }
-  }
+        }
 
-  static cadastrarGrupo = async (req, res) => {
-    try {
-      
-        let grupo = new grupos(req.body);
-        grupo.save((err) => {
-          if (err) {
-            res.status(500).send({ message: `${err.message} - falha ao cadastrar grupo.` })
-          } else {
-            res.status(201).send(grupo.toJSON())
-          }
-        })
-      } catch (err) {
-      // console.error(err);
-      return res.status(500).json({ error: true, code: 500, message: "Erro interno do Servidor" })
-    }
-import rotas from "../models/Rota.js";
-    try {
-        const id = req.params.id;
-        await grupos.findByIdAndUpdate(id, { $set: req.body }, (err) => {
-          if (!err) {
-            res.status(200).send({ message: 'Grupo atualizado com sucesso' })
-          } else {
-            res.status(500).send({ message: err.message })
-          }
-        }).clone().catch((err) => { console.log(err) })
-      } catch (err) {
-      // console.error(err);
-      return res.status(500).json({ error: true, code: 500, message: "Erro interno do Servidor" })
-    }
-  }
+    static atualizarGrupo = async (req,res) =>{
+        try{
+            const id = req.params.id            
+            
 
-  static excluirGrupo = async (req, res) => {
-    try {
-        const id = req.params.id;
-        await grupos.findByIdAndDelete(id, (err) => {
-          if (!err) {
-            res.status(200).send({ message: 'Grupo removido com sucesso' })
-          } else {
-            res.status(500).send({ message: err.message })
-          }
-        })
-      } catch (err) {
-      // console.error(err);
-      return res.status(500).json({ error: true, code: 500, message: "Erro interno do Servidor" })
-    }
-  }*/
+            grupos.findByIdAndUpdate(id, {$set: req.body}).then(()=>{
+                res.status(200).json([{ code: 200, message: 'Grupo atualizado com sucesso' }])
+            })
+            .catch((err) => {
+                console.log(err)
+                return res.status(500).json([{ error: true, code: 500, message: "Erro nos dados, confira e repita" }])
+            })
 
+        }
+
+        catch(err){
+            console.error(err)
+            return res.status(500).json({error: true, code: 500, message: "Erro interno do Servidor"})
+        }
+    }
+
+    static excluirGrupo = async (req,res) => {
+        try{
+            let id = req.params.id
+            const grupo = await grupos.findById(id)
+
+            if(!grupo){
+                return res.status(400).json({code: 400, mensage:"Grupo não Localizado!"})
+            }
+
+            grupos.findByIdAndDelete(id).then(()=>{
+                res.status(200).send({ message: 'Grupo excluído com sucesso!' })
+            }).catch((err)=>{
+                console.log(err)
+            })
+            
+        } catch (err) {
+            console.error(err);
+            return res.status(500).json({ error: true, code: 500, message: "Erro interno do Servidor" })
+
+        }
+    }
 }
 
-export default GrupoController;
+export default GrupoController
