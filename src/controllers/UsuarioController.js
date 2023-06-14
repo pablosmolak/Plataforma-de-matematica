@@ -24,7 +24,7 @@ class UsuarioController {
                 for (let i = 0; i < user.docs.length; i++) {
                     user.docs[i].grupos = await grupos.find({ _id: { $in: user.docs[i].grupos } }).lean();
                 }
-                
+
                 return res.json(user)
             }
 
@@ -43,10 +43,7 @@ class UsuarioController {
         }catch (err){
             //console.error(err)
             return res.status(500).json({error: true, code: 500, message: "Erro interno do Servidor"})
-
         }
-
-
     }
 
     static listarUsuarioId = async (req,res) => {
@@ -65,7 +62,6 @@ class UsuarioController {
         }catch (err){
             console.error(err)
             return res.status(500).json({error: true, code: 500, message: "Erro interno do Servidor"})
-
         }
     }
     
@@ -77,6 +73,11 @@ class UsuarioController {
             let userExiste = await usuarios.findOne({user: req.body.user})
 
             if(!emailExiste && !userExiste){
+
+                if(req.body.senha.length < 8){
+                    return res.status(422).json({ error: true, code: 422, message: "Senha informada menor que 8 caracteres!"})
+                }
+
                 let senhaHash = bcrypt.hashSync(usuario.senha,8);
                 usuario.senha = senhaHash;
 
@@ -85,21 +86,17 @@ class UsuarioController {
                 })
                 .catch((err) =>{
                     //console.log(err)
-                    return res.status(500).json([{ error: true, code: 500, message: "Erro nos dados, confira e repita" }])
+                    return res.status(500).json({ error: true, code: 500, message: "Erro nos dados, confira e repita" })
                 })
-            }
-            else if(emailExiste){
+            }else if(emailExiste){
                 return res.status(422).json({ code: 422, message: "E-mail já cadastrado!" })
-
-            }
-            else if(userExiste){
+            }else if(userExiste){
                 return res.status(422).json({ code: 422, message: "Usuario já cadastrado!"})
             }
                 
         }catch (err){
             //console.error(err)
             return res.status(500).json({error: true, code: 500, message: "Erro interno do Servidor"})
-
         }
     }
 
@@ -108,19 +105,34 @@ class UsuarioController {
             var id = req.params.id
             var usuario = new usuarios(req.body)
 
-            if(usuario.senha){
-                var senhaHash = await bcrypt.hash(usuario.senha, 8)
-                req.body.senha = senhaHash
+            let emailExiste = await usuarios.findOne({email:req.body.email})
+            let userExiste = await usuarios.findOne({user: req.body.user})
+            
+            if(!emailExiste && !userExiste){
+                
+                if(usuario.senha){
+                    
+                    if(req.body.senha.length < 8){
+                        return res.status(422).json({ error: true, code: 422, message: "Senha informada menor que 8 caracteres!" })
+                    }
+
+                    var senhaHash = await bcrypt.hash(usuario.senha, 8)
+                    req.body.senha = senhaHash
+                }
+    
+                usuarios.findByIdAndUpdate(id, {$set: req.body}).then(()=>{
+                    res.status(201).json({ code: 201, message: 'Cadastro atualizado com sucesso' })
+                })
+                .catch((err) => {
+                    console.log(err)
+                    return res.status(500).json({ error: true, code: 500, message: "Erro nos dados, confira e repita" })
+                })
+            }else if(emailExiste){
+                return res.status(422).json({ code: 422, message: "E-mail já cadastrado!" })
+
+            }else if(userExiste){
+                return res.status(422).json({ code: 422, message: "Usuario já cadastrado!"})
             }
-
-            usuarios.findByIdAndUpdate(id, {$set: req.body}).then(()=>{
-                res.status(201).json([{ code: 201, message: 'Cadastro atualizado com sucesso' }])
-            })
-            .catch((err) => {
-                console.log(err)
-                return res.status(500).json([{ error: true, code: 500, message: "Erro nos dados, confira e repita" }])
-            })
-
         }
 
         catch(err){
@@ -135,7 +147,7 @@ class UsuarioController {
             const usuario = await usuarios.findById(id)
 
             if(!usuario){
-                return res.status(400).json([{code: 400, mensage:"Usuario não Localizado!"}])
+                return res.status(400).json({code: 400, message:"Usuario não Localizado!"})
             }
 
             usuarios.findByIdAndDelete(id).then(() => {

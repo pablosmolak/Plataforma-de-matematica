@@ -37,6 +37,52 @@ describe ('/POST em Usuários', () => {
         
     });
 
+    it("Deve retornar erro de E-mail já cadastrado", async () =>{
+        const dados = await request(app)
+        .post('/usuarios')
+        .set('Authorization', `Bearer ${token}`)
+        .set('Accept', 'aplication/json')
+        .send({
+            nome: 'Pablo Smolak',
+            user: 'smolaktest1',
+            email: 'smolaktest@gmail.com',
+            senha: '12325554',
+            telefone: '984227163'
+        })
+        .expect(422)
+    })
+
+    it("Deve retornar erro de User Name já cadastrado", async () =>{
+        const dados = await request(app)
+        .post('/usuarios')
+        .set('Accept', 'aplication/json')
+        .send({
+            nome: 'Pablo Smolak',
+            user: 'smolaktest',
+            email: 'smolaktest1@gmail.com',
+            senha: '12325554',
+            telefone: '984227163'
+        })
+        .expect(422)
+        expect(dados._body.message).toEqual('Usuario já cadastrado!')
+    })
+
+    it("Deve retornar erro de senha menor que 8 caracteres", async () =>{
+        const dados = await request(app)
+        .post('/usuarios')
+        .set('Accept', 'aplication/json')
+        .send({
+            nome: 'Pablo Smolak',
+            user: 'smolaktest1',
+            email: 'smolaktest1@gmail.com',
+            senha: '12325',
+            telefone: '984227163'
+        })
+        .expect(422)
+        expect(dados._body.message).toEqual('Senha informada menor que 8 caracteres!')
+    })
+})
+
 describe('/POST em Login', () => {
     it("Deve retornar o Token e as informaçoes do Usuário", async () =>{
         const dados = await request(app)
@@ -61,7 +107,18 @@ describe ('/GET em Usuários', () => {
         .expect(200);
         expect(dados._body.docs[0].nome).toEqual('Dev oliveira');
     })
+
+    it("Deve retornar um Usuário filtrado pelo nome", async () =>{
+        const dados = await request(app)
+        .get('/usuarios?nome=dev')
+        .set('Authorization', `Bearer ${token}`)
+        .set('accept', 'aplication/json')
+        .expect('content-type', /json/)
+        .expect(200);
+        expect(dados._body.docs[0].nome).toEqual('Dev oliveira');
+    })
 })
+
 
 describe('/GET/ID em Usuários', () =>{
     it("Deve retornar um Usuário pelo id", async () => {
@@ -85,35 +142,58 @@ describe('/GET/ID em Usuários', () =>{
     })
 })
 
-    it("Deve retornar erro de E-mail já cadastrado", async () =>{
+
+
+describe("/PATCH/ID em Usúarios", () =>{
+    it("Deve Atualizar um Usuário!", async ()=>{
         const dados = await request(app)
-        .post('/usuarios')
+        .patch(`/usuarios/${idUsuario}`)
         .set('Authorization', `Bearer ${token}`)
         .set('Accept', 'aplication/json')
         .send({
-            nome: 'Pablo Smolak',
-            user: 'smolaktest1',
+            user: 'smolakinhotest'
+        })
+        .expect(201)
+        expect(dados._body.message).toEqual('Cadastro atualizado com sucesso')
+    })
+
+    it("Deve retornar erro de E-mail já cadastrado", async () =>{
+        const dados = await request(app)
+        .patch(`/usuarios/${idUsuario}`)
+        .set('Authorization', `Bearer ${token}`)
+        .set('Accept', 'aplication/json')
+        .send({
             email: 'smolaktest@gmail.com',
-            senha: '12325554',
-            telefone: '984227163'
         })
         .expect(422)
     })
 
     it("Deve retornar erro de User Name já cadastrado", async () =>{
         const dados = await request(app)
-        .post('/usuarios')
+        .patch(`/usuarios/${idUsuario}`)
+        .set('Authorization', `Bearer ${token}`)
+        .set('Accept', 'aplication/json')
+        .send({
+            user: 'smolakinhotest',
+        })
+        .expect(422)
+        expect(dados._body.message).toEqual('Usuario já cadastrado!')
+    })
+
+    it("Deve retornar erro de senha menor que 8 caracteres", async () =>{
+        const dados = await request(app)
+        .patch(`/usuarios/${idUsuario}`)
         .set('Authorization', `Bearer ${token}`)
         .set('Accept', 'aplication/json')
         .send({
             nome: 'Pablo Smolak',
-            user: 'smolaktest',
+            user: 'smolaktest1',
             email: 'smolaktest1@gmail.com',
-            senha: '12325554',
+            senha: '12325',
             telefone: '984227163'
         })
         .expect(422)
-        expect(dados._body.message).toEqual('Usuario já cadastrado!')
+        expect(dados._body.message).toEqual('Senha informada menor que 8 caracteres!')
     })
 })
 
@@ -125,6 +205,15 @@ describe("/DELETE/ID em Usuários", () =>{
         .set('Authorization', `Bearer ${token}`)
         .expect('content-type', /json/)
         expect(dados._body.message).toEqual("Usuário excluído com sucesso.")
+    })
+
+    it("Deve retornar erro de usuário não encontrado!", async () =>{
+        const dados = await request(app)
+        .delete(`/usuarios/6476d5c8900ad134fbcd18c2`)
+        .set('Accept', 'aplication/json')
+        .set('Authorization', `Bearer ${token}`)
+        .expect('content-type', /json/)
+        expect(dados._body.message).toEqual("Usuario não Localizado!")
     })
 })
 

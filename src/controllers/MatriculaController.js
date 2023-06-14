@@ -40,9 +40,7 @@ class MatriculaController {
                 }
                 
                 return res.json(matri)
-
             }
-
             else{
                 const matricula = await matriculas.paginate({nome: new RegExp(nome, 'i')}, options)
                 let matri = JSON.parse(JSON.stringify(matricula))

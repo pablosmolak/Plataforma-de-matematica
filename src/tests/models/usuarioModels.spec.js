@@ -11,8 +11,12 @@ describe("Deve retornar testes de unidade de pessoa", () =>{
     afterEach(() => jest.clearAllMocks())
 
     const objetoUsuario ={
-        nome: 'Pablo Smolak'
-        
+        nome: 'Pablo Smolak',
+        user: 'psmolakk',
+        email: 'psmolakk@gmail.com',
+        senha : '123456789',
+        telefone: '984227458',
+        ativo: true
     }
 
     it('Deve Instanciar uma nova Pessoa ', () => {
@@ -24,7 +28,12 @@ describe("Deve retornar testes de unidade de pessoa", () =>{
     it('Deve retornar o CadastroPessoa simulado com mock', () => {
         const usuario = new Usuario(objetoUsuario)
         UsuarioController.cadastrarUsuario = jest.fn().mockReturnValue({
-            nome: 'Pablo Smolak'
+            nome: 'Pablo Smolak',
+            user: 'psmolakk',
+            email: 'psmolakk@gmail.com',
+            senha : '123456789',
+            telefone: '984227458',
+            ativo: true
         })
 
         const retorno = UsuarioController.cadastrarUsuario();
@@ -38,16 +47,26 @@ describe("Deve retornar testes de unidade de pessoa", () =>{
     it("Deve retornar uma lista de pessoa simulada com mock", () =>{
         UsuarioController.listarUsuario = jest.fn().mockReturnValue([
             {
-                nome: 'cleiton'
+                nome: 'pedro',
+                user: 'ppedro',
+                email: 'ppedro@gmail.com',
+                senha : '123456789',
+                telefone: '984227458',
+                ativo: true
             },
             {
-                nome:'rabudo'
+                nome: 'Joao',
+                user: 'pjao',
+                email: 'pjao@gmail.com',
+                senha : '123456789',
+                telefone: '984227458',
+                ativo: true
             }
         ])
 
         const retorno = UsuarioController.listarUsuario();
         expect(retorno).toHaveLength(2)
-        expect(retorno[0]).toHaveProperty('nome', 'cleiton')
+        expect(retorno[0]).toHaveProperty('nome', 'pedro')
         expect(UsuarioController.listarUsuario).toBeCalledTimes(1)
     })
 
@@ -55,19 +74,29 @@ describe("Deve retornar testes de unidade de pessoa", () =>{
         UsuarioController.listarUsuarioId = jest.fn().mockReturnValue(
             {
                 _id: '63f969d459942abbe89a2251',
-                nome: 'Tarsila Reis'
+                nome: 'Pablo Smolak',
+                user: 'psmolakk',
+                email: 'psmolakk@gmail.com',
+                enha : '123456789',
+                telefone: '984227458',
+                ativo: true
             }
         )
 
         const retorno = UsuarioController.listarUsuarioId()
-        expect(retorno.nome).toEqual("Tarsila Reis")
+        expect(retorno.nome).toEqual("Pablo Smolak")
         expect(UsuarioController.listarUsuarioId).toBeCalledTimes(1)
     })
 
     it('Deve retornar atualização de pessoa simulada com mock', () => {
         const objetoUsuarioAtualizar = {
             _id: '63f969d459942abbe89a2251',
-            nome: 'Tarsila Reis'
+            nome: 'Pablo Smolak',
+            user: 'psmolakk',
+            email: 'psmolakk@gmail.com',
+            enha : '123456789',
+            telefone: '984227458',
+            ativo: true
     
         }
 
@@ -80,6 +109,4 @@ describe("Deve retornar testes de unidade de pessoa", () =>{
         expect(retorno).toHaveProperty('message', 'Cadastro atualizado com sucesso')
         expect(UsuarioController.atualizarUsuario).toBeCalledTimes(1)
     })
-
-
 })
