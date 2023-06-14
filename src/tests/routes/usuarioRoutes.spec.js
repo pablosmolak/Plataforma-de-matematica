@@ -144,7 +144,7 @@ describe('/GET/ID em Usuários', () =>{
 
 
 
-describe("/PATCH/ID em Usúarios", () =>{
+describe("/PATCH/ID em Usuários", () =>{
     it("Deve Atualizar um Usuário!", async ()=>{
         const dados = await request(app)
         .patch(`/usuarios/${idUsuario}`)

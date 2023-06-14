@@ -35,10 +35,34 @@ describe('/POST em login', () => {
         .post('/login')
         .set('accept', 'aplication/json')
         .send({
-            user: "dev155555555555555555",
+            user: "dev1",
             senha: "123"
         })
         .expect(400)
         expect(dados._body.message).toEqual('Usuário inexistente!')
+    })
+
+    it('Deve retornar erro de usuario usuario ou senha incorretos', async () =>{
+        const dados = await request(app)
+        .post('/login')
+        .set('accept', 'aplication/json')
+        .send({
+            user: "dev",
+            senha: "1234"
+        })
+        .expect(400)
+        expect(dados._body.message).toEqual('Usuário ou senha incorretos!')
+    })
+
+    it('Deve retornar erro de usuário inativo', async () =>{
+        const dados = await request(app)
+        .post('/login')
+        .set('accept', 'aplication/json')
+        .send({
+            user: "Ivonise.Melo",
+            senha: "123"
+        })
+        .expect(400)
+        expect(dados._body.message).toEqual('Usuário inativo!')
     })
 })
