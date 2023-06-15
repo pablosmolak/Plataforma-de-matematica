@@ -36,15 +36,33 @@ const swaggerOptions = {
           description: "Usuários do Sistema"
         },
         {
-          name: "Rotas",
-          description: "Rotas do Sistema"
+          name: "Cursos",
+          description: "Cursos Disponibilizados"
         },
         {
-          name: "Unidades",
-          description: "Operações para rota Unidades"
-        }  
+          name: "Matrículas",
+          description: "Matriculas dos usuários nos cursos"
+        },
+        {
+          name: "Grupos",
+          description: "Grupos de usuários do Sistema"
+        },
+        {
+          name: "Rotas",
+          description: "Rotas do Sistema"
+        }      
+
       ],
       paths: {},
+      components: {
+        securitySchemes:{
+          bearerAuth: {
+            type: 'http',
+            scheme: 'bearer',
+            bearerFormat: 'JWT'
+          }
+        }
+      }
     },
     apis: ["./src/routes/*.js"]
   };

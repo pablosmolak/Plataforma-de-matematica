@@ -25,7 +25,6 @@ const router = express.Router()
  *                $ref: '#/components/schemas/login'
 */
 
-
 router
     .post("/login", AutenticacaoController.logar)
 
