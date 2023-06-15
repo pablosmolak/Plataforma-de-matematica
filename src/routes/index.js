@@ -19,17 +19,17 @@ import autenticacao from "./AutenticacaoRoutes.js"
  *          example: "63759607e0a9fb91607a8c6d"
  *        nome:
  *          type: string
- *          example: "João da Silva"
+ *          example: "Pablo Smolak"
  *        email:
  *          type: string
- *          example: "82493617Cesar_Batista27@gmail.com"
+ *          example: "Smolaktest@gmail.com"
  *        ativo: 
  *          type: boolean
  *          example: true
  *        link_foto:
  *          type: string
  *          example: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
- *        token (recuperação de seha):
+ *        senha (criptografada):
  *          type: string
  *          example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MjRkNTE5Y2ViNTVkMzdmY2JmOGI1MyIsImlhdCI6MTY4MDI2ODMxOCwiZXhwIjoxNjgwMjc1NTE4fQ.desbT2UAGbnsgIa0coVlrBG798pkQlkuy15ODO-KTmg"           
  *        grupos:
@@ -46,7 +46,7 @@ import autenticacao from "./AutenticacaoRoutes.js"
  *               example: "63759607e0a9fb91607a8c6d"
  *             rota:
  *               type: string
- *               example: "/grupos"
+ *               example: "/usuarios"
  *             dominio:
  *               type: string
  *               example: "google.com"
@@ -129,11 +129,6 @@ import autenticacao from "./AutenticacaoRoutes.js"
  *             verbo_delete:
  *               type: boolean
  *               example: true
- *    
- *    
- *        
- *    
- *    
  *     Rota:
  *       type: object
  *       properties:
@@ -205,146 +200,31 @@ import autenticacao from "./AutenticacaoRoutes.js"
  *         message:
  *           type: string
  *           example: "Acesso liberado!"
- * 
- * 
- *     pessoa:
+ *     Error:
  *       type: object
  *       properties:
- *        _id: 
- *          type: string
- *          example: "63759607e0a9fb91607a8c6d"
- *        nome:
- *          type: string
- *          example: "João da Silva"
- *        cpf:
- *          type: string
- *          example: "000.000.000-00"
- *        nit:
- *          type: string
- *          example: "000.000.000-00"
- *        dataNascimento:
- *          type: string
- *          example: "dd-mm-yyyy - 01-01-1980"
- *        estrangeiro: 
+ *        error:         
  *          type: boolean
- *          example: true
- *        pais:
- *          type: string
- *          example: "Brasil"
- *        cep:
- *          type: string
- *          example: "00.000-000"
- *        logradouro: 
- *          type: string
- *          example: "Rua Santos Silva"
- *        numero: 
- *          type: string
- *          example: "0000"
- *        bairro: 
- *          type: string
- *          example: "Centro"
- *        cidade: 
- *          type: string
- *          example: "Vilhena"
- *        estado: 
- *          type: string
- *          example: "RO"
- *        telefone: 
- *          type: string
- *          example: "(00)0-0000-0000"
- *        telefoneContato: 
- *          type: string
- *          example: "Maria Contato"
- * 
- * 
- * 
- * 
- *     Atendimento:
- *       type: object
- *       properties:
- *        _id: 
- *          type: string
- *          example: "63759607e0a9fb91607a8c6d"
- *        oid_pessoa:
- *          type: string
- *          example: "63759607e0a9fb91607a8c6d"
- *        nome:
- *          type: string
- *          example: "Oliveira Santos Silva"
- *        cpf:
- *          type: string
- *          example: "000.000.000-00"
- *        nit:
- *          type: string
- *          example: "000.000.000-00"
- *        tipo:
- *          type: string
- *          example: "Bolsa família"
- *        observacao:
- *          type: string
- *          example: "Incidunt animi quidem iste consequatur. Aut ut dolor voluptatem inventore laudantium. Quam aut repellendus voluptatem quis asperiores tempore error voluptatum. Vitae quas magni nihil atque id quae."
- *        dataAtendimento:
- *          type: string
- *          example: "2022-09-29T07:46:11.985Z"
- *  
- * 
- *     Sessao:
- *       type: object
- *       properties:
- *        _id: 
- *          type: string
- *          example: "63759607e0a9fb91607a8c6d"
- *        nome:
- *          type: string
- *          example: "João da Silva"
- *        email:
- *          type: string
- *          example: "82493617Cesar_Batista27@gmail.com"
- *        ativo: 
- *          type: boolean
- *          example: true
- *        link_foto:
- *          type: string
- *          example: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
- *        token (recuperação de seha):
- *          type: string
- *          example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MjRkNTE5Y2ViNTVkMzdmY2JmOGI1MyIsImlhdCI6MTY4MDI2ODMxOCwiZXhwIjoxNjgwMjc1NTE4fQ.desbT2UAGbnsgIa0coVlrBG798pkQlkuy15ODO-KTmg"           
- *        grupos:
- *           type: object
- *           properties:
- *             _id: 
- *               type: string
- *               example: "6424d518ceb55d37fcbf8b4c"
- *        rotas:
- *           type: object
- *           properties:
- *             _id: 
- *               type: string
- *               example: "63759607e0a9fb91607a8c6d"
- *             rota:
- *               type: string
- *               example: "/grupos"
- *             dominio:
- *               type: string
- *               example: "google.com"
- *             ativo: 
- *               type: boolean
- *               example: true
- *             verbo_get:
- *               type: boolean
- *               example: true
- *             verbo_post:  
- *               type: boolean
- *               example: true
- *             verbo_put:
- *               type: boolean
- *               example: true
- *             verbo_patch:
- *               type: boolean
- *               example: true
- *             verbo_delete:
- *               type: boolean
- *               example: true 
+ *        code:
+ *          type: integer
+ *        message:
+ *         type: string
+ *   
+ *   responses:
+ *     auth:
+ *       '498':
+ *          description: Token de autenticação não existe
+ *          content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *                properties:
+ *                  code:
+ *                    type: integer
+ *                    example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NzZkNWM4OTAwYWQxMzRmYmNkMThiYyIsIm5vbWUiOiJEZXYgb2xpdmVpcmEiLCJlbWFpbCI6ImRldkBnbWFpbC5jb20iLCJ1c2VyIjoiZGV2IiwiYXRpdm8iOnRydWUsImlhdCI6MTY4Njg2MjEyNiwiZXhwIjoxNjg2ODY5MzI2fQ.SWgi-rKsz6HvXQj5XZD5MGkbIFzCNTKyNDhkfTMhBms"
+ *                  message:
+ *                    type: object
+ *                    example: "O Token de autenticação não existe!" 
  */
 
 

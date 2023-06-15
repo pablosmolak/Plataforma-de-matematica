@@ -1,12 +1,16 @@
 import usuarios from "../models/Usuario.js"
 import grupos from "../models/Grupo.js"
 import bcrypt from "bcryptjs"
+import AuthPermissao from "../middleware/authPermissao.js"
 
 class UsuarioController {
 
     static listarUsuario = async (req,res) => {
 
         try {
+
+            await AuthPermissao.verificarPermissao('usuarios', 'get', req, res)
+
             const nome = req.query.nome
             const {page, perPage} = req.query
 
@@ -41,13 +45,16 @@ class UsuarioController {
             }
             
         }catch (err){
-            //console.error(err)
+            console.error(err)
             return res.status(500).json({error: true, code: 500, message: "Erro interno do Servidor"})
         }
     }
 
     static listarUsuarioId = async (req,res) => {
         try{
+
+            await AuthPermissao.verificarPermissao('usuarios', 'get', req, res)
+
             const id = req.params.id
 
             usuarios.findById(id).then(async (usuario) => {
@@ -67,6 +74,8 @@ class UsuarioController {
     
     static cadastrarUsuario = async (req,res) => {
         try{
+
+            
             let usuario = new usuarios(req.body)//criação do usuario
 
             let emailExiste = await usuarios.findOne({email:req.body.email})
@@ -89,9 +98,9 @@ class UsuarioController {
                     return res.status(500).json({ error: true, code: 500, message: "Erro nos dados, confira e repita" })
                 })
             }else if(emailExiste){
-                return res.status(422).json({ code: 422, message: "E-mail já cadastrado!" })
+                return res.status(422).json({error: true, code: 422, message: "E-mail já cadastrado!" })
             }else if(userExiste){
-                return res.status(422).json({ code: 422, message: "Usuario já cadastrado!"})
+                return res.status(422).json({error: true, code: 422, message: "Usuario já cadastrado!"})
             }
                 
         }catch (err){
@@ -102,6 +111,9 @@ class UsuarioController {
 
     static atualizarUsuario = async (req,res) =>{
         try{
+
+            await AuthPermissao.verificarPermissao('usuarios', 'patch', req, res)
+
             var id = req.params.id
             var usuario = new usuarios(req.body)
 
@@ -143,11 +155,14 @@ class UsuarioController {
     
     static excluirUsuario = async (req,res) => {
         try{
+
+            await AuthPermissao.verificarPermissao('usuarios', 'delete', req, res)
+            
             let id = req.params.id
             const usuario = await usuarios.findById(id)
 
             if(!usuario){
-                return res.status(400).json({code: 400, message:"Usuario não Localizado!"})
+                return res.status(404).json({error: true,code: 404, message:"Usuario não Localizado!"})
             }
 
             usuarios.findByIdAndDelete(id).then(() => {

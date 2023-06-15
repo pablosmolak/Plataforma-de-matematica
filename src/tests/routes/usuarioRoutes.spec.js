@@ -198,15 +198,6 @@ describe("/PATCH/ID em Usuários", () =>{
 })
 
 describe("/DELETE/ID em Usuários", () =>{
-    it("Deve Excluir um Usuário!", async () =>{
-        const dados = await request(app)
-        .delete(`/usuarios/${idUsuario}`)
-        .set('Accept', 'aplication/json')
-        .set('Authorization', `Bearer ${token}`)
-        .expect('content-type', /json/)
-        expect(dados._body.message).toEqual("Usuário excluído com sucesso.")
-    })
-
     it("Deve retornar erro de usuário não encontrado!", async () =>{
         const dados = await request(app)
         .delete(`/usuarios/6476d5c8900ad134fbcd18c2`)
@@ -214,6 +205,15 @@ describe("/DELETE/ID em Usuários", () =>{
         .set('Authorization', `Bearer ${token}`)
         .expect('content-type', /json/)
         expect(dados._body.message).toEqual("Usuario não Localizado!")
+    })
+
+    it("Deve Excluir um Usuário!", async () =>{
+        const dados = await request(app)
+        .delete(`/usuarios/${idUsuario}`)
+        .set('Accept', 'aplication/json')
+        .set('Authorization', `Bearer ${token}`)
+        .expect('content-type', /json/)
+        expect(dados._body.message).toEqual("Usuário excluído com sucesso.")
     })
 })
 
