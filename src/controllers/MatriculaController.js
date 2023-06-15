@@ -18,14 +18,6 @@ class MatriculaController {
             }
 
             if (!nome) {
-                // const matriculas = await matricula.paginate({}, options)
-
-                // // retorno da busca desejada
-
-                // matriculas.usuarios = await usuarios.find({ _id: { $in: matriculas.usuarios } }).lean();
-
-                // return res.json(matriculas);
-
                 const matricula = await matriculas.paginate({}, options)
                 let matri = JSON.parse(JSON.stringify(matricula))
                 matri.usuario = await usuarios.find({_id : {$in: matri.usuario }}).lean()
