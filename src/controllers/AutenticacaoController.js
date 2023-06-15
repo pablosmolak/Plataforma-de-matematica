@@ -19,7 +19,7 @@ class AutenticacaoController {
         }
         if(!userExist.ativo){
             return res.status(400).json({code:400, message:"Usuário inativo!"})
-        }
+        }s
 
         return res.status(200).json({
             token: jwt.sign(
