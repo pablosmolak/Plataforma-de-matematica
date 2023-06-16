@@ -16,7 +16,7 @@ const router = express.Router()
  *        - bearerAuth: []
  *      parameters:
  *        - in: query
- *          name: nome
+ *          name: Nome
  *          schema:
  *            type: string
  *          description: Nome do usuário para filtrar
@@ -60,20 +60,29 @@ const router = express.Router()
  *                    type: integer
  *                  nextPage:
  *                    type: integer
- *        500:
- *          description: Erro Interno do Servidor
+ *        401:
+ *          description: O usuário não tem permissão para realizar a operação.
  *          content:
  *            application/json:
  *              schema:
  *                type: object
  *                properties:
- *                  error:
- *                    type: boolean
- *                  code:
- *                    type: integer
- *                  message:
- *                    type: string
- *       
+ *                  docs:
+ *                    type: array
+ *                    items:
+ *                      $ref: '#/components/schemas/Error'
+ *        498:
+ *          description: Erros de Token
+ *          content:
+ *            application/json:
+ *              schema:
+ *                 $ref: '#/components/schemas/Error'
+ *        500:
+ *          description: Erro Interno do Servidor
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/Error'
  *  /usuarios/{id}:
  *    get:
  *      summary: Usuario encontrado por ID
@@ -101,32 +110,35 @@ const router = express.Router()
  *                    type: array
  *                    items:
  *                      $ref: '#/components/schemas/Usuario'
- *        400: 
- *          description: ID inválido ou não encontrado
+ *        401:
+ *          description: O usuário não tem permissão para realizar a operação.
  *          content:
  *            application/json:
  *              schema:
  *                type: object
  *                properties:
- *                  error:
- *                    type: boolean
- *                  code:
- *                    type: integer
- *                  message:
- *                    type: string
+ *                  docs:
+ *                    type: array
+ *                    items:
+ *                      $ref: '#/components/schemas/Error'
+ *        404: 
+ *          description: ID inválido ou não encontrado
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/Error'
+ *        498:
+ *          description: Erros de Token
+ *          content:
+ *            application/json:
+ *              schema:
+ *                 $ref: '#/components/schemas/Error'
  *        500:
  *          description: Erro interno do Servidor
  *          content:
  *            application/json:
  *              schema:
- *                type: object
- *                properties:
- *                  error:
- *                    type: boolean
- *                  code:
- *                    type: integer
- *                  message:
- *                    type: string
+ *                $ref: '#/components/schemas/Error'
  *    post: 
  *      tags:
  *        - Usuários
@@ -144,12 +156,29 @@ const router = express.Router()
  *            application/json:
  *              schema:
  *                $ref: '#/components/schemas/Usuario'
+ *        401:
+ *          description: O usuário não tem permissão para realizar a operação.
+ *          content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *                properties:
+ *                  docs:
+ *                    type: array
+ *                    items:
+ *                      $ref: '#/components/schemas/Error'
  *        422:
  *          description: Erro ao cadastrar o Usuário
  *          content:
  *            application/json:
  *              schema:
  *                $ref: '#/components/schemas/Error'
+ *        498:
+ *          description: Erros de Token
+ *          content:
+ *            application/json:
+ *              schema:
+ *                 $ref: '#/components/schemas/Error'
  *        500:
  *          description: Erro interno do servidor
  *          content:
@@ -158,7 +187,7 @@ const router = express.Router()
  *                $ref: '#/components/schemas/Error'
  *                  
  *    patch:
- *      summary: Atualiza apenas os atributos passados no body de um usuário existente no banco de dados.
+ *      summary: Atualiza atributos de um usuário existente no banco de dados.
  *      tags:
  *        - Usuários
  *      security:
@@ -189,8 +218,8 @@ const router = express.Router()
  *                    type: array
  *                    items:
  *                      $ref: '#/components/schemas/Usuario'
- *        '401':
- *          description: O usuário não tem permissão para atualizar o usuário.
+ *        401:
+ *          description: O usuário não tem permissão para realizar a operação.
  *          content:
  *            application/json:
  *              schema:
@@ -200,7 +229,19 @@ const router = express.Router()
  *                    type: array
  *                    items:
  *                      $ref: '#/components/schemas/Error'
- *        '500':
+ *        404: 
+ *          description: ID inválido ou não encontrado
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/Error'
+ *        498:
+ *          description: Erros de Token
+ *          content:
+ *            application/json:
+ *              schema:
+ *                 $ref: '#/components/schemas/Error'
+ *        500:
  *          description: Erro interno do servidor
  *          content:
  *            application/json:
@@ -238,13 +279,30 @@ const router = express.Router()
  *                    type: integer
  *                  message:
  *                    type: string
- *        '404':
+ *        401:
+ *          description: O usuário não tem permissão para realizar a operação.
+ *          content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *                properties:
+ *                  docs:
+ *                    type: array
+ *                    items:
+ *                      $ref: '#/components/schemas/Error'
+ *        404:
  *          description: Usuário não encontrado
  *          content:
  *            application/json:
  *              schema:
  *                $ref: '#/components/schemas/Error'
- *        '500':
+ *        498:
+ *          description: Erros de Token
+ *          content:
+ *            application/json:
+ *              schema:
+ *                 $ref: '#/components/schemas/Error'
+ *        500:
  *          description: Erro interno do servidor.
  *          content:
  *            application/json:

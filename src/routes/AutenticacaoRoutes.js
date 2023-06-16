@@ -17,7 +17,7 @@ const router = express.Router()
  *            schema:
  *                $ref: '#/components/schemas/login'
  *      responses:
- *        '200':
+ *        200:
  *          description: Login realizado com sucesso
  *          content:
  *            application/json:
@@ -44,8 +44,14 @@ const router = express.Router()
  *                        example: "smolak.test"
  *                      ativo:
  *                        type: bollean
- *                        example: "true"
- *         $ref: '#/components/schemas/auth'     
+ *                        example: "true" 
+ *        400:
+ *          description: Erros de Usuário
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/Error'     
+ *            
 */
 
 router

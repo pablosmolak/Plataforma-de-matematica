@@ -1,7 +1,7 @@
 import usuarios from "../models/Usuario.js"
 import grupos from "../models/Grupo.js"
 import bcrypt from "bcryptjs"
-import AuthPermissao from "../middleware/authPermissao.js"
+import AuthPermissao from "../middleware/AuthPermissao.js"
 
 class UsuarioController {
 
@@ -64,7 +64,7 @@ class UsuarioController {
                 return res.status(200).send(user)
             })
             .catch((err) => {
-                return res.status(400).json({error: true, code: 400, message: "ID invalido ou não encontrado"})
+                return res.status(404).json({error: true, code: 404, message: "ID invalido ou não encontrado"})
             })
         }catch (err){
             console.error(err)
@@ -95,7 +95,7 @@ class UsuarioController {
                 })
                 .catch((err) =>{
                     //console.log(err)
-                    return res.status(500).json({ error: true, code: 500, message: "Erro nos dados, confira e repita" })
+                    return res.status(422).json({ error: true, code: 422, message: "Erro nos dados, confira e repita" })
                 })
             }else if(emailExiste){
                 return res.status(422).json({error: true, code: 422, message: "E-mail já cadastrado!" })

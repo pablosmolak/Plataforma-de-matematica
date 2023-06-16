@@ -169,7 +169,6 @@ import autenticacao from "./AutenticacaoRoutes.js"
  *         senha:
  *           type: string
  *           example: "123"
- *               
  * 
  *     login_token_altera_senha:
  *       type: object
@@ -209,22 +208,7 @@ import autenticacao from "./AutenticacaoRoutes.js"
  *          type: integer
  *        message:
  *         type: string
- *   
- *   responses:
- *     auth:
- *       '498':
- *          description: Token de autenticação não existe
- *          content:
- *            application/json:
- *              schema:
- *                type: object
- *                properties:
- *                  code:
- *                    type: integer
- *                    example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0NzZkNWM4OTAwYWQxMzRmYmNkMThiYyIsIm5vbWUiOiJEZXYgb2xpdmVpcmEiLCJlbWFpbCI6ImRldkBnbWFpbC5jb20iLCJ1c2VyIjoiZGV2IiwiYXRpdm8iOnRydWUsImlhdCI6MTY4Njg2MjEyNiwiZXhwIjoxNjg2ODY5MzI2fQ.SWgi-rKsz6HvXQj5XZD5MGkbIFzCNTKyNDhkfTMhBms"
- *                  message:
- *                    type: object
- *                    example: "O Token de autenticação não existe!" 
+ *  
  */
 
 
