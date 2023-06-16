@@ -8,6 +8,68 @@ const router = express.Router()
  * @swagger
  * paths:
  *  /usuarios:
+ *    post: 
+ *      tags:
+ *        - Usuários
+ *      summary: Cadastra um novo Usuário
+ *      requestBody:
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                nome:
+ *                  type: string
+ *                  example: Pablo Smolak
+ *                user:
+ *                  type: string
+ *                  example: smolak.dev
+ *                email:
+ *                  type: string
+ *                  example: smolak.dev@gmail.com
+ *                senha:
+ *                  type: string
+ *                  example: 80028922
+ *                telefone:
+ *                  type: sting
+ *                  example: 984227163   
+ *      responses:
+ *        201:
+ *          description: Usuário cadastrado com sucesso
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/Usuario'
+ *        401:
+ *          description: O usuário não tem permissão para realizar a operação.
+ *          content:
+ *            application/json:
+ *              schema:
+ *                type: object
+ *                properties:
+ *                  docs:
+ *                    type: array
+ *                    items:
+ *                      $ref: '#/components/schemas/Error'
+ *        422:
+ *          description: Erro ao cadastrar o Usuário
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/Error'
+ *        498:
+ *          description: Erros de Token
+ *          content:
+ *            application/json:
+ *              schema:
+ *                 $ref: '#/components/schemas/Error'
+ *        500:
+ *          description: Erro interno do servidor
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/Error'
  *    get:
  *      tags:
  *        - Usuários
@@ -138,54 +200,7 @@ const router = express.Router()
  *          content:
  *            application/json:
  *              schema:
- *                $ref: '#/components/schemas/Error'
- *    post: 
- *      tags:
- *        - Usuários
- *      summary: Cadastra um novo Usuário
- *      requestBody:
- *        required: true
- *        content:
- *          application/json:
- *            schema:
- *              $ref: '#/components/schemas/Usuario'
- *      responses:
- *        201:
- *          description: Usuário cadastrado com sucesso
- *          content:
- *            application/json:
- *              schema:
- *                $ref: '#/components/schemas/Usuario'
- *        401:
- *          description: O usuário não tem permissão para realizar a operação.
- *          content:
- *            application/json:
- *              schema:
- *                type: object
- *                properties:
- *                  docs:
- *                    type: array
- *                    items:
- *                      $ref: '#/components/schemas/Error'
- *        422:
- *          description: Erro ao cadastrar o Usuário
- *          content:
- *            application/json:
- *              schema:
- *                $ref: '#/components/schemas/Error'
- *        498:
- *          description: Erros de Token
- *          content:
- *            application/json:
- *              schema:
- *                 $ref: '#/components/schemas/Error'
- *        500:
- *          description: Erro interno do servidor
- *          content:
- *            application/json:
- *              schema:
- *                $ref: '#/components/schemas/Error'
- *                  
+ *                $ref: '#/components/schemas/Error'              
  *    patch:
  *      summary: Atualiza atributos de um usuário existente no banco de dados.
  *      tags:

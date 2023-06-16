@@ -81,12 +81,18 @@ class UsuarioController {
             let emailExiste = await usuarios.findOne({email:req.body.email})
             let userExiste = await usuarios.findOne({user: req.body.user})
 
+            //const grupo = await grupos.findOne({nome: "Alunos"})
+           // console.log(grupo._id)
+
             if(!emailExiste && !userExiste){
 
                 if(req.body.senha.length < 8){
                     return res.status(422).json({ error: true, code: 422, message: "Senha informada menor que 8 caracteres!"})
                 }
-
+                
+                //const grupo = await grupos.findOne({nome: "Alunos"})
+                //usuario.grupos = grupo._id
+                
                 let senhaHash = bcrypt.hashSync(usuario.senha,8);
                 usuario.senha = senhaHash;
 
@@ -104,7 +110,7 @@ class UsuarioController {
             }
                 
         }catch (err){
-            //console.error(err)
+            console.error(err)
             return res.status(500).json({error: true, code: 500, message: "Erro interno do Servidor"})
         }
     }
