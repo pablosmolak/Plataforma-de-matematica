@@ -273,11 +273,11 @@ const router = express.Router()
  *        - Usuários
  *      security:
  *        - bearerAuth: []
- *      description: Esta função é responsável por eliminar um usuário existente no banco de dados, verificando previamente se o usuário tem permissão para realizar a ação.
+ *      description: Esta função é responsável por excluir um usuário existente no banco de dados, verificando previamente se o usuário tem permissão para realizar a ação
  *      parameters:
  *        - in: path
  *          name: id
- *          description: ID do usuário a ser eliminada.
+ *          description: ID do usuário a ser excluido
  *          required: true
  *          schema:
  *            type: string

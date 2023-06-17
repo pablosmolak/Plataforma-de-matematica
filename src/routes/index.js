@@ -135,7 +135,64 @@ import autenticacao from "./AutenticacaoRoutes.js"
  *         verbo_delete:
  *           type: boolean
  *           example: true
- *                                         
+ *     Cursos:
+ *       type: object
+ *       properties:
+ *         modulo:
+ *           type: string
+ *           example: Equação de 2° Grau
+ *         nivel:
+ *           type: string
+ *           example: Médio
+ *         professor:
+ *           type: string
+ *           example: Smolak
+ *         aulas:
+ *           type: object
+ *           properties:
+ *             nome:
+ *               type: string
+ *               example: Aula 1 
+ *             orientação:
+ *               type: string
+ *               example: "Nessa aula é passado os conceitos iniciais da equação"
+ *             videos:
+ *               type: object
+ *               properties:
+ *                 nomeArquivo:
+ *                   type: string
+ *                   example: Video Aula 1
+ *                 descricao:
+ *                   type: string
+ *                   example: iniciando os conceitos
+ *                 data:
+ *                   type: string
+ *             exercicios:
+ *               type: object
+ *               properties:
+ *                 nomeArquivo:
+ *                   type: string
+ *                   example: Video Aula 1
+ *                 descricao:
+ *                   type: string
+ *                   example: iniciando os conceitos
+ *                 data:
+ *                   type: string
+ *             resolucoes:
+ *               type: object
+ *               properties:
+ *                 nomeArquivo:
+ *                   type: string
+ *                   example: Video Aula 1
+ *                 descricao:
+ *                   type: string
+ *                   example: iniciando os conceitos
+ *                 data:
+ *                   type: string
+ *         ativo:
+ *           type: boolean
+ *           example: true
+ *                                           
  *     Login:
  *       type: object
  *       properties:
