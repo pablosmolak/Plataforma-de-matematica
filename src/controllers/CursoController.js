@@ -3,36 +3,50 @@ import rotas from "../models/Rota.js";
 
 class CursoController {
 
-    static listarCursos = async (req,res) => {
+  static listarCursos = async (req,res) => {
 
-        try {
-            const nome = req.query.nome
-            const {page, perPage} = req.query
+    try {
 
-            const options = {
-                page: parseInt(page) || 1,
-                limit: parseInt(perPage) > 5 ? 5 : parseInt(perPage) || 5
+        await AuthPermissao.verificarPermissao('cursos', 'get', req, res)
+
+        const nome = req.query.nome
+        const {page, perPage} = req.query
+
+        const options = {
+            nome: (nome),
+            page: parseInt(page) || 1,
+            limit: parseInt(perPage) > 5 ? 5 : parseInt(perPage) || 5
+        }
+
+        if(!nome){
+            const curso = await cursos.paginate({}, options)
+            let cursos = JSON.parse(JSON.stringify(curso))
+            cursos.grupos = await grupos.find({_id : {$in: user.grupos }}).lean()
+
+            for (let i = 0; i < cursos.docs.length; i++) {
+                cursos.docs[i].grupos = await grupos.find({ _id: { $in: cursos.docs[i].grupos } }).lean();
             }
 
-            if(!nome){
-                const cursos = await curso.paginate({}, options)
-                return res.json(cursos);
+            return res.json(cursos)
+        }
+
+        else{
+            const curso = await cursos.paginate({nome: new RegExp(nome, 'i')}, options)
+            let cursos = JSON.parse(JSON.stringify(curso))
+            cursos.grupos = await grupos.find({ _id: { $in: cursos.grupos } }).lean()
+
+            for (let i = 0; i < user.docs.length; i++) {
+                cursos.docs[i].grupos = await grupos.find({ _id: { $in: cursos.docs[i].grupos } }).lean()
             }
 
-            else{
-                const cursos = await curso.paginate({ nome: new RegExp(nome, 'i') }, options);
-                return res.json(cursos);
-            }
-            
-        }catch (err){
-            console.error(err)
-            return res.status(500).json({error: true, code: 500, message: "Erro interno do Servidor"})
-
+            return res.json(user)
         }
         
+    }catch (err){
+        console.error(err)
+        return res.status(500).json({error: true, code: 500, message: "Erro interno do Servidor"})
     }
-
-
+}
     static listarCursosPorId = async (req, res) => {
         try {
             await cursos.findById(req.params.id).exec((err, rotas) => {
@@ -51,19 +65,22 @@ class CursoController {
   static cadastrarCurso = async (req, res) => {
     try {
       
-        let grupo = new cursos(req.body);
-        grupo.save((err) => {
-          if (err) {
-            res.status(500).send({ message: `${err.message} - falha ao cadastrar curso.` })
-          } else {
-            res.status(201).send(curso.toJSON())
-          }
+        let novo_curso = new curso(req.body);
+
+          novo_curso.save().then(() => {
+            res.status(201).send(novo_curso.toJSON())
+        })
+        .catch((err) =>{
+            console.log(err)
+            return res.status(422).json({ error: true, code: 422, message: "Erro nos dados, confira e repita" })
         })
       } catch (err) {
-      // console.error(err);
+       console.error(err);
       return res.status(500).json({ error: true, code: 500, message: "Erro interno do Servidor" })
     }
-   // 
+  }
+
+    static atualizarCurso = async (req,res) => {
     try {
         const id = req.params.id;
         await cursos.findByIdAndUpdate(id, { $set: req.body }, (err) => {
@@ -78,7 +95,6 @@ class CursoController {
       return res.status(500).json({ error: true, code: 500, message: "Erro interno do Servidor" })
     }
   }
-
   static excluirCurso = async (req, res) => {
     try {
         const id = req.params.id;
