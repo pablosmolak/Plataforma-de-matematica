@@ -28,10 +28,6 @@ const usuarioSchema = new mongoose.Schema(
                 _id: {type: mongoose.Schema.Types.ObjectId, ref:'grupo'},
             }
         ]
-    },
-
-    {
-        versionKey: 'true'
     }
 )
 

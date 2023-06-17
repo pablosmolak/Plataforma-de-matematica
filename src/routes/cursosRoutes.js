@@ -366,11 +366,11 @@ const router = express.Router();
 */
 
 router
-    .get("/cursos",CursoController.listarCursos)
-    .get("/cursos/:id", CursoController.listarCursosPorId)
-    .post("/cursos", CursoController.cadastrarCurso)
-    .patch("/curso/:id",CursoController.atualizarCurso)
-    .delete("/curso/:id", CursoController.excluirCurso)
+    .get("/cursos", AuthMiddleware, CursoController.listarCursos)
+    .get("/cursos/:id", AuthMiddleware, CursoController.listarCursosPorId)
+    .post("/cursos", AuthMiddleware, CursoController.cadastrarCurso)
+    .patch("/cursos/:id", AuthMiddleware, CursoController.atualizarCurso)
+    .delete("/cursos/:id", AuthMiddleware, CursoController.excluirCurso)
 
 
 export default router;

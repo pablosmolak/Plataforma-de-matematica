@@ -92,27 +92,16 @@ class AuthPermissao {
                 for (let j = 0; j < user.grupos[i].rotas.length; j++) {
                     if (user.grupos[i].rotas[j].rota === rota_acessada) {
                         if (user.grupos[i].rotas[j].ativo) {
+                            console.log(user.grupos[i].rotas[j]["verbo_" + verbo])
                             if (user.grupos[i].rotas[j]["verbo_" + verbo]) {
                                 // executa o callback se o usuário tiver permissão para acessar o recurso
-                                try {
-                                    for (let i = 0; i < user.rotas.length; i++) {
-                                        if (user.grupos[i].rotas[j].rota === rota_acessada) {
-                                            if (user.grupos[i].rotas[j]["verbo_" + verbo]) {
-                                                // Remover todos itens do array
-                                                falhas.length = 0;
-                                                return false;
-                                            }
-                                        }
-                                    }
-                                } catch (error) {
-                                    console.error(error);
-                                    return res.status(500).json([{ code: 500, message: "Erro interno do servidor: Callback fail" }]);
-                                }
+                                falhas.length = 0;
+                                return false;
                             } else {
-                                falhas.push([{ code: 401, message: "Operação " + verbo.toUpperCase() + " está desativada para o grupo: " + user.grupos[i].nome + ", contate o administrador do sistema." }])
+                                falhas.push([{ code: 401, message: "Operação " + verbo.toUpperCase() + " está desativada para o grupo: " + (user.grupos[i].nome).toUpperCase() + ", contate o administrador do sistema." }])
                             }
                         } else {
-                            falhas.push([{ code: 401, message: "Rota /" + rota_acessada.toUpperCase() + " está inativa para o grupo: " + user.grupos[i].nome + ", contate o administrador do sistema." }])
+                            falhas.push([{ code: 401, message: "Rota /" + rota_acessada.toUpperCase() + " está inativa para o grupo: " + (user.grupos[i].nome).toUpperCase() + ", contate o administrador do sistema." }])
                         }
                     }
                 }

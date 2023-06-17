@@ -12,7 +12,7 @@ afterAll(() => {
 })
 
 
-describe('/POST em Login para autenticação dos proxsm tests', () => {
+describe('/POST em Login para autenticação dos proximos testes', () => {
   it("Deve retornar o Token e as informaçoes do Usuário", async () =>{
       const dados = await request(app)
       .post('/login')
@@ -27,26 +27,36 @@ describe('/POST em Login para autenticação dos proxsm tests', () => {
 })
 
 describe ('/POST em Cursos', () => {
-  it("Deve cadastrar um Curso", async () => {
-      const dados = await request(app)
-      .post('/cursos')
-      .set('Accept', 'aplication/json')
-      .send({           
-            'modulo': '1',
-            'trim': 'primeiro',
-            'nivel': '2',
-            'aula' : [{
-                'videos': [],
-                'comentarios': 'nenhum comentario',
-                'arquivos': [],
-                'orientacao': 'nenhuma'
-            }],
-            'rotas': []
-      })
-      .expect(201);
-      idCurso = dados._body._id;
-      
-  })
+    it("Deve cadastrar um Curso", async () => {
+        const dados = await request(app)
+        .post('/cursos')
+        .set('Authorization', `Bearer ${token}`)
+        .set('Accept', 'aplication/json')
+        .send({           
+                "modulo": "Equação de 2° Grau",
+                "descricao": "curso sobre equação de 2° grau",
+                "nivel": "Medio",
+                "professor": "Smolakinho"
+        })
+        .expect(201);
+        idCurso = dados._body._id;
+        
+    })
+
+    it("Deve Retornar erro de Modulo ja cadastrado", async () => {
+        const dados = await request(app)
+        .post('/cursos')
+        .set('Authorization', `Bearer ${token}`)
+        .set('Accept', 'aplication/json')
+        .send({           
+            "modulo": "Equação de 2° Grau",
+            "descricao": "curso sobre equação de 2° grau",
+            "nivel": "Medio",
+            "professor": "Smolakinho"
+        })
+        .expect(422);
+        expect(dados._body.message).toEqual('Modulo já cadastrado!')
+    })
 })
 
 describe ('/GET em Cursos', () => {
@@ -56,7 +66,28 @@ describe ('/GET em Cursos', () => {
         .set('Authorization', `Bearer ${token}`)
         .set('accept', 'aplication/json')
         .expect('content-type', /json/)
-        .expect(200);
-        expect(dados._body.docs[i].nome).toEqual('INGLES');
+        .expect(200)
+        expect(dados._body.docs[0].modulo).toEqual('Modulo 2');
     })
+})
+
+describe("/DELETE/ID em Cursos", () =>{
+    it("Deve Excluir um Curso!", async () =>{
+        const dados = await request(app)
+        .delete(`/cursos/${idCurso}`)
+        .set('Accept', 'aplication/json')
+        .set('Authorization', `Bearer ${token}`)
+        .expect('content-type', /json/)
+        expect(dados._body.message).toEqual("Curso excluído com sucesso!")
+    })
+    it("Deve retornar erro de Curso não encontrado!", async () =>{
+        const dados = await request(app)
+        .delete(`/cursos/${idCurso}`)
+        .set('Accept', 'aplication/json')
+        .set('Authorization', `Bearer ${token}`)
+        .expect('content-type', /json/)
+        expect(dados._body.message).toEqual("Curso não Localizado!")
+    })
+
+    
 })

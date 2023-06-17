@@ -2,7 +2,6 @@ import usuarios from "../models/Usuario.js"
 import grupos from "../models/Grupo.js"
 import bcrypt from "bcryptjs"
 import AuthPermissao from "../middleware/AuthPermissao.js"
-import mongoose from "mongoose"
 
 class UsuarioController {
 
@@ -49,7 +48,7 @@ class UsuarioController {
             
         }catch (err){
             console.error(err)
-            return res.status(500).json({error: true, code: 500, message: "Erro interno do Servidor"})
+            return res.status(500).json({error: true, code: 500, message: "Erro interno do Servidor!"})
         }
     }
 
@@ -69,18 +68,17 @@ class UsuarioController {
                 return res.status(200).send(user)
             })
             .catch((err) => {
-                return res.status(404).json({error: true, code: 404, message: "ID invalido ou não encontrado"})
+                return res.status(404).json({error: true, code: 404, message: "ID invalido ou não encontrado!"})
             })
         }catch (err){
             console.error(err)
-            return res.status(500).json({error: true, code: 500, message: "Erro interno do Servidor"})
+            return res.status(500).json({error: true, code: 500, message: "Erro interno do Servidor!"})
         }
     }
     
     static cadastrarUsuario = async (req,res) => {
         try{
 
-            
             let usuario = new usuarios(req.body)//criação do usuario
 
             let emailExiste = await usuarios.findOne({email:req.body.email})
@@ -94,7 +92,6 @@ class UsuarioController {
                 
                 const grupo = await grupos.findOne({nome: "Alunos"})
                 usuario.grupos = {_id: grupo}
-                //usuario.grupos = new mongoose.Types.ObjectId(grupos._id);
                 
                 let senhaHash = bcrypt.hashSync(usuario.senha,8);
                 usuario.senha = senhaHash;
@@ -104,7 +101,7 @@ class UsuarioController {
                 })
                 .catch((err) =>{
                     //console.log(err)
-                    return res.status(422).json({ error: true, code: 422, message: "Erro nos dados, confira e repita" })
+                    return res.status(422).json({ error: true, code: 422, message: "Erro nos dados, confira e repita!" })
                 })
             }else if(emailExiste){
                 return res.status(422).json({error: true, code: 422, message: "E-mail já cadastrado!" })
@@ -114,7 +111,7 @@ class UsuarioController {
                 
         }catch (err){
             console.error(err)
-            return res.status(500).json({error: true, code: 500, message: "Erro interno do Servidor"})
+            return res.status(500).json({error: true, code: 500, message: "Erro interno do Servidor!"})
         }
     }
 
@@ -144,11 +141,11 @@ class UsuarioController {
                 }
     
                 usuarios.findByIdAndUpdate(id, {$set: req.body}).then(()=>{
-                    res.status(201).json({ code: 201, message: 'Cadastro atualizado com sucesso' })
+                    res.status(201).json({ code: 201, message: 'Usuário atualizado com sucesso!' })
                 })
                 .catch((err) => {
                     console.log(err)
-                    return res.status(500).json({ error: true, code: 500, message: "Erro nos dados, confira e repita" })
+                    return res.status(500).json({ error: true, code: 500, message: "Erro nos dados, confira e repita!" })
                 })
             }else if(emailExiste){
                 return res.status(422).json({ code: 422, message: "E-mail já cadastrado!" })
@@ -160,7 +157,7 @@ class UsuarioController {
 
         catch(err){
             console.error(err)
-            return res.status(500).json({error: true, code: 500, message: "Erro interno do Servidor"})
+            return res.status(500).json({error: true, code: 500, message: "Erro interno do Servidor!"})
         }
     }
     
@@ -175,17 +172,17 @@ class UsuarioController {
             const usuario = await usuarios.findById(id)
 
             if(!usuario){
-                return res.status(404).json({error: true,code: 404, message:"Usuario não Localizado!"})
+                return res.status(404).json({error: true,code: 404, message:"Usuário não Localizado!"})
             }
 
             usuarios.findByIdAndDelete(id).then(() => {
-                    return res.status(200).json({code: 200, message: "Usuário excluído com sucesso." })
+                    return res.status(200).json({code: 200, message: "Usuário excluído com sucesso!" })
             }).catch((err) =>{
                     console.log(err)
                 })
         } catch(err){
             console.error(err)
-            return res.status(500).json({error: true, code: 500, message: "Erro interno do Servidor"})
+            return res.status(500).json({error: true, code: 500, message: "Erro interno do Servidor!"})
         }
     }
 }

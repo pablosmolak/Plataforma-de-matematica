@@ -2,41 +2,37 @@ import {describe, expect, it, jest, beforeEach, afterAll, afterEach } from '@jes
 import Curso from "../../models/Curso.js"
 import CursoController from '../../controllers/CursoController.js'
 
-const cursoFactory = {
-
-}
-
-describe("Deve retornar testes de unidade de curso", () =>{
+describe("Deve retornar testes de unidade de Curso", () =>{
 
     afterEach(() => jest.clearAllMocks())
 
     const objetoCurso ={
-        modulo: '1',
-        trim: 'primeiro',
-        nivel: '2',
-        aula : 'matematica'
+        modulo: "Equação de 2° Grau",
+        descricao: "curso sobre equação de 2° grau",
+        nivel: "Medio",
+        professor: "Smolakinho"
     }
 
     it('Deve Instanciar um novo Curso ', () => {
         const curso = new Curso(objetoCurso)
         expect(curso).toEqual(expect.objectContaining(objetoCurso))
-        expect(curso).toHaveProperty('curso', 'matematica')
+        expect(curso).toHaveProperty('modulo', 'Equação de 2° Grau')
     })
 
     it('Deve retornar o CadastroCurso simulado com mock', () => {
         const curso = new Curso(objetoCurso)
         CursoController.cadastrarCurso = jest.fn().mockReturnValue({
-            modulo: '1',
-            trim: 'primeiro',
-            nivel: '2',
-            aula : 'matematica',
-            ativo: true
+            modulo: "Equação de 2° Grau",
+            descricao: "curso sobre equação de 2° grau",
+            nivel: "Medio",
+            professor: "Smolakinho"
+        
         })
 
         const retorno = CursoController.cadastrarCurso();
 
         expect(retorno).toEqual(expect.objectContaining({
-            nome : "matematica"
+            modulo: "Equação de 2° Grau"
         }))
         expect(CursoController.cadastrarCurso).toBeCalledTimes(1)
     })
@@ -44,62 +40,53 @@ describe("Deve retornar testes de unidade de curso", () =>{
     it("Deve retornar uma lista de curso simulada com mock", () =>{
         CursoController.listarCurso = jest.fn().mockReturnValue([
             {
-                modulo: '2',
-                trim: 'segundo',
-                nivel: '5',
-                aula : 'portugues',
-                ativo: true
+                modulo: "Equação de 2° Grau",
+                descricao: "curso sobre equação de 2° grau",
+                nivel: "Medio",
+                professor: "Smolakinho"
             },
             {
-                modulo: '3',
-                trim: 'terceiro',
-                nivel: '2',
-                aula : 'ingles',
-                ativo: true
+                modulo: "Equação de 1° Grau",
+                descricao: "curso sobre equação de 1° grau",
+                nivel: "Medio",
+                professor: "Smolakinho"
             }
         ])
 
         const retorno = CursoController.listarCurso();
         expect(retorno).toHaveLength(2)
-        expect(retorno[0]).toHaveProperty('curso', 'ingles')
+        expect(retorno[0]).toHaveProperty('nivel', 'Medio')
         expect(CursoController.listarCurso).toBeCalledTimes(1)
     })
 
     it("Deve retornar um curso por id simulada com mock", () => {
         CursoController.listarCursoId = jest.fn().mockReturnValue(
             {
-                _id: '63f969d459942abbe89a2251',
-                modulo: '2',
-                trim: 'segundo',
-                nivel: '5',
-                aula : 'portugues',
-                ativo: true
+                _id: '63f969d459942abbe89a2251',  
+                modulo: "Equação de 2° Grau",
+                descricao: "curso sobre equação de 2° grau",
+                nivel: "Medio",
+                professor: "Smolakinho"
+                
             }
         )
 
         const retorno = CursoController.listarCursoId()
-        expect(retorno.curso).toEqual("Matematica")
+        expect(retorno.modulo).toEqual("Equação de 2° Grau")
         expect(CursoController.listarCursoId).toBeCalledTimes(1)
     })
 
     it('Deve retornar atualização de curso simulada com mock', () => {
-        const objetoCursoAtualizar = {
-            _id: '63f969d459942abbe89a2251',
-            modulo: '2',
-            trim: 'segundo',
-            nivel: '5',
-            aula : 'portugues',
-            ativo: true
-    
-        }
-
         CursoController.atualizarCurso = jest.fn().mockReturnValue({
-            message: 'Cadastro atualizado com sucesso'
-
+            _id: '63f969d459942abbe89a2251',  
+            modulo: "Equação de 2° Grau",
+            descricao: "curso sobre equação de 2° grau",
+            nivel: "Medio",
+            professor: "Smolakinho"
         })
 
-        const retorno = CursoController.atualizarUsuario()
-        expect(retorno).toHaveProperty('message', 'Cadastro atualizado com sucesso')
+        const retorno = CursoController.atualizarCurso()
+        expect(retorno).toHaveProperty('modulo', 'Equação de 2° Grau')
         expect(CursoController.atualizarCurso).toBeCalledTimes(1)
     })
 })

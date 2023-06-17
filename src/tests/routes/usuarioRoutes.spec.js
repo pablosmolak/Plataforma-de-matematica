@@ -40,7 +40,6 @@ describe ('/POST em Usuários', () => {
     it("Deve retornar erro de E-mail já cadastrado", async () =>{
         const dados = await request(app)
         .post('/usuarios')
-        .set('Authorization', `Bearer ${token}`)
         .set('Accept', 'aplication/json')
         .send({
             nome: 'Pablo Smolak',
@@ -50,6 +49,7 @@ describe ('/POST em Usuários', () => {
             telefone: '984227163'
         })
         .expect(422)
+        expect(dados._body.message).toEqual('E-mail já cadastrado!')
     })
 
     it("Deve retornar erro de User Name já cadastrado", async () =>{
@@ -105,7 +105,7 @@ describe ('/GET em Usuários', () => {
         .set('accept', 'aplication/json')
         .expect('content-type', /json/)
         .expect(200);
-        expect(dados._body.docs[0].nome).toEqual('Dev oliveira');
+        expect(dados._body.docs[0].nome).toEqual('Dev Oliveira');
     })
 
     it("Deve retornar um Usuário filtrado pelo nome", async () =>{
@@ -115,7 +115,7 @@ describe ('/GET em Usuários', () => {
         .set('accept', 'aplication/json')
         .expect('content-type', /json/)
         .expect(200);
-        expect(dados._body.docs[0].nome).toEqual('Dev oliveira');
+        expect(dados._body.docs[0].nome).toEqual('Dev Oliveira');
     })
 })
 
@@ -123,12 +123,12 @@ describe ('/GET em Usuários', () => {
 describe('/GET/ID em Usuários', () =>{
     it("Deve retornar um Usuário pelo id", async () => {
         const dados = await request(app)
-        .get('/usuarios/6476d5c8900ad134fbcd18bc')
+        .get(`/usuarios/${idUsuario}`)
         .set('Authorization', `Bearer ${token}`)
         .set('accept', 'aplication/json')
         .expect('content-type', /json/)
         .expect(200);
-        expect(dados._body.nome).toEqual('Dev oliveira');
+        expect(dados._body.nome).toEqual('Pablo Smolak');
 
     })
     it("Deve retornar erro de ID invalido", async () => {
@@ -137,8 +137,8 @@ describe('/GET/ID em Usuários', () =>{
         .set('Authorization', `Bearer ${token}`)
         .set('accept', 'aplication/json')
         .expect('content-type', /json/)
-        .expect(400);
-        expect(dados._body.message).toEqual('ID invalido ou não encontrado');
+        .expect(404);
+        expect(dados._body.message).toEqual('ID invalido ou não encontrado!');
     })
 })
 
@@ -154,7 +154,7 @@ describe("/PATCH/ID em Usuários", () =>{
             user: 'smolakinhotest'
         })
         .expect(201)
-        expect(dados._body.message).toEqual('Cadastro atualizado com sucesso')
+        expect(dados._body.message).toEqual('Usuário atualizado com sucesso!')
     })
 
     it("Deve retornar erro de E-mail já cadastrado", async () =>{
@@ -204,7 +204,7 @@ describe("/DELETE/ID em Usuários", () =>{
         .set('Accept', 'aplication/json')
         .set('Authorization', `Bearer ${token}`)
         .expect('content-type', /json/)
-        expect(dados._body.message).toEqual("Usuario não Localizado!")
+        expect(dados._body.message).toEqual("Usuário não Localizado!")
     })
 
     it("Deve Excluir um Usuário!", async () =>{
@@ -213,7 +213,7 @@ describe("/DELETE/ID em Usuários", () =>{
         .set('Accept', 'aplication/json')
         .set('Authorization', `Bearer ${token}`)
         .expect('content-type', /json/)
-        expect(dados._body.message).toEqual("Usuário excluído com sucesso.")
+        expect(dados._body.message).toEqual("Usuário excluído com sucesso!")
     })
 })
 
