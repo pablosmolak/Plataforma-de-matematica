@@ -2,6 +2,7 @@ import usuarios from "../models/Usuario.js"
 import grupos from "../models/Grupo.js"
 import bcrypt from "bcryptjs"
 import AuthPermissao from "../middleware/AuthPermissao.js"
+import mongoose from "mongoose"
 
 class UsuarioController {
 
@@ -9,7 +10,9 @@ class UsuarioController {
 
         try {
 
-            await AuthPermissao.verificarPermissao('usuarios', 'get', req, res)
+            if(await AuthPermissao.verificarPermissao('usuarios', 'get', req, res) !== false){
+                return
+            }
 
             const nome = req.query.nome
             const {page, perPage} = req.query
@@ -35,10 +38,10 @@ class UsuarioController {
             else{
                 const usuario = await usuarios.paginate({nome: new RegExp(nome, 'i')}, options)
                 let user = JSON.parse(JSON.stringify(usuario))
-                user.grupos = await grupos.find({ _id: { $in: user.grupos } }).lean()
+                user.grupos = await grupos.find({_id : {$in: user.grupos }}).lean()
 
                 for (let i = 0; i < user.docs.length; i++) {
-                    user.docs[i].grupos = await grupos.find({ _id: { $in: user.docs[i].grupos } }).lean()
+                    user.docs[i].grupos = await grupos.find({ _id: { $in: user.docs[i].grupos } }).lean();
                 }
 
                 return res.json(user)
@@ -53,7 +56,9 @@ class UsuarioController {
     static listarUsuarioId = async (req,res) => {
         try{
 
-            await AuthPermissao.verificarPermissao('usuarios', 'get', req, res)
+            if(await AuthPermissao.verificarPermissao('usuarios', 'get', req, res)!== false){
+                return
+            }
 
             const id = req.params.id
 
@@ -81,17 +86,15 @@ class UsuarioController {
             let emailExiste = await usuarios.findOne({email:req.body.email})
             let userExiste = await usuarios.findOne({user: req.body.user})
 
-            //const grupo = await grupos.findOne({nome: "Alunos"})
-           // console.log(grupo._id)
-
             if(!emailExiste && !userExiste){
 
                 if(req.body.senha.length < 8){
                     return res.status(422).json({ error: true, code: 422, message: "Senha informada menor que 8 caracteres!"})
                 }
                 
-                //const grupo = await grupos.findOne({nome: "Alunos"})
-                //usuario.grupos = grupo._id
+                const grupo = await grupos.findOne({nome: "Alunos"})
+                usuario.grupos = {_id: grupo}
+                //usuario.grupos = new mongoose.Types.ObjectId(grupos._id);
                 
                 let senhaHash = bcrypt.hashSync(usuario.senha,8);
                 usuario.senha = senhaHash;
@@ -118,7 +121,9 @@ class UsuarioController {
     static atualizarUsuario = async (req,res) =>{
         try{
 
-            await AuthPermissao.verificarPermissao('usuarios', 'patch', req, res)
+            if(await AuthPermissao.verificarPermissao('usuarios', 'patch', req, res) !== false){
+                return
+            }
 
             var id = req.params.id
             var usuario = new usuarios(req.body)
@@ -162,7 +167,9 @@ class UsuarioController {
     static excluirUsuario = async (req,res) => {
         try{
 
-            await AuthPermissao.verificarPermissao('usuarios', 'delete', req, res)
+            if(await AuthPermissao.verificarPermissao('usuarios', 'delete', req, res) !== false){
+                return
+            }
             
             let id = req.params.id
             const usuario = await usuarios.findById(id)

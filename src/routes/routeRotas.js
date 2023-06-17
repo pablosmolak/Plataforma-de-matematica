@@ -16,14 +16,14 @@ const router = express.Router()
  *        content:
  *          application/json:
  *            schema:
- *              $ref: '#/components/schemas/Usuario'
+ *              $ref: '#/components/schemas/Rotas'
  *      responses:
  *        201:
  *          description: Rota cadastrada com sucesso
  *          content:
  *            application/json:
  *              schema:
- *                $ref: '#/components/schemas/Usuario'
+ *                $ref: '#/components/schemas/Rotas'
  *        401:
  *          description: O Usuário não tem permissão para realizar a operação
  *          content:
@@ -36,7 +36,7 @@ const router = express.Router()
  *                    items:
  *                      $ref: '#/components/schemas/Error'
  *        422:
- *          description: Erro ao cadastrar o Rota
+ *          description: Erro ao cadastrar a Rota
  *          content:
  *            application/json:
  *              schema:
@@ -56,15 +56,15 @@ const router = express.Router()
  *    get:
  *      tags:
  *        - Rotas
- *      summary: Lista todos os usuários
+ *      summary: Lista todas as rotas
  *      security:
  *        - bearerAuth: []
  *      parameters:
  *        - in: query
- *          name: Nome
+ *          name: rota
  *          schema:
  *            type: string
- *          description: Nome do usuário para filtrar
+ *          description: Nome da rota para filtrar
  *        - in: query
  *          name: page
  *          schema:
@@ -77,7 +77,7 @@ const router = express.Router()
  *          description: Quantidade de registros por página
  *      responses:
  *        200:
- *          description: Retorna a lista de Usuários
+ *          description: Retorna a lista de Rotas
  *          content:
  *            application/json:
  *              schema:
@@ -86,7 +86,7 @@ const router = express.Router()
  *                  docs:
  *                    type: array
  *                    items:
- *                      $ref: '#/components/schemas/Usuario'
+ *                      $ref: '#/components/schemas/Rota'
  *                  totalDocs:
  *                    type: integer
  *                  limit:

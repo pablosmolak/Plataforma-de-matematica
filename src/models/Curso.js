@@ -8,7 +8,7 @@ const cursoSchema = new mongoose.Schema(
         professor: {type: String, required: true, trim: true},
         aulas: [{
             nome: {type: String, required: true, trim:true},
-            orientacao: {type: String, required: true, trim: true},
+            descricao: {type: String, required: true, trim: true},
             videos: [{
                 nomeArquivo: {type: String, required: true, trim: true},
                 descricao: {type: String, required: true, trim: true},
@@ -23,8 +23,7 @@ const cursoSchema = new mongoose.Schema(
                 nomeArquivo: {type: String, required: true, trim: true},
                 descricao: {type: String, required: true, trim: true},
                 data: {type: Date}
-            }],
-            comentarios: {type: String, required: true, trim: true},
+            }]
         }],
         ativo: {type:Boolean, required: true},
     

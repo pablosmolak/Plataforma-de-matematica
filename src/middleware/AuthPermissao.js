@@ -67,7 +67,7 @@ class AuthPermissao {
                                 if (usuarioPefil.rotas[i].rota === rota_acessada) {
                                     if (usuarioPefil.rotas[i]["verbo_" + verbo]) {
                                         falhas.length = 0;
-                                        return;
+                                        return false;
                                     }
                                 }
                             }
@@ -100,7 +100,7 @@ class AuthPermissao {
                                             if (user.grupos[i].rotas[j]["verbo_" + verbo]) {
                                                 // Remover todos itens do array
                                                 falhas.length = 0;
-                                                return;
+                                                return false;
                                             }
                                         }
                                     }

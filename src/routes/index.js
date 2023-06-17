@@ -46,10 +46,7 @@ import autenticacao from "./AutenticacaoRoutes.js"
  *               example: "63759607e0a9fb91607a8c6d"
  *             rota:
  *               type: string
- *               example: "/usuarios"
- *             dominio:
- *               type: string
- *               example: "google.com"
+ *               example: "/grupos"
  *             ativo: 
  *               type: boolean
  *               example: true
@@ -77,28 +74,13 @@ import autenticacao from "./AutenticacaoRoutes.js"
  *           example: "63759607e0a9fb91607a8c6d"
  *         nome:
  *           type: string
- *           example: "/grupos"
- *         decricao:
+ *           example: "Alunos"
+ *         descricao:
  *           type: string
- *           example: "google.com"
+ *           example: "grupo de alunos"
  *         ativo: 
  *           type: boolean
  *           example: true
- *         unidades:
- *           type: object
- *           properties:
- *             _id: 
- *               type: string
- *               example: "63759607e0a9fb91607a8c6d"
- *             nome:
- *               type: string
- *               example: "IFRO Vilhena"
- *             localidade:
- *               type: string
- *               example: "Vilhena/RO"
- *             ativo:
- *               type: boolean
- *               example: true
  *         rotas:
  *           type: object
  *           properties:
@@ -108,9 +90,6 @@ import autenticacao from "./AutenticacaoRoutes.js"
  *             rota:
  *               type: string
  *               example: "/grupos"
- *             dominio:
- *               type: string
- *               example: "google.com"
  *             ativo: 
  *               type: boolean
  *               example: true
@@ -137,10 +116,7 @@ import autenticacao from "./AutenticacaoRoutes.js"
  *           example: "63759607e0a9fb91607a8c6d"
  *         rota:
  *           type: string
- *           example: "/grupos"
- *         dominio:
- *           type: string
- *           example: "google.com"
+ *           example: "/rotas"
  *         ativo: 
  *           type: boolean
  *           example: true
@@ -160,7 +136,7 @@ import autenticacao from "./AutenticacaoRoutes.js"
  *           type: boolean
  *           example: true
  *                                         
- *     login:
+ *     Login:
  *       type: object
  *       properties:
  *         user:
@@ -169,36 +145,6 @@ import autenticacao from "./AutenticacaoRoutes.js"
  *         senha:
  *           type: string
  *           example: "123"
- * 
- *     login_token_altera_senha:
- *       type: object
- *       properties:
- *         senha:
- *           type: string
- *           example: "eyJhbGciOiJIUzI1NiIsInR5"
- * 
- *     autorizacao:	
- *       type: object
- *       properties:
- *         code:
- *           type: string
- *           example: "200"
- *         message:
- *           type: string
- *           example: "Token válido!"
- *         user_id:
- *           type: string
- *           example: "6424d519ceb55d37fcbf8b54"
- * 
- *     permissao:	
- *       type: object
- *       properties:
- *         code:
- *           type: string
- *           example: "200"
- *         message:
- *           type: string
- *           example: "Acesso liberado!"
  *     Error:
  *       type: object
  *       properties:
