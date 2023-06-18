@@ -7,18 +7,19 @@ class AutenticacaoController {
     static logar = async (req,res) => {
 
         const {user, email, senha} = req.body
-        const userExist = await User.findOne({ user }).select('+senha')
-    
+        const userExist = await User.findOne({ user }).select('+senha') || await User.findOne({ email }).select('+senha')
+        
+
         if(!userExist){
-            return res.status(400).json({code: 400,message: 'Usuário inexistente!'})
+            return res.status(400).json({error: true, code:400,message: 'Usuário inexistente!'})
 
         }
         if(! (await bcript.compare(senha, userExist.senha))){
-           return res.status(400).json({code:400, message: "Usuário ou senha incorretos!"})
+           return res.status(400).json({error: true, code:400, message: "Usuário ou senha incorretos!"})
 
         }
         if(!userExist.ativo){
-            return res.status(400).json({code:400, message:"Usuário inativo!"})
+            return res.status(400).json({error: true, code:400, message:"Usuário inativo!"})
         }
 
         return res.status(200).json({

@@ -2,11 +2,7 @@ import {describe, expect, it, jest, beforeEach, afterAll, afterEach } from '@jes
 import Usuario from "../../models/Usuario.js"
 import UsuarioController from '../../controllers/UsuarioController.js'
 
-const usuarioFactory = {
-
-}
-
-describe("Deve retornar testes de unidade de pessoa", () =>{
+describe("Deve retornar testes de unidade de Usuário", () =>{
 
     afterEach(() => jest.clearAllMocks())
 

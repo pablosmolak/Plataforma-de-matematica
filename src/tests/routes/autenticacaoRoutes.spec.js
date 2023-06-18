@@ -59,7 +59,7 @@ describe('/POST em login', () => {
         .post('/login')
         .set('accept', 'aplication/json')
         .send({
-            user: "Ivonise.Melo",
+            user: "Siniti.Batista",
             senha: "123"
         })
         .expect(400)

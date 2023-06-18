@@ -3,7 +3,8 @@ import mongoosePaginate from "mongoose-paginate-v2";
 
 const cursoSchema = new mongoose.Schema(
     {
-        modulo: {type: String, required: true, trim: true},
+        modulo: {type: String, required: true, trim: true, minlength: 3, maxlength: 200},
+        descricao:  {type: String, required: true, trim: true, minlength: 3},
         nivel: {type: String, required: true, trim: true},
         professor: {type: String, required: true, trim: true},
         aulas: [{
@@ -24,14 +25,13 @@ const cursoSchema = new mongoose.Schema(
                 descricao: {type: String, required: true, trim: true},
                 data: {type: Date}
             }],
-            comentarios: {type: String, required: true, trim: true},
         }],
-        ativo: {type:Boolean, required: true},
+        ativo: {type:Boolean, required: true, default: true},
     
     },
     
     {
-        versionKey: "true"
+        versionKey: "_version"
     }
 );
 
