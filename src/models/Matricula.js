@@ -18,7 +18,7 @@ const matriculaSchema = new mongoose.Schema(
     },
 
     {
-        versionKey: 'true'
+        versionKey: "_version"
     }
 );
 

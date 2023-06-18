@@ -2,12 +2,17 @@ import matriculas from "../models/Matricula.js"
 import usuarios from "../models/Usuario.js";
 import cursos from "../models/Curso.js"
 import usuario from "../models/Usuario.js";
+import AuthPermissao from "../middleware/AuthPermissao.js"
 
 class MatriculaController {
 
     static listarMatricula = async (req, res) => {
 
         try {
+
+            if(await AuthPermissao.verificarPermissao('matriculas', 'get', req, res) !== false){
+                return
+            }
             const nome = req.query.nome
             const { page, perPage } = req.query
 
@@ -58,6 +63,11 @@ class MatriculaController {
 
     static listarMatriculaId = async (req,res) => {
         try{
+
+            if(await AuthPermissao.verificarPermissao('matriculas', 'get', req, res) !== false){
+                return
+            }
+
             const id = req.params.id
 
             matriculas.findById(id).then(async (matricula) => {
@@ -78,6 +88,11 @@ class MatriculaController {
 
     static cadastrarMatricula = async (req,res) => {
         try{
+
+            if(await AuthPermissao.verificarPermissao('matriculas', 'post', req, res) !== false){
+                return
+            }
+
             let matricula = new matriculas(req.body)
             
             const timeElapsed = Date.now();
@@ -100,6 +115,10 @@ class MatriculaController {
 
     static atualizarMatricula = async (req,res) =>{
         try{
+
+            if(await AuthPermissao.verificarPermissao('matriculas', 'patch', req, res) !== false){
+                return
+            }
             var id = req.params.id
             var matricula = new matriculas(req.body);
 
@@ -120,6 +139,11 @@ class MatriculaController {
 
     static excluirMatricula = async (req,res) => {
         try{
+
+            if(await AuthPermissao.verificarPermissao('matriculas', 'delete', req, res) !== false){
+                return
+            }
+
             let id = req.params.id
             const matricula = await matriculas.findById(id)
 
@@ -128,13 +152,13 @@ class MatriculaController {
             }
 
             matriculas.findByIdAndDelete(id).then(() => {
-                    return res.status(200).json({code: 200, message: "Matricula excluída com sucesso." })
+                    return res.status(200).json({code: 200, message: "Matricula excluída com sucesso!" })
             }).catch((err) =>{
                     console.log(err)
                 })
         } catch(err){
             console.error(err)
-            return res.status(500).json({error: true, code: 500, message: "Erro interno do Servidor"})
+            return res.status(500).json({error: true, code: 500, message: "Erro interno do Servidor!"})
         }
     }
 }

@@ -12,7 +12,7 @@ const router = express.Router()
  *    post: 
  *      tags:
  *        - Matrículas
- *      summary: Cadastra um novo Usuário
+ *      summary: Cadastra uma nova Matrícula
  *      requestBody:
  *        required: true
  *        content:
@@ -37,13 +37,13 @@ const router = express.Router()
  *                  example: 984227163   
  *      responses:
  *        201:
- *          description: Usuário cadastrado com sucesso
+ *          description: Matricula cadastrada com sucesso
  *          content:
  *            application/json:
  *              schema:
  *                $ref: '#/components/schemas/Usuario'
  *        401:
- *          description: O usuário não tem permissão para realizar a operação.
+ *          description: O usuário não tem permissão para realizar a operação
  *          content:
  *            application/json:
  *              schema:
@@ -54,7 +54,7 @@ const router = express.Router()
  *                    items:
  *                      $ref: '#/components/schemas/Error'
  *        422:
- *          description: Erro ao cadastrar o Usuário
+ *          description: Erro ao cadastrar a Matrícula
  *          content:
  *            application/json:
  *              schema:
@@ -95,7 +95,7 @@ const router = express.Router()
  *          description: Quantidade de registros por página
  *      responses:
  *        200:
- *          description: Retorna a lista de Usuários
+ *          description: Retorna a lista de Matrículas
  *          content:
  *            application/json:
  *              schema:
@@ -148,7 +148,7 @@ const router = express.Router()
  *                $ref: '#/components/schemas/Error'
  *  /matriculas/{id}:
  *    get:
- *      summary: Usuario encontrado por ID
+ *      summary: Matrícula encontrada por ID
  *      operationId: getUsuarioPorId
  *      tags:
  *        - Matrículas
@@ -157,13 +157,13 @@ const router = express.Router()
  *      parameters:
  *        - in: path
  *          name: id
- *          description: ID do usuário para filtrar
+ *          description: ID da Matrícula para filtrar
  *          required: true
  *          schema:
  *            type: string
  *      responses:
  *        200:
- *          description: Retorna o Usuario por id
+ *          description: Retorna o Matrícula por id
  *          content:
  *            application/json:
  *              schema:
@@ -203,7 +203,7 @@ const router = express.Router()
  *              schema:
  *                $ref: '#/components/schemas/Error'              
  *    patch:
- *      summary: Atualiza atributos de um usuário existente no banco de dados.
+ *      summary: Atualiza atributos de uma Matrícula existente no banco de dados.
  *      tags:
  *        - Matrículas
  *      security:
@@ -269,7 +269,7 @@ const router = express.Router()
  *                    items:
  *                      $ref: '#/components/schemas/Error'
  *    delete:
- *      summary: Exclui um usuário existente no banco de dados.
+ *      summary: Exclui uma Matrícula existente no banco de dados.
  *      tags:
  *        - Matrículas
  *      security:
@@ -278,14 +278,13 @@ const router = express.Router()
  *      parameters:
  *        - in: path
  *          name: id
- *          description: ID do usuário a ser eliminada.
+ *          description: ID da Matrícula a ser excluída
  *          required: true
  *          schema:
  *            type: string
- *            format: string
  *      responses:
  *        200:
- *          description: Usuário excluído com sucesso
+ *          description: Matrícula excluída com sucesso
  *          content:
  *            application/json:
  *              schema:
@@ -293,8 +292,10 @@ const router = express.Router()
  *                properties:
  *                  code:
  *                    type: integer
+ *                    example: 201
  *                  message:
  *                    type: string
+ *                    example: Matricula excluída com sucesso!
  *        401:
  *          description: O usuário não tem permissão para realizar a operação.
  *          content:
@@ -307,7 +308,7 @@ const router = express.Router()
  *                    items:
  *                      $ref: '#/components/schemas/Error'
  *        404:
- *          description: Usuário não encontrado
+ *          description: Matrícula não encontrada
  *          content:
  *            application/json:
  *              schema:

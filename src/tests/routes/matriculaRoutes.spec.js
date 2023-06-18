@@ -85,7 +85,7 @@ describe ('/GET em Matriculas', () => {
         .set('accept', 'aplication/json')
         .expect('content-type', /json/)
         .expect(200);
-        expect(dados._body.docs[0]._id).toEqual('648e63910a514e9e40b4a6d7');
+        expect(dados._body.docs[0]._id).toEqual('648e653ede972e01bc7f5b42');
     })
 })
 
@@ -150,16 +150,16 @@ describe("/PATCH/ID em Matriculas", () =>{
 
 
 describe("/DELETE/ID em Matriculas", () =>{
-    it("Deve Excluir uma Matricula!", async () =>{                 // parte de excluir esta rodando
+    it("Deve Excluir uma Matricula!", async () =>{                 
         const dados = await request(app)
         .delete(`/matriculas/${idMatricula}`)
         .set('Authorization', `Bearer ${token}`)
         .set('Accept', 'aplication/json')
         .expect(200)
-        expect(dados._body.message).toEqual("Matricula excluída com sucesso.");
+        expect(dados._body.message).toEqual("Matricula excluída com sucesso!");
     })
 
-    it("Deve retornar erro de matricula não encontrada!", async () =>{          // essa nao está
+    it("Deve retornar erro de matricula não encontrada!", async () =>{          
         const dados = await request(app)
         .delete(`/matriculas/${idMatricula}`)
         .set('Authorization', `Bearer ${token}`)
