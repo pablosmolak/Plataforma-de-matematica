@@ -106,7 +106,7 @@ class MatriculaController {
             var matricula = new matriculas(req.body);
 
             matriculas.findByIdAndUpdate(id, {$set: req.body}).then(()=>{
-                res.status(201).json([{ code: 201, message: 'Matricula atualizado com sucesso' }])
+                res.status(201).json([{ code: 201, message: 'Matricula atualizada com sucesso' }])
             })
             .catch((err) => {
                 console.log(err)
@@ -127,7 +127,7 @@ class MatriculaController {
             const matricula = await matriculas.findById(id)
 
             if(!matricula){
-                return res.status(400).json([{code: 400, mensage:"Matricula não Localizada!"}])
+                return res.status(400).json([{code: 400, message: "Matricula não Localizada!" }])
             }
 
             matriculas.findByIdAndDelete(id).then(() => {

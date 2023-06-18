@@ -40,26 +40,6 @@ describe ('/POST em Matriculas', () => {
         idMatricula = dados._body._id;       
     });
 
-    // it("Deve retornar o erro de Usuário já cadastrado no curso", async () =>{
-    //     const dados = await request(app)
-    //     .post('/matriculas')
-    //     .set('Accept', 'aplication/json')
-    //     .send({
-    //         usuario: {
-    //             _id: "6476d5c8900ad134fbcd18bc",
-    //         },
-    //         cursos: [
-    //             {
-    //                 _id: "6476d5c9900ad134fbcd18d1",
-    //                 situacao: "Em andamento",
-    //             }
-    //         ]
-    //     })
-    //     .expect(422)
-    //     expect(dados._body.message).toEqual('Usuario já cadastrado no curso!')
-    // })
-
-
 });
 
 describe ('/GET em Matriculas', () => {
@@ -70,7 +50,7 @@ describe ('/GET em Matriculas', () => {
         .expect('content-type', /json/)
         .expect(200);
         //console.log(dados._body);
-        expect(dados._body.docs[0]._id).toEqual('648a626f29d11c3bce1c2ddc');
+        expect(dados._body.docs[0]._id).toEqual('648e63910a514e9e40b4a6d7');
     })
 });
 
@@ -93,29 +73,29 @@ describe("/PATCH/ID em Matriculas", () =>{
         .patch(`/matriculas/${idMatricula}`)
         .set('Accept', 'aplication/json')
         .send({
-            usuario: {
-                _id: "6476d5c8900ad134fbcd18bd",
-            },
+            matri: "648e63da63b73fee24aca8e4"
         })
         .expect(201)
-        expect(dados._body.message).toEqual('Matricula atualizado com sucesso')
+        expect(dados._body.message).toEqual('Matricula atualizada com sucesso');
     })
 });
 
+
+
 describe("/DELETE/ID em Matriculas", () =>{
+    it("Deve Excluir uma Matricula!", async () =>{
+        const dados = await request(app)
+        .delete(`/matriculas/${idMatricula}`)
+        .set('Accept', 'aplication/json')
+        .expect(200)
+        expect(dados._body.message).toEqual("Matricula excluída com sucesso.");
+    })
+
     it("Deve retornar erro de matricula não encontrada!", async () =>{
         const dados = await request(app)
         .delete(`/matriculas/${idMatricula}`)
         .set('Accept', 'aplication/json')
         .expect(400)
-        expect(dados._body.message).toEqual("Matricula não Localizada!")
-    })
-
-    it("Deve Excluir uma Matricula!", async () =>{
-        const dados = await request(app)
-        .delete(`/matricula/${idMatricula}`)
-        .set('Accept', 'aplication/json')
-        .expect(200)
-        expect(dados._body.message).toEqual("Matricula excluída com sucesso.")
+        expect(dados._body.message).toEqual("Matricula não Localizada!");
     })
 });
