@@ -126,7 +126,7 @@ class MatriculaController {
             let id = req.params.id
             const matricula = await matriculas.findById(id)
 
-            if(!matricula){
+            if(!matriculas){
                 return res.status(400).json([{code: 400, message: "Matricula não Localizada!" }])
             }
 
