@@ -13,8 +13,8 @@ const router = express.Router();
  *      tags:
  *        - Cursos
  *      security:
- * 
  *        - bearerAuth: [] 
+ *      description: Esta função é responsável por criar um Curso no banco de dados, verificando previamente se o usuário tem permissão para realizar a ação.
  *      summary: Cadastra um novo Curso
  *      requestBody:
  *        required: true
@@ -78,6 +78,7 @@ const router = express.Router();
  *      summary: Lista todos os Cursos
  *      security:
  *        - bearerAuth: []
+ *      description: Esta função é responsável por buscar um Curso existente no banco de dados, verificando previamente se o usuário tem permissão para realizar a ação.
  *      parameters:
  *        - in: query
  *          name: Módulo
@@ -155,6 +156,7 @@ const router = express.Router();
  *        - Cursos
  *      security:
  *        - bearerAuth: []
+ *      description: Esta função é responsável por buscar um Curso existente no banco de dados por ID, verificando previamente se o usuário tem permissão para realizar a ação.
  *      parameters:
  *        - in: path
  *          name: id
@@ -215,7 +217,7 @@ const router = express.Router();
  *        content:
  *          application/json:
  *            schema:
- *              $ref: '#/components/schemas/Usuario'
+ *              $ref: '#/components/schemas/Cursos'
  *      parameters:
  *        - in: path
  *          name: id
@@ -225,16 +227,19 @@ const router = express.Router();
  *            type: string
  *      responses:
  *        201:
- *          description: Usuário atualizado com sucesso 
+ *          description: Curso atualizado com sucesso 
  *          content:
  *            application/json:
  *              schema:
  *                type: object
  *                properties:
- *                  docs:
- *                    type: array
- *                    items:
- *                      $ref: '#/components/schemas/Usuario'
+ *                  code:
+ *                    type: integer
+ *                    example: 201
+ *                  message:
+ *                    type: string
+ *                    example: Curso atualizado com sucesso!
+ *                      
  *        401:
  *          description: O usuário não tem permissão para realizar a operação.
  *          content:

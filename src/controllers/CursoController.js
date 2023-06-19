@@ -98,20 +98,26 @@ class CursoController {
           }
           
           var id = req.params.id
-
-          let moduloExiste = await cursos.findOne({modulo:req.body.modulo})
-
-          if(!moduloExiste){
+          cursos.findById(id).then(async ()=>{
+            let moduloExiste = await cursos.findOne({modulo:req.body.modulo})
+            
+            if(moduloExiste){
+              return res.status(422).json({error: true, code: 422, message: "Modulo já cadastrado!" })
+            }
+            
             cursos.findByIdAndUpdate(id,{$set: req.body}).then(()=>{
               res.status(201).json({ code: 201, message: 'Curso atualizado com sucesso!' })
             })
             .catch((err) => {
-              console.log(err)
-              return res.status(404).json({ error: true, code: 404, message: "Curso não encontrado!" })
+              //console.log(err)
+              return res.status(422).json({ error: true, code: 422, message: "Erro nos dados, Verifique e tente novamente!" })
             })
-          }else if(moduloExiste){
-            return res.status(422).json({error: true, code: 422, message: "Modulo já cadastrado!" })
-          }
+          })
+          
+          .catch((err)=> {
+            return res.status(404).json({ error: true, code: 404, message: "Curso não encontrado!" })
+          })
+
       }
 
       catch(err){
