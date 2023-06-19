@@ -53,6 +53,11 @@ class CursoController {
 
               return res.status(200).send(curso)
           })
+          .catch((err)=> {
+            //console.log(err)
+            return res.status(404).json({ error: true, code: 404, message: "Curso não encontrado!" })
+
+          })
           
       }catch(err){
           //console.error(err);
@@ -115,9 +120,9 @@ class CursoController {
           })
           
           .catch((err)=> {
+            //console.log)(err)
             return res.status(404).json({ error: true, code: 404, message: "Curso não encontrado!" })
           })
-
       }
 
       catch(err){
@@ -135,17 +140,14 @@ class CursoController {
           
           let id = req.params.id
           
-          const curso = await cursos.findById(id)
-
-          if(!curso){
-            return res.status(404).json({error: true,code: 404, message:"Curso não Localizado!"})
-          }
-         
-          cursos.findByIdAndDelete(id).then(() => {
-            return res.status(200).json({code: 200, message: "Curso excluído com sucesso!" })
+          await cursos.findById(id).then(() => {
+              cursos.findByIdAndDelete(id).then(() => {
+                return res.status(200).json({code: 200, message: "Curso excluído com sucesso!" })
+              }) 
           })
-          .catch((err) =>{
-            console.log(err)
+          .catch((err)=>{
+            //console.log(err)
+            return res.status(404).json({error: true,code: 404, message:"Curso não Localizado!"})
           })   
       }
         

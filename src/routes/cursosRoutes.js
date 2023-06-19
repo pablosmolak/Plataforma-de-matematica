@@ -48,14 +48,9 @@ const router = express.Router();
  *          content:
  *            application/json:
  *              schema:
- *                type: object
- *                properties:
- *                  docs:
- *                    type: array
- *                    items:
- *                      $ref: '#/components/schemas/Error'
+ *                $ref: '#/components/schemas/Error'
  *        422:
- *          description: Erro ao cadastrar o Usuário
+ *          description: Erro ao cadastrar o Curso
  *          content:
  *            application/json:
  *              schema:
@@ -130,12 +125,7 @@ const router = express.Router();
  *          content:
  *            application/json:
  *              schema:
- *                type: object
- *                properties:
- *                  docs:
- *                    type: array
- *                    items:
- *                      $ref: '#/components/schemas/Error'
+ *                $ref: '#/components/schemas/Error'
  *        498:
  *          description: Erros de Token
  *          content:
@@ -170,25 +160,15 @@ const router = express.Router();
  *          content:
  *            application/json:
  *              schema:
- *                type: object
- *                properties:
- *                  docs:
- *                    type: array
- *                    items:
- *                      $ref: '#/components/schemas/Cursos'
+ *                $ref: '#/components/schemas/Cursos'
  *        401:
  *          description: O usuário não tem permissão para realizar a operação.
  *          content:
  *            application/json:
  *              schema:
- *                type: object
- *                properties:
- *                  docs:
- *                    type: array
- *                    items:
- *                      $ref: '#/components/schemas/Error'
+ *                $ref: '#/components/schemas/Error'
  *        404: 
- *          description: ID inválido ou não encontrado
+ *          description: Curso não encontrado
  *          content:
  *            application/json:
  *              schema:
@@ -244,15 +224,16 @@ const router = express.Router();
  *          description: O usuário não tem permissão para realizar a operação.
  *          content:
  *            application/json:
- *              schema:
- *                type: object
- *                properties:
- *                  docs:
- *                    type: array
- *                    items:
- *                      $ref: '#/components/schemas/Error'
+ *              schema:                  
+ *                $ref: '#/components/schemas/Error'
  *        404: 
- *          description: ID inválido ou não encontrado
+ *          description: Curso não encontrado
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/Error'
+ *        422:
+ *          description: Erro ao cadastrar o Curso
  *          content:
  *            application/json:
  *              schema:
@@ -268,12 +249,7 @@ const router = express.Router();
  *          content:
  *            application/json:
  *              schema:
- *                type: object
- *                properties:
- *                  docs:
- *                    type: array
- *                    items:
- *                      $ref: '#/components/schemas/Error'
+ *                $ref: '#/components/schemas/Error'
  *    delete:
  *      summary: Exclui um Curso existente no banco de dados
  *      tags:
@@ -305,12 +281,7 @@ const router = express.Router();
  *          content:
  *            application/json:
  *              schema:
- *                type: object
- *                properties:
- *                  docs:
- *                    type: array
- *                    items:
- *                      $ref: '#/components/schemas/Error'
+ *                $ref: '#/components/schemas/Error'
  *        404:
  *          description: Usuário não encontrado
  *          content:

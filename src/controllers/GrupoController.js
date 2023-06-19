@@ -1,6 +1,4 @@
 import grupos from "../models/Grupo.js";
-import usuarios from "../models/Usuario.js";
-import rotas from "../models/Rota.js";
 
 class GrupoController {
 
@@ -29,8 +27,9 @@ class GrupoController {
                
                 return res.json(gpo)
             }
-            
-        }catch (err){
+        }
+        
+        catch(err){
             //console.error(err)
             return res.status(500).json({error: true, code: 500, message: "Erro interno do Servidor"})
         }
@@ -45,8 +44,12 @@ class GrupoController {
 
                 return res.status(200).send(gpo)
             })
+            .catch((err) => {
+                //console.log(err)
+                return res.status(404).json({ error: true, code: 404, message: "Grupo não encontrado!" })
+            })
             
-        } catch (err){
+        }catch(err){
             //console.error(err)
             return res.status(500).json({error: true, code: 500, message: "Erro interno do Servidor"})
         }
@@ -60,9 +63,9 @@ class GrupoController {
             
             if(!grupoExiste){
                 grupo.save().then(()=>{
-                    res.status(201).send(grupo.toJSON())
+                    return res.status(201).send(grupo.toJSON())
                 }).catch((err)=>{
-                      return res.status(500).json({ error: true, code: 500, message: "Erro nos dados, confira e repita" })
+                    return res.status(422).json({ error: true, code: 422, message: "Erro nos dados, confira e repita" })
                 })
             }
             
@@ -70,25 +73,37 @@ class GrupoController {
                 return res.status(422).json({ code: 422, message: "Nome de Grupo já cadastrado!" })
             }
             
-        }catch (err) {
+        }catch(err){
             console.error(err);
             return res.status(500).json({ error: true, code: 500, message: "Erro interno do Servidor" })
         }
-        }
+    }
 
     static atualizarGrupo = async (req,res) =>{
         try{
             const id = req.params.id            
             
+            grupos.findById(id).then(async () => {
+                
+                let nomeGrupoExiste = await grupos.findOne({nome:req.body.nome})
 
-            grupos.findByIdAndUpdate(id, {$set: req.body}).then(()=>{
-                res.status(200).json([{ code: 200, message: 'Grupo atualizado com sucesso' }])
+                if(nomeGrupoExiste){
+                    return res.status(422).json({ code: 422, message: "Nome de Grupo já cadastrado!" })
+                }
+
+                grupos.findByIdAndUpdate(id, {$set: req.body}).then(()=>{
+                    res.status(201).json([{ code: 201, message: 'Grupo atualizado com sucesso' }])
+                })
+                .catch((err) => {
+                    console.log(err)
+                    return res.status(422).json([{ error: true, code: 422, message: "Erro nos dados, confira e repita" }])
+                })
+
             })
             .catch((err) => {
-                console.log(err)
-                return res.status(500).json([{ error: true, code: 500, message: "Erro nos dados, confira e repita" }])
+                //console.log(err)
+                return res.status(404).json({ error: true, code: 404, message: "Grupo não encontrado!" })
             })
-
         }
 
         catch(err){
@@ -100,20 +115,20 @@ class GrupoController {
     static excluirGrupo = async (req,res) => {
         try{
             let id = req.params.id
-            const grupo = await grupos.findById(id)
-
-            if(!grupo){
-                return res.status(400).json({code: 400, mensage:"Grupo não Localizado!"})
-            }
-
-            grupos.findByIdAndDelete(id).then(()=>{
-                res.status(200).send({ message: 'Grupo excluído com sucesso!' })
-            }).catch((err)=>{
-                console.log(err)
-            })
             
+            await grupos.findById(id).then(() => {
+                
+                grupos.findByIdAndDelete(id).then(()=>{
+                    res.status(200).send({ message: 'Grupo excluído com sucesso!' })
+                })
+            })
+            .catch((err) => {
+                //console.log(err)
+                return res.status(404).json({error: true, code: 404, mensage:"Grupo não Localizado!"})
+            })
+ 
         } catch (err) {
-            console.error(err);
+            //console.error(err);
             return res.status(500).json({ error: true, code: 500, message: "Erro interno do Servidor" })
 
         }
