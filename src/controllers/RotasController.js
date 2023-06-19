@@ -58,17 +58,17 @@ class RotaController{
       const rota = new rotas(req.body);
       const rotaExiste = await rotas.findOne({ rota: rota.rota })
 
-      if (rotaExiste) {
-        return res.status(400).json({ error: true, code: 400, message: "Rota já cadastrada." });
+      if(rotaExiste){
+        return res.status(422).json({error: true,code: 422, message: "Nome de Rota informado já cadastrado!" })
       }
+
       rota.save().then(() => {
           return res.status(201).send(rota.toJSON());
       })
       .catch((err) => {
           //console.log(err)
-          return res.status(500).json([{error: true, code: 500, message: "Erro nos dados, confira e repita" }]) 
+          return res.status(422).json({error: true, code: 422, message: "Erro nos dados, confira e repita" }) 
       })
-      
     }
     
     catch (err) {
@@ -87,16 +87,16 @@ class RotaController{
         }
 
         rotas.findByIdAndUpdate(id, {$set: req.body}).then(() =>{
-          res.status(201).json([{ code: 201, message: 'Rota atualizada com sucesso!'}])
+          res.status(201).json({ code: 201, message: 'Rota atualizada com sucesso!'})
         })
         .catch((err) =>{
-          console.log(err)
-          return res.status(500).json([{ error: true, code: 500, message: "Erro nos dados, confira e repita" }])
+          //console.log(err)
+          return res.status(404).json({ error: true, code: 404, message: "Rota não encontrada!" })
         })
     } 
 
     catch(err){
-        console.error(err);
+        //console.error(err);
         return res.status(500).json({ error: true, code: 500, message: "Erro interno do Servidor" });
     }
   }

@@ -2,7 +2,7 @@ import express from "express";
 import usuario from "./usuariosRoutes.js";
 import cursos from "./cursosRoutes.js";
 import usuarios from "./usuariosRoutes.js"
-import rotas from "./routeRotas.js"
+import rotas from "./rotasRoutes.js"
 import matricula from "./matriculaRoutes.js"
 import grupos from "./gruposRoutes.js"
 import autenticacao from "./AutenticacaoRoutes.js"

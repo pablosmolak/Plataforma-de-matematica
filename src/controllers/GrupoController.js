@@ -20,32 +20,20 @@ class GrupoController {
                 const grupo = await grupos.paginate({}, options)
                 let gpo = JSON.parse(JSON.stringify(grupo))
                 
-                //for (let i = 0; i < gpo.docs.length; i++) {
-                 //   gpo.docs[i].usuarios = await usuarios.find({ _id: { $in: gpo.docs[i].usuarios } }).lean();
-                //}
-                
                 return res.json(gpo)
             }
 
             else{
                 const grupo = await grupos.paginate({nome: new RegExp(nome, 'i')}, options)
                 let gpo = JSON.parse(JSON.stringify(grupo))
-               // gpo.grupos = await grupos.find({ _id: { $in: gpo.grupos } }).lean()
-
-               // for (let i = 0; i < gpo.docs.length; i++) {
-                //    gpo.docs[i].grupos = await grupos.find({ _id: { $in: gpo.docs[i].grupos } }).lean()
-               // }
-
+               
                 return res.json(gpo)
             }
             
         }catch (err){
-            console.error(err)
+            //console.error(err)
             return res.status(500).json({error: true, code: 500, message: "Erro interno do Servidor"})
-
         }
-
-
     }
 
     static listarGrupoId = async (req,res) => {
@@ -59,9 +47,8 @@ class GrupoController {
             })
             
         } catch (err){
-            console.error(err)
+            //console.error(err)
             return res.status(500).json({error: true, code: 500, message: "Erro interno do Servidor"})
-
         }
     }
 
@@ -75,7 +62,7 @@ class GrupoController {
                 grupo.save().then(()=>{
                     res.status(201).send(grupo.toJSON())
                 }).catch((err)=>{
-                    return res.status(500).json({ error: true, code: 500, message: "Erro nos dados, confira e repita" })
+                      return res.status(500).json({ error: true, code: 500, message: "Erro nos dados, confira e repita" })
                 })
             }
             

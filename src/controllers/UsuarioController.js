@@ -147,7 +147,7 @@ class UsuarioController {
                 })
                 .catch((err) => {
                     console.log(err)
-                    return res.status(500).json({ error: true, code: 500, message: "Erro nos dados, confira e repita!" })
+                    return res.status(404).json({ error: true, code: 404, message: "Id de Usuário não encontrado!" })
                 })
             }else if(emailExiste){
                 return res.status(422).json({error: true, code: 422, message: "E-mail já cadastrado!" })

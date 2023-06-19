@@ -43,15 +43,15 @@ class CursoController {
       try{
 
           if(await AuthPermissao.verificarPermissao('cursos', 'get', req, res) !== false){
-              return
+             return
           }
 
           const id = req.params.id
 
           cursos.findById(id).then(async (curso) =>{
-              let cursoRetorn = JSON.parse(JSON.stringify(curso))
+              //let cursoRetorn = JSON.parse(JSON.stringify(curso))
 
-              return res.status(200).send(user)
+              return res.status(200).send(curso)
           })
           
       }catch(err){
@@ -78,14 +78,14 @@ class CursoController {
           })
           .catch((err) =>{
               console.log(err)
-              return res.status(422).json({ error: true, code: 422, message: "Erro nos dados, confira e repita" })
+              return res.status(422).json({ error: true, code: 422, message: "Erro nos dados, confira e repita!" })
           })
         }else if(moduloExiste){
           return res.status(422).json({error: true, code: 422, message: "Modulo já cadastrado!" })
         }
 
     }catch(err){
-        console.error(err);
+        //console.error(err);
         return res.status(500).json({ error: true, code: 500, message: "Erro interno do Servidor" })
     }
   }
@@ -107,7 +107,7 @@ class CursoController {
             })
             .catch((err) => {
               console.log(err)
-              return res.status(500).json({ error: true, code: 500, message: "Erro nos dados, confira e repita" })
+              return res.status(404).json({ error: true, code: 404, message: "Curso não encontrado!" })
             })
           }else if(moduloExiste){
             return res.status(422).json({error: true, code: 422, message: "Modulo já cadastrado!" })
@@ -140,8 +140,7 @@ class CursoController {
           })
           .catch((err) =>{
             console.log(err)
-          })
-            
+          })   
       }
         
       catch(err){

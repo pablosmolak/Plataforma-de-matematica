@@ -1,5 +1,6 @@
 import express from "express"
-import GrupoController from "../controllers/GrupoController.js";
+import GrupoController from "../controllers/GrupoController.js"
+import AuthMiddleware from "../middleware/AuthMiddleware.js"
 
 const router = express.Router()
 
@@ -325,10 +326,10 @@ const router = express.Router()
 */
 
 router
-    .get("/grupos", GrupoController.listarGrupo)
-    .get("/grupos/:id", GrupoController.listarGrupoId)
-    .post("/grupos", GrupoController.cadastrarGrupo)
-    .patch("/grupos/:id", GrupoController.atualizarGrupo)
-    .delete("/grupos/:id", GrupoController.excluirGrupo)
+    .get("/grupos", AuthMiddleware, GrupoController.listarGrupo)
+    .get("/grupos/:id", AuthMiddleware, GrupoController.listarGrupoId)
+    .post("/grupos", AuthMiddleware, GrupoController.cadastrarGrupo)
+    .patch("/grupos/:id", AuthMiddleware, GrupoController.atualizarGrupo)
+    .delete("/grupos/:id", AuthMiddleware, GrupoController.excluirGrupo)
 
 export default router;

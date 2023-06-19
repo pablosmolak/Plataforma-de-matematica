@@ -81,6 +81,20 @@ describe ('/POST em Usuários', () => {
         .expect(422)
         expect(dados._body.message).toEqual('Senha informada menor que 8 caracteres!')
     })
+
+    it("Deve retornar erro de falta de dados no cadastro de Usuário", async () =>{
+        const dados = await request(app)
+        .post('/usuarios')
+        .set('Accept', 'aplication/json')
+        .send({
+            user: 'smolaktest1',
+            email: 'smolaktest1@gmail.com',
+            senha: '12325554',
+            telefone: '984227163'
+        })
+        .expect(422)
+        expect(dados._body.message).toEqual('Erro nos dados, confira e repita!')
+    })
 })
 
 describe('/POST em Login', () => {
@@ -195,6 +209,22 @@ describe("/PATCH/ID em Usuários", () =>{
         .expect(422)
         expect(dados._body.message).toEqual('Senha informada menor que 8 caracteres!')
     })
+
+    it("Deve retornar erro de falta de dados no cadastro de Usuário", async () =>{
+        const dados = await request(app)
+        .patch(`/usuarios/${idUsuario}e`)
+        .set('Authorization', `Bearer ${token}`)
+        .set('Accept', 'aplication/json')
+        .send({
+            nome: 'Pablo Smolak',
+            user: 'smolaktest1',
+            email: 'smolaktest1@gmail.com',
+            senha: '1232511111',
+            telefone: '984227163'
+        })
+        .expect(404)
+        expect(dados._body.message).toEqual('Id de Usuário não encontrado!')
+    })
 })
 
 describe("/DELETE/ID em Usuários", () =>{
@@ -204,6 +234,7 @@ describe("/DELETE/ID em Usuários", () =>{
         .set('Accept', 'aplication/json')
         .set('Authorization', `Bearer ${token}`)
         .expect('content-type', /json/)
+        .expect(404)
         expect(dados._body.message).toEqual("Usuário não Localizado!")
     })
 
@@ -213,6 +244,7 @@ describe("/DELETE/ID em Usuários", () =>{
         .set('Accept', 'aplication/json')
         .set('Authorization', `Bearer ${token}`)
         .expect('content-type', /json/)
+        .expect(200)
         expect(dados._body.message).toEqual("Usuário excluído com sucesso!")
     })
 })

@@ -11,7 +11,7 @@ const pegaToken = async (req) => {
     let decoded = await promisify(jwt.verify)(token, process.env.SECRET); // promisify converte uma função de callback para uma função async/await
     req.user_id = decoded.id;
     if (!decoded) {
-        return res.status(401).json([{ code: 401, message: "Faltou o token de autorização!" }]);
+        return res.status(401).json([{error:true, code: 401, message: "O token de autenticação não existe!" }]);
     } else {
         return req.user_id;
     }
@@ -92,7 +92,7 @@ class AuthPermissao {
                 for (let j = 0; j < user.grupos[i].rotas.length; j++) {
                     if (user.grupos[i].rotas[j].rota === rota_acessada) {
                         if (user.grupos[i].rotas[j].ativo) {
-                            console.log(user.grupos[i].rotas[j]["verbo_" + verbo])
+                            //console.log(user.grupos[i].rotas[j]["verbo_" + verbo])
                             if (user.grupos[i].rotas[j]["verbo_" + verbo]) {
                                 // executa o callback se o usuário tiver permissão para acessar o recurso
                                 falhas.length = 0;

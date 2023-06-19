@@ -6,21 +6,21 @@ const AuthMiddleware = async (req, res, next) => {
     const auth = req.headers.authorization;
 
     if (!auth) {
-      return res.status(498).json([{ code: 498, message: "O token de autenticação não existe!" }])
+      return res.status(498).json({error: true, code: 498, message: "O token de autenticação não existe!" })
     }
 
     const [, token] = auth.split(' '); // desestruturação
 
     const decodificado = await promisify(jwt.verify)(token, process.env.SECRET);
     if (!decodificado) { 
-      return res.status(498).json([{ error: true, code: 498, message: "O token está expirado!" }])
+      return res.status(498).json({error: true, code: 498, message: "O token está expirado!"})
     } else { 
       req.user_id = decodificado.id;
       next();
     }
 
   } catch {
-    return res.status(498).json([{ error: true, code: 498, message: "O token está inválido!" }])
+    return res.status(498).json({error: true, code: 498, message: "O token está inválido!"})
   }
 
 }

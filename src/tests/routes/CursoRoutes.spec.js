@@ -66,6 +66,21 @@ describe ('/POST em Cursos', () => {
         .expect(422);
         expect(dados._body.message).toEqual('Modulo já cadastrado!')
     })
+
+    it("Deve Retornar erro de Modulo ja cadastrado", async () => {
+        const dados = await request(app)
+        .post('/cursos')
+        .set('Authorization', `Bearer ${token}`)
+        .set('Accept', 'aplication/json')
+        .send({           
+            "modulo": "Equação de 1° Grau",
+            "descricao": "",
+            "nivel": "Medio",
+            "professor": "Smolakinho"
+        })
+        .expect(422);
+        expect(dados._body.message).toEqual('Erro nos dados, confira e repita!')
+    })
 })
 
 describe ('/GET em Cursos', () => {
@@ -77,6 +92,74 @@ describe ('/GET em Cursos', () => {
         .expect('content-type', /json/)
         .expect(200)
         expect(dados._body.docs[0].modulo).toEqual('Modulo 2');
+    })
+
+    it("Deve retornar uma lista de Cursos filtrada por modulo", async () =>{
+        const dados = await request(app)
+        .get('/cursos?modulo=equação')
+        .set('Authorization', `Bearer ${token}`)
+        .set('accept', 'aplication/json')
+        .expect('content-type', /json/)
+        .expect(200)
+    })
+})
+
+describe ('/GET/ID em Cursos', () => {
+    it("Deve retornar uma Curso por Id", async () =>{
+        const dados = await request(app)
+        .get(`/cursos/${idCurso}`)
+        .set('Authorization', `Bearer ${token}`)
+        .set('accept', 'aplication/json')
+        .expect('content-type', /json/)
+        .expect(200)
+        expect(dados._body.modulo).toEqual('Equação de 2° Grau');
+    })
+
+    it.skip("Deve retornar uma lista de Cursos filtrada por modulo", async () =>{
+        const dados = await request(app)
+        .get('/cursos?modulo=equação')
+        .set('Authorization', `Bearer ${token}`)
+        .set('accept', 'aplication/json')
+        .expect('content-type', /json/)
+        .expect(200)
+    })
+})
+
+describe ('/PATCH em Cursos', () => {
+    it("Deve atualizar um Curso", async () => {
+        const dados = await request(app)
+        .patch(`/cursos/${idCurso}`)
+        .set('Authorization', `Bearer ${token}`)
+        .set('Accept', 'aplication/json')
+        .send({           
+                "modulo": "Equação de 3° Grau",
+        })
+        .expect(201)
+        expect(dados._body.message).toEqual('Curso atualizado com sucesso!')
+    })
+
+    it("Deve atualizar um Curso", async () => {
+        const dados = await request(app)
+        .patch(`/cursos/${idCurso}a`)
+        .set('Authorization', `Bearer ${token}`)
+        .set('Accept', 'aplication/json')
+        .send({           
+                "modulo": "Equação de 4° Grau",
+        })
+        .expect(404)
+        expect(dados._body.message).toEqual('Curso não encontrado!')
+    })
+
+    it("Deve atualizar um Curso", async () => {
+        const dados = await request(app)
+        .patch(`/cursos/${idCurso}a`)
+        .set('Authorization', `Bearer ${token}`)
+        .set('Accept', 'aplication/json')
+        .send({           
+                "modulo": "Equação de 3° Grau",
+        })
+        .expect(422)
+        expect(dados._body.message).toEqual('Modulo já cadastrado!')
     })
 })
 
