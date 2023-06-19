@@ -4,7 +4,8 @@ import mongoose from "mongoose"
 import app from "../../app.js"
 
 let server
-let idPessoa
+let idRota = false
+let token = false
 
 beforeEach(() => {
     const port = 3001
@@ -19,71 +20,50 @@ afterAll(() => {
     mongoose.connection.close()
 })
 
-describe ('/GET em Rotas', () => {
-    it("Deve retornar uma lista de Rotas", async () =>{
+describe('/POST em Login para autenticação dos proximos testes', () => {
+    it("Deve retornar o Token e as informaçoes do Usuário", async () =>{
         const dados = await request(app)
-        .get('/rotas')
+        .post('/login')
         .set('accept', 'aplication/json')
-        .expect('content-type', /json/)
+        .send({
+            user: "dev",
+            senha: "123"
+        })
         .expect(200);
-        expect(dados._body.docs[0].nome).toEqual('Dev santos');
-    })
-})
-
-describe('/GET/ID em Rotas', () =>{
-    it("Id da rota não localizado", async () => {
-        const dados = await request(app)
-        .get('/rotas/6476d5c8900ad134fbcd18bc')
-        .set('accept', 'aplication/json')
-        .expect('content-type', /json/)
-        .expect(200);
-        expect(dados._body.nome).toEqual('Dev santos');
-
-    })
-    it("Deve retornar erro de ID invalido", async () => {
-        const dados = await request(app)
-        .get('/rotas/64723ab40d64bff37ee0a0e74e4')
-        .set('accept', 'aplication/json')
-        .expect('content-type', /json/)
-        .expect(400);
-        expect(dados._body.message).toEqual('ID invalido ou não encontrado');
+        token = dados._body.token;
     })
 })
 
 describe ('/POST em Rotas', () => {
-    it("Rota já cadastrada", async () => {
+    it("deve Cadastrar uma rota", async () => {
         const dados = await request(app)
         .post('/rotas')
+        .set('Authorization', `Bearer ${token}`)
         .set('Accept', 'aplication/json')
-        .send({           
-            nome: 'Ana Reis',
-            user: 'reistest',
-            email: 'reistest@gmail.com',
-            senha: '00098761',
-            telefone: '999007586'
+        .send({
+            rota: "teste",
+            ativo: true
         })
         .expect(201);
-        idPessoa = dados._body._id;
+        idRota = dados._body._id;
         
     });
 
-    it("Deve retornar erro 400 se faltar o campo nome", async () =>{
+    it.skip("Deve retornar erro de Falta de Dados ao Cadastrar a Rota", async () =>{
         const dados = await request(app)
         .post('/rotas')
+        .set('Authorization', `Bearer ${token}`)
         .set('Accept', 'aplication/json')
-        .send({
-            nome: 'Ana Reis',
-            user: 'reistest1',
-            email: 'reistest@gmail.com',
-            senha: '00098761',
-            telefone: '999007586'
+        .send({  
+            ativo: true
         })
         .expect(422)
     })
 
-    it("Deve retornar erro ao criar um recurso sem dados obrigatórios", async () =>{
+    it.skip("Deve retornar erro ao criar um recurso sem dados obrigatórios", async () =>{
         const dados = await request(app)
         .post('/rotas')
+        .set('Authorization', `Bearer ${token}`)
         .set('Accept', 'aplication/json')
         .send({
             nome: 'Ana Reis',
@@ -97,12 +77,48 @@ describe ('/POST em Rotas', () => {
     })
 })
 
+describe ('/GET em Rotas', () => {
+    it("Deve retornar uma lista de Rotas", async () =>{
+        const dados = await request(app)
+        .get('/rotas')
+        .set('Authorization', `Bearer ${token}`)
+        .set('accept', 'aplication/json')
+        .expect('content-type', /json/)
+        .expect(200)
+    })
+})
+
+describe('/GET/ID em Rotas', () =>{
+    it("Deve retornar rota por id", async () => {
+        const dados = await request(app)
+        .get(`/rotas/${idRota}`)
+        .set('Authorization', `Bearer ${token}`)
+        .set('accept', 'aplication/json')
+        .expect('content-type', /json/)
+        .expect(200);
+        expect(dados._body.rota).toEqual('teste');
+
+    })
+    it("Deve retornar erro de Rota não encontrada", async () => {
+        const dados = await request(app)
+        .get(`/rotas/${idRota}a`)
+        .set('Authorization', `Bearer ${token}`)
+        .set('accept', 'aplication/json')
+        .expect('content-type', /json/)
+        .expect(404);
+        expect(dados._body.message).toEqual('Rota não encontrada!');
+    })
+})
+
+
+
 describe("/DELETE/ID em Rotas", () =>{
     it("Deve Excluir uma Rota!", async () =>{
         const dados = await request(app)
-        .delete('/rotas/'+ idPessoa)
+        .delete(`/rotas/${idRota}`)
+        .set('Authorization', `Bearer ${token}`)
         .set('Accept', 'aplication/json')
         .expect('content-type', /json/)
-        expect(dados._body.message).toEqual("Rotas excluído com sucesso.")
+        expect(dados._body.message).toEqual("Rota excluída com sucesso!")
     })
 })

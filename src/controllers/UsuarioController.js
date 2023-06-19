@@ -60,7 +60,7 @@ class UsuarioController {
                 return res.status(200).send(user)
             })
             .catch((err) => {
-                return res.status(400).json({error: true, code: 400, message: "ID invalido ou não encontrado"})
+                return res.status(404).json({error: true, code: 400, message: "Usuário não encontrado!"})
             })
         }catch (err){
             console.error(err)
@@ -81,7 +81,7 @@ class UsuarioController {
                 usuario.senha = senhaHash;
 
                 usuario.save().then(() => {
-                    res.status(201).send(usuario.toJSON())
+                    return res.status(201).send(usuario.toJSON())
                 })
                 .catch((err) =>{
                     //console.log(err)
@@ -89,11 +89,10 @@ class UsuarioController {
                 })
             }
             else if(emailExiste){
-                return res.status(422).json({ code: 422, message: "E-mail já cadastrado!" })
-
+                return res.status(422).json({error: true, code: 422, message: "E-mail já cadastrado!" })
             }
             else if(userExiste){
-                return res.status(422).json({ code: 422, message: "Usuario já cadastrado!"})
+                return res.status(422).json({error:true, code: 422, message: "Usuario já cadastrado!"})
             }
                 
         }catch (err){
@@ -114,7 +113,7 @@ class UsuarioController {
             }
 
             usuarios.findByIdAndUpdate(id, {$set: req.body}).then(()=>{
-                res.status(201).json([{ code: 201, message: 'Cadastro atualizado com sucesso' }])
+                res.status(201).json({ code: 201, message: 'Cadastro atualizado com sucesso!' })
             })
             .catch((err) => {
                 console.log(err)
@@ -142,8 +141,9 @@ class UsuarioController {
                     return res.status(200).json({code: 200, message: "Usuário excluído com sucesso." })
             }).catch((err) =>{
                     console.log(err)
-                })
-        } catch(err){
+            })
+
+        }catch(err){
             console.error(err)
             return res.status(500).json({error: true, code: 500, message: "Erro interno do Servidor"})
         }
