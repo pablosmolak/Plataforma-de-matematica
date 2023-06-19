@@ -38,19 +38,12 @@ const rotas_array =
     'rotas:id',
     'grupos',
     'grupos:id',
-    'unidades',
-    'unidades:id',
     'usuarios',
     'usuarios:id',
-    'usuarios',
-    'usuarios:id',
-    'projetos',
-    'projetos:id',
-    'refeicoes',
-    'refeicoes:id',
-    'contraturnos',
-    'contraturnos:id',
-    'liberacaorefeicao'
+    'cursos',
+    'cursos:id',
+    'matriculas',
+    'matriculas:id'
   ]
 function getRotaName(i) {
   return rotas_array[i].toString();
@@ -167,7 +160,7 @@ function seedUsuario(qtdusuarios) {
   return usuarios;
 }
 
-seedUsuario(10);
+seedUsuario(5);
 
 // insertmany com ignore duplicates
 await Usuario.collection.insertMany(usuarios, { ordered: false });
@@ -332,6 +325,7 @@ function getSituacao() {
 }
 
 // array usuarios que serão inseridos no banco de dados
+/*
 const matriculas = [];
 
 function seedMatricula(qtd) {
@@ -352,11 +346,11 @@ function seedMatricula(qtd) {
 
 seedMatricula(30);
 
+
 // insertmany com ignore duplicates
 await Matricula.collection.insertMany(matriculas)
 console.log(matriculas.length + ' Matrículas inseridas!');
-
-
+*/
 // encerrar a conexão com o banco de dados com uma mensagem no console
 db.close();
 console.log('Conexão com o banco de dados encerrada!');
