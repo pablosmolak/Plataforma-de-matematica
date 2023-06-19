@@ -3,9 +3,18 @@ import request from "supertest"
 import mongoose from "mongoose"
 import app from "../../app.js"
 
-let idCurso
+let server
+let idCurso = false
 let token = false
 
+beforeEach(() => {
+    const port = 3004
+    server = app.listen(port)
+})
+
+afterEach(() => {
+    server.close()
+})
 
 afterAll(() => {
     mongoose.connection.close()
@@ -88,6 +97,4 @@ describe("/DELETE/ID em Cursos", () =>{
         .expect('content-type', /json/)
         expect(dados._body.message).toEqual("Curso não Localizado!")
     })
-
-    
 })

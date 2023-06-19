@@ -8,7 +8,7 @@ let idRota = false
 let token = false
 
 beforeEach(() => {
-    const port = 3001
+    const port = 3002
     server = app.listen(port)
 })
 

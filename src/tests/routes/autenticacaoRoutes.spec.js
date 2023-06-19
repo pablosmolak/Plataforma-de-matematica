@@ -6,7 +6,7 @@ import app from "../../app.js"
 let server
 
 beforeEach(() => {
-    const port = 3002
+    const port = 3005
     server = app.listen(port)
 })
 

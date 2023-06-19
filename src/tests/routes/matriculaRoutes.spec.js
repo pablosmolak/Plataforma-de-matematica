@@ -8,7 +8,7 @@ let idMatricula = false;
 let token = false
 
 beforeEach(() => {
-    const port = 3007
+    const port = 3003
     server = app.listen(port)
 })
 

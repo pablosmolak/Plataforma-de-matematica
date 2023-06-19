@@ -138,7 +138,7 @@ describe('/GET/ID em Usuários', () =>{
         .set('accept', 'aplication/json')
         .expect('content-type', /json/)
         .expect(404);
-        expect(dados._body.message).toEqual('ID invalido ou não encontrado!');
+        expect(dados._body.message).toEqual('Usuário não encontrado!');
     })
 })
 

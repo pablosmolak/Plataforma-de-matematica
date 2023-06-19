@@ -124,14 +124,9 @@ class UsuarioController {
                 return
             }
 
-            usuarios.findByIdAndUpdate(id, {$set: req.body}).then(()=>{
-                res.status(201).json({ code: 201, message: 'Cadastro atualizado com sucesso!' })
-            })
-            .catch((err) => {
-                console.log(err)
-                return res.status(500).json([{ error: true, code: 500, message: "Erro nos dados, confira e repita" }])
-            })
-
+            let usuario = new usuarios(req.body)
+            const id = req.params.id
+            
             let emailExiste = await usuarios.findOne({email:req.body.email})
             let userExiste = await usuarios.findOne({user: req.body.user})
             
@@ -155,10 +150,10 @@ class UsuarioController {
                     return res.status(500).json({ error: true, code: 500, message: "Erro nos dados, confira e repita!" })
                 })
             }else if(emailExiste){
-                return res.status(422).json({ code: 422, message: "E-mail já cadastrado!" })
+                return res.status(422).json({error: true, code: 422, message: "E-mail já cadastrado!" })
 
             }else if(userExiste){
-                return res.status(422).json({ code: 422, message: "Usuario já cadastrado!"})
+                return res.status(422).json({error: true, code: 422, message: "Usuario já cadastrado!"})
             }
         }
 
