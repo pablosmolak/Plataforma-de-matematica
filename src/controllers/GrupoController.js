@@ -1,4 +1,5 @@
 import grupos from "../models/Grupo.js";
+import AuthPermissao from "../middleware/AuthPermissao.js"
 
 class GrupoController {
 
@@ -88,7 +89,7 @@ class GrupoController {
             }
             
         }catch(err){
-            console.error(err);
+            //console.error(err);
             return res.status(500).json({ error: true, code: 500, message: "Erro interno do Servidor!" })
         }
     }

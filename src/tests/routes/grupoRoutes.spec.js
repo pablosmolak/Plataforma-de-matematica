@@ -61,7 +61,20 @@ describe('/POST em Grupos', () => {
             })
             .expect(422)
         expect(dados._body.message).toEqual('Nome de Grupo já cadastrado!')
+    })
+
+    it("Deve retornar erro de falta de dados ao cadastrar o Grupo", async () => {
+        const dados = await request(app)
+            .post('/grupos')
+            .set('Authorization', `Bearer ${token}`)
+            .set('Accept', 'application/json')
+            .send({
+                descricao: 'Descrição do novo grupo'
+            })
+            .expect(422)
+        expect(dados._body.message).toEqual('Erro nos dados, confira e repita!')
         })
+
 
 })
 
@@ -97,14 +110,14 @@ describe('/GET/ID em Grupos', () => {
         expect(dados._body.nome).toEqual('Novo Grupo')
     })
 
-    it.skip("Deve retornar uma lista de Grupos ", async () => {
+    it("Deve retornar erro de Grupos não encontrado", async () => {
         const dados = await request(app)
-        .get('/grupos?nome=alunos')
+        .get(`/grupos/${idGrupo}a`)
         .set('Authorization', `Bearer ${token}`)
         .set('accept', 'application/json')
         .expect('content-type', /json/)
-        .expect(200)
-        expect(dados.body.docs[0].nome).toEqual('Alunos')
+        .expect(404)
+        expect(dados._body.message).toEqual('Grupo não encontrado!')
     })
 })
 
