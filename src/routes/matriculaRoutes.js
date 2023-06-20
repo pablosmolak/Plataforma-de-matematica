@@ -13,6 +13,9 @@ const router = express.Router()
  *      tags:
  *        - Matrículas
  *      summary: Cadastra uma nova Matrícula
+ *      security:
+ *        - bearerAuth: []
+ *      description: Esta função é responsável por criar um Curso no banco de dados, verificando previamente se o usuário tem permissão para realizar a ação.       
  *      requestBody:
  *        required: true
  *        content:
@@ -41,7 +44,7 @@ const router = express.Router()
  *          content:
  *            application/json:
  *              schema:
- *                $ref: '#/components/schemas/Usuario'
+ *                $ref: '#/components/schemas/Matriculas'
  *        401:
  *          description: O usuário não tem permissão para realizar a operação
  *          content:
@@ -74,7 +77,7 @@ const router = express.Router()
  *    get:
  *      tags:
  *        - Matrículas
- *      summary: Lista todos os usuários
+ *      summary: Lista todos as Matrículas
  *      security:
  *        - bearerAuth: []
  *      parameters:
