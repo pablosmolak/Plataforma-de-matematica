@@ -118,7 +118,6 @@ class CursoController {
               return res.status(422).json({ error: true, code: 422, message: "Erro nos dados, Verifique e tente novamente!" })
             })
           })
-          
           .catch((err)=> {
             //console.log)(err)
             return res.status(404).json({ error: true, code: 404, message: "Curso não encontrado!" })

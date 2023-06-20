@@ -5,6 +5,11 @@ class GrupoController {
     static listarGrupo = async (req,res) => {
 
         try {
+
+            if(await AuthPermissao.verificarPermissao('grupos', 'get', req, res) !== false){
+                return
+            }
+
             const nome = req.query.nome
             const {page, perPage} = req.query
 
@@ -31,17 +36,21 @@ class GrupoController {
         
         catch(err){
             //console.error(err)
-            return res.status(500).json({error: true, code: 500, message: "Erro interno do Servidor"})
+            return res.status(500).json({error: true, code: 500, message: "Erro interno do Servidor!"})
         }
     }
 
     static listarGrupoId = async (req,res) => {
         try{
+
+            if(await AuthPermissao.verificarPermissao('grupos', 'get', req, res) !== false){
+                return
+            }
+
             const id = req.params.id
 
             grupos.findById(id).then(async (grupo) => {
                 let gpo = JSON.parse(JSON.stringify(grupo))
-
                 return res.status(200).send(gpo)
             })
             .catch((err) => {
@@ -51,12 +60,17 @@ class GrupoController {
             
         }catch(err){
             //console.error(err)
-            return res.status(500).json({error: true, code: 500, message: "Erro interno do Servidor"})
+            return res.status(500).json({error: true, code: 500, message: "Erro interno do Servidor!"})
         }
     }
 
     static cadastrarGrupo = async (req,res) => {
         try{
+
+            if(await AuthPermissao.verificarPermissao('grupos', 'post', req, res) !== false){
+                return
+            }
+
             let grupo = new grupos(req.body)//criação do grupo
             
             let grupoExiste = await grupos.findOne({nome:req.body.nome})
@@ -65,7 +79,7 @@ class GrupoController {
                 grupo.save().then(()=>{
                     return res.status(201).send(grupo.toJSON())
                 }).catch((err)=>{
-                    return res.status(422).json({ error: true, code: 422, message: "Erro nos dados, confira e repita" })
+                    return res.status(422).json({ error: true, code: 422, message: "Erro nos dados, confira e repita!" })
                 })
             }
             
@@ -75,15 +89,20 @@ class GrupoController {
             
         }catch(err){
             console.error(err);
-            return res.status(500).json({ error: true, code: 500, message: "Erro interno do Servidor" })
+            return res.status(500).json({ error: true, code: 500, message: "Erro interno do Servidor!" })
         }
     }
 
     static atualizarGrupo = async (req,res) =>{
         try{
+
+            if(await AuthPermissao.verificarPermissao('grupos', 'patch', req, res) !== false){
+                return
+            }
+
             const id = req.params.id            
             
-            grupos.findById(id).then(async () => {
+            await grupos.findById(id).then(async () => {
                 
                 let nomeGrupoExiste = await grupos.findOne({nome:req.body.nome})
 
@@ -92,11 +111,11 @@ class GrupoController {
                 }
 
                 grupos.findByIdAndUpdate(id, {$set: req.body}).then(()=>{
-                    res.status(201).json([{ code: 201, message: 'Grupo atualizado com sucesso' }])
+                    res.status(201).json([{ code: 201, message: 'Grupo atualizado com sucesso!' }])
                 })
                 .catch((err) => {
                     console.log(err)
-                    return res.status(422).json([{ error: true, code: 422, message: "Erro nos dados, confira e repita" }])
+                    return res.status(422).json([{ error: true, code: 422, message: "Erro nos dados, confira e repita!" }])
                 })
 
             })
@@ -108,12 +127,17 @@ class GrupoController {
 
         catch(err){
             console.error(err)
-            return res.status(500).json({error: true, code: 500, message: "Erro interno do Servidor"})
+            return res.status(500).json({error: true, code: 500, message: "Erro interno do Servidor!"})
         }
     }
 
     static excluirGrupo = async (req,res) => {
         try{
+
+            if(await AuthPermissao.verificarPermissao('grupos', 'delete', req, res) !== false){
+                return
+            }
+
             let id = req.params.id
             
             await grupos.findById(id).then(() => {
@@ -129,7 +153,7 @@ class GrupoController {
  
         } catch (err) {
             //console.error(err);
-            return res.status(500).json({ error: true, code: 500, message: "Erro interno do Servidor" })
+            return res.status(500).json({ error: true, code: 500, message: "Erro interno do Servidor!" })
 
         }
     }

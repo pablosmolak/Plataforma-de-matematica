@@ -8,12 +8,12 @@ class MatriculaController {
 
     static listarMatricula = async (req, res) => {
 
-        try {
+        try{
 
             if(await AuthPermissao.verificarPermissao('matriculas', 'get', req, res) !== false){
                 return
             }
-            const nome = req.query.nome
+            //const nome = req.query.nome
             const { page, perPage } = req.query
 
             const options = {
@@ -21,7 +21,7 @@ class MatriculaController {
                 limit: parseInt(perPage) > 5 ? 5 : parseInt(perPage) || 5
             }
 
-            if (!nome) {
+            //if(!nome){
                 const matricula = await matriculas.paginate({}, options)
                 let matri = JSON.parse(JSON.stringify(matricula))
                 matri.usuario = await usuarios.find({_id : {$in: matri.usuario }}).lean()
@@ -37,7 +37,7 @@ class MatriculaController {
                 }
                 
                 return res.json(matri)
-            }
+            /*}
             else{
                 const matricula = await matriculas.paginate({nome: new RegExp(nome, 'i')}, options)
                 let matri = JSON.parse(JSON.stringify(matricula))
@@ -53,9 +53,11 @@ class MatriculaController {
                 }
 
                 return res.json(matri)
-            }}
+            }}*/
 
-        } catch (err) {
+        } 
+        
+        catch(err){
             //console.error(err)
             return res.status(500).json({ error: true, code: 500, message: "Erro interno do Servidor" })
         }
@@ -70,19 +72,20 @@ class MatriculaController {
 
             const id = req.params.id
 
-            matriculas.findById(id).then(async (matricula) => {
+            await matriculas.findById(id).then(async (matricula) => {
                 let matri = JSON.parse(JSON.stringify(matricula))
                 matri.usuario = await usuario.find({_id: {$in: matri.usuario}}).lean()
                 matri.cursos = await cursos.find({_id: {$in: matri.cursos}}).lean()
                 return res.status(200).send(matri)
             })
             .catch((err) => {
-                return res.status(404).json({error: true, code: 404, message: "ID invalido ou não encontrado!"})
+                return res.status(404).json({error: true, code: 404, message: "Matrícula não encontrada!"})
             })
-        }catch (err){
-            //console.error(err)
-            return res.status(500).json({error: true, code: 500, message: "Erro interno do Servidor"})
+        }
 
+        catch (err){
+            //console.error(err)
+            return res.status(500).json({error: true, code: 500, message: "Erro interno do Servidor!"})
         }
     }
 
@@ -95,21 +98,22 @@ class MatriculaController {
 
             let matricula = new matriculas(req.body)
             
-            const timeElapsed = Date.now();
-            const dataInicio = new Date(timeElapsed)
+            const dataInicio = new Date(Date.now())
 
-           
             matricula.cursos[0].dataInicio = dataInicio
+
             matricula.save().then(() => {
                  res.status(201).send(matricula.toJSON())
-            }).catch((err) =>{
+            })
+            .catch((err) =>{
                 console.log(err)
-                return res.status(500).json({ error: true, code: 500, message: "Erro nos dados, confira e repita!" })
-            })        
-        }catch (err){
+                return res.status(500).json({error: true, code: 500, message: "Erro nos dados, confira e repita!"})
+            })  
+        }
+        
+        catch (err){
             //console.error(err)
-            return res.status(500).json({error: true, code: 500, message: "Erro interno do Servidor"})
-
+            return res.status(500).json({error: true, code: 500, message: "Erro interno do Servidor!"})
         }
     }
 
@@ -120,20 +124,26 @@ class MatriculaController {
                 return
             }
             var id = req.params.id
-            var matricula = new matriculas(req.body);
 
-            matriculas.findByIdAndUpdate(id, {$set: req.body}).then(()=>{
-                res.status(201).json({code: 201, message: 'Matricula atualizada com sucesso!'})
+            await matriculas.findById(id).then(() => {
+                
+                matriculas.findByIdAndUpdate(id, {$set: req.body}).then(()=>{
+                    res.status(201).json({code: 201, message: 'Matricula atualizada com sucesso!'})
+                })
+                .catch((err) => {
+                    //console.log(err) <------------verificar
+                    return res.status(500).json({ error: true, code: 500, message: "Erro nos dados, confira e repita!" })
+                })
             })
             .catch((err) => {
-                console.log(err)
-                return res.status(500).json({ error: true, code: 500, message: "Erro nos dados, confira e repita!" })
+                //console.log(err)
+                return res.status(404).json({error: true, code: 404, message: "Matrícula não encontrada!"})
             })
         }
 
         catch(err){
             //console.error(err)
-            return res.status(500).json({error: true, code: 500, message: "Erro interno do Servidor"})
+            return res.status(500).json({error: true, code: 500, message: "Erro interno do Servidor!"})
         }
     }
 
@@ -145,17 +155,19 @@ class MatriculaController {
             }
 
             let id = req.params.id
-            const matricula = await matriculas.findById(id)
+        
+            await matriculas.findById(id).then(() => {
 
-            if(!matricula){
-                return res.status(404).json({error: true,code: 404, message: "Matricula não Localizada!" })
-            }
-
-            matriculas.findByIdAndDelete(id).then(() => {
-                    return res.status(200).json({code: 200, message: "Matricula excluída com sucesso!" })
-            }).catch((err) =>{
-                    console.log(err)
+                matriculas.findByIdAndDelete(id).then(() => {
+                        return res.status(200).json({code: 200, message: "Matrícula excluída com sucesso!" })
                 })
+            
+            })
+            .catch((err) => {
+                //console.log(err)
+                return res.status(404).json({error: true, code: 404, message: "Matrícula não encontrada!"})
+            })
+
         } catch(err){
             console.error(err)
             return res.status(500).json({error: true, code: 500, message: "Erro interno do Servidor!"})
