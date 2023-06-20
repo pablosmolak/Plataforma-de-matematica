@@ -55,7 +55,7 @@ describe ('/POST em Matriculas', () => {
         idMatricula = dados._body._id;       
     })
 
-    it("Deve cadastrar uma Matricula", async () => {
+    it("Deve retornar erro de falta de dados ao cadastrar uma Matricula", async () => {
         const dados = await request(app)
         .post('/matriculas')
         .set('Authorization', `Bearer ${token}`)
@@ -67,11 +67,11 @@ describe ('/POST em Matriculas', () => {
             cursos: [
                 {
                     _id: "6476d5c9900ad134fbcd18d1",
-                    situacao: "Em andamento",
+                    situacao: "Em andamento"
                 }
             ]
         })
-        .expect(500)
+        .expect(422)
         expect(dados._body.message).toEqual("Erro nos dados, confira e repita!")       
     })
 
@@ -101,14 +101,14 @@ describe('/GET/ID em Matriculas', () =>{
 
     })
 
-    it("Deve retornar erro de id invalido", async () =>{
+    it("Deve retornar erro de Matrícula não encontrada", async () =>{
         const dados = await request(app)
         .get(`/matriculas/${idMatricula}a`)
         .set('Authorization', `Bearer ${token}`)
         .set('accept', 'aplication/json')
         .expect('content-type', /json/)
         .expect(404);
-        expect(dados._body.message).toEqual("ID invalido ou não encontrado!");
+        expect(dados._body.message).toEqual("Matrícula não encontrada!");
     })
 
 })
@@ -126,7 +126,7 @@ describe("/PATCH/ID em Matriculas", () =>{
         expect(dados._body.message).toEqual('Matricula atualizada com sucesso!');
     })
 
-    it("Deve cadastrar uma Matricula", async () => {
+    it("Deve retornar erro de dados incorretos ao atualizar uma Matricula", async () => {
         const dados = await request(app)
         .patch(`/matriculas/${idMatricula}`)
         .set('Authorization', `Bearer ${token}`)
@@ -142,7 +142,7 @@ describe("/PATCH/ID em Matriculas", () =>{
                 }
             ]
         })
-        .expect(500)
+        .expect(422)
         expect(dados._body.message).toEqual("Erro nos dados, confira e repita!")       
     })
 })
@@ -156,15 +156,15 @@ describe("/DELETE/ID em Matriculas", () =>{
         .set('Authorization', `Bearer ${token}`)
         .set('Accept', 'aplication/json')
         .expect(200)
-        expect(dados._body.message).toEqual("Matricula excluída com sucesso!");
+        expect(dados._body.message).toEqual("Matrícula excluída com sucesso!");
     })
 
     it("Deve retornar erro de matricula não encontrada!", async () =>{          
         const dados = await request(app)
-        .delete(`/matriculas/${idMatricula}`)
+        .delete(`/matriculas/${idMatricula}e`)
         .set('Authorization', `Bearer ${token}`)
         .set('Accept', 'aplication/json')
         .expect(404)
-        expect(dados._body.message).toEqual("Matricula não Localizada!");
+        expect(dados._body.message).toEqual("Matrícula não encontrada!");
     })
 })

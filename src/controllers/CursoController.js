@@ -82,7 +82,7 @@ class CursoController {
             res.status(201).send(curso.toJSON())
           })
           .catch((err) =>{
-              console.log(err)
+              //console.log(err)
               return res.status(422).json({ error: true, code: 422, message: "Erro nos dados, confira e repita!" })
           })
         }else if(moduloExiste){

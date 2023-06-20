@@ -58,7 +58,7 @@ class MatriculaController {
         } 
         
         catch(err){
-            //console.error(err)
+            console.error(err)
             return res.status(500).json({ error: true, code: 500, message: "Erro interno do Servidor" })
         }
     }
@@ -98,21 +98,23 @@ class MatriculaController {
 
             let matricula = new matriculas(req.body)
             
-            const dataInicio = new Date(Date.now())
+            const data = new Date(await Date.now())
 
-            matricula.cursos[0].dataInicio = dataInicio
+            console.log(data)
+
+            matricula.cursos[0] = {dataInicio:data}
 
             matricula.save().then(() => {
                  res.status(201).send(matricula.toJSON())
             })
             .catch((err) =>{
                 console.log(err)
-                return res.status(500).json({error: true, code: 500, message: "Erro nos dados, confira e repita!"})
+                return res.status(422).json({error: true, code: 422, message: "Erro nos dados, confira e repita!"})
             })  
         }
         
         catch (err){
-            //console.error(err)
+            console.error(err)
             return res.status(500).json({error: true, code: 500, message: "Erro interno do Servidor!"})
         }
     }

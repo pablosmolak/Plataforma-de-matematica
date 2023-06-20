@@ -74,7 +74,6 @@ describe ('/POST em Cursos', () => {
         .set('Accept', 'aplication/json')
         .send({           
             "modulo": "Equação de 1° Grau",
-            "descricao": "",
             "nivel": "Medio",
             "professor": "Smolakinho"
         })
@@ -91,7 +90,7 @@ describe ('/GET em Cursos', () => {
         .set('accept', 'aplication/json')
         .expect('content-type', /json/)
         .expect(200)
-        expect(dados._body.docs[0].modulo).toEqual('Modulo 2');
+        expect(dados._body.docs[0].modulo).toEqual('Equação de 3° Grau');
     })
 
     it("Deve retornar uma lista de Cursos filtrada por modulo", async () =>{
@@ -132,13 +131,13 @@ describe ('/PATCH em Cursos', () => {
         .set('Authorization', `Bearer ${token}`)
         .set('Accept', 'aplication/json')
         .send({           
-                "modulo": "Equação de 3° Grau",
+                "modulo": "Equação de 1° Grau",
         })
         .expect(201)
         expect(dados._body.message).toEqual('Curso atualizado com sucesso!')
     })
 
-    it("Deve atualizar um Curso", async () => {
+    it("Deve retornar erro de Curso não encontrado", async () => {
         const dados = await request(app)
         .patch(`/cursos/${idCurso}a`)
         .set('Authorization', `Bearer ${token}`)
@@ -150,9 +149,9 @@ describe ('/PATCH em Cursos', () => {
         expect(dados._body.message).toEqual('Curso não encontrado!')
     })
 
-    it("Deve atualizar um Curso", async () => {
+    it("Deve retornar erro de modulo já cadastrado", async () => {
         const dados = await request(app)
-        .patch(`/cursos/${idCurso}a`)
+        .patch(`/cursos/${idCurso}`)
         .set('Authorization', `Bearer ${token}`)
         .set('Accept', 'aplication/json')
         .send({           
@@ -170,14 +169,16 @@ describe("/DELETE/ID em Cursos", () =>{
         .set('Accept', 'aplication/json')
         .set('Authorization', `Bearer ${token}`)
         .expect('content-type', /json/)
+        .expect(200)
         expect(dados._body.message).toEqual("Curso excluído com sucesso!")
     })
     it("Deve retornar erro de Curso não encontrado!", async () =>{
         const dados = await request(app)
-        .delete(`/cursos/${idCurso}`)
+        .delete(`/cursos/${idCurso}s`)
         .set('Accept', 'aplication/json')
         .set('Authorization', `Bearer ${token}`)
         .expect('content-type', /json/)
+        .expect(404)
         expect(dados._body.message).toEqual("Curso não Localizado!")
     })
 })

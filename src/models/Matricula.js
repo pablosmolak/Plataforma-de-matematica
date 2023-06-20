@@ -4,7 +4,7 @@ import mongoosePaginate from "mongoose-paginate-v2";
 const matriculaSchema = new mongoose.Schema(
     {
         usuario: {
-            _id: { type: mongoose.Schema.Types.ObjectId, ref: 'usuario', required: true },
+            _id: { type: mongoose.Schema.Types.ObjectId, ref: 'usuario'},
         },
         cursos: [
             {

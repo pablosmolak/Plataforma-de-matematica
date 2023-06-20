@@ -121,6 +121,31 @@ describe('/GET/ID em Grupos', () => {
     })
 })
 
+describe("/PATCH/ID em Grupos", () =>{
+    it("Deve Atualizar um Grupo", async () =>{
+        const dados = await request(app)
+        .patch(`/grupos/${idGrupo}`)
+        .set('Authorization', `Bearer ${token}`)
+        .set('Accept', 'aplication/json')
+        .send({
+            nome: 'Novo grupo 2 '
+        })
+        .expect(201)
+        expect(dados._body.message).toEqual('Grupo atualizado com sucesso!')
+    })
+    it("Deve retornar erro de Grupo não encontrado", async () =>{
+        const dados = await request(app)
+        .patch(`/grupos/${idGrupo}e`)
+        .set('Authorization', `Bearer ${token}`)
+        .set('Accept', 'aplication/json')
+        .send({
+            nome: 'Novo grupo 2 '
+        })
+        .expect(404)
+        expect(dados._body.message).toEqual('Grupo não encontrado!')
+    })
+})
+
 describe("/DELETE/ID em Grupos", () =>{
     it("Deve Excluir um Grupo!", async () =>{
         const dados = await request(app)
@@ -130,6 +155,16 @@ describe("/DELETE/ID em Grupos", () =>{
         .expect('content-type', /json/)
         .expect(200)
         expect(dados._body.message).toEqual('Grupo excluído com sucesso!')
+    })
+
+    it("Deve Excluir um Grupo!", async () =>{
+        const dados = await request(app)
+        .delete(`/grupos/${idGrupo}e`)
+        .set('Authorization', `Bearer ${token}`)
+        .set('Accept', 'aplication/json')
+        .expect('content-type', /json/)
+        .expect(404)
+        expect(dados._body.message).toEqual('Grupo não encontrado!')
     })
 })
 

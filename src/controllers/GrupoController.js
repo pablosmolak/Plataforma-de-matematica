@@ -108,15 +108,15 @@ class GrupoController {
                 let nomeGrupoExiste = await grupos.findOne({nome:req.body.nome})
 
                 if(nomeGrupoExiste){
-                    return res.status(422).json({ code: 422, message: "Nome de Grupo já cadastrado!" })
+                    return res.status(422).json({ error: true, code: 422, message: "Nome de Grupo já cadastrado!" })
                 }
 
                 grupos.findByIdAndUpdate(id, {$set: req.body}).then(()=>{
-                    res.status(201).json([{ code: 201, message: 'Grupo atualizado com sucesso!' }])
+                    res.status(201).json({ code: 201, message: 'Grupo atualizado com sucesso!' })
                 })
                 .catch((err) => {
-                    console.log(err)
-                    return res.status(422).json([{ error: true, code: 422, message: "Erro nos dados, confira e repita!" }])
+                    //console.log(err)
+                    return res.status(422).json({ error: true, code: 422, message: "Erro nos dados, confira e repita!" })
                 })
 
             })
@@ -127,7 +127,7 @@ class GrupoController {
         }
 
         catch(err){
-            console.error(err)
+            //console.error(err)
             return res.status(500).json({error: true, code: 500, message: "Erro interno do Servidor!"})
         }
     }
@@ -149,7 +149,7 @@ class GrupoController {
             })
             .catch((err) => {
                 //console.log(err)
-                return res.status(404).json({error: true, code: 404, mensage:"Grupo não Localizado!"})
+                return res.status(404).json({error: true, code: 404, message:"Grupo não encontrado!"})
             })
  
         } catch (err) {

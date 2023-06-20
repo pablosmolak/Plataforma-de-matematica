@@ -191,7 +191,7 @@ describe("/PATCH/ID em Usuários", () =>{
             user: 'smolakinhotest',
         })
         .expect(422)
-        expect(dados._body.message).toEqual('Usuario já cadastrado!')
+        expect(dados._body[0].message).toEqual('Usuario já cadastrado!')
     })
 
     it("Deve retornar erro de senha menor que 8 caracteres", async () =>{
@@ -207,7 +207,7 @@ describe("/PATCH/ID em Usuários", () =>{
             telefone: '984227163'
         })
         .expect(422)
-        expect(dados._body.message).toEqual('Senha informada menor que 8 caracteres!')
+        expect(dados._body[0].message).toEqual('Senha informada menor que 8 caracteres!')
     })
 
     it("Deve retornar erro de falta de dados no cadastro de Usuário", async () =>{
@@ -223,19 +223,19 @@ describe("/PATCH/ID em Usuários", () =>{
             telefone: '984227163'
         })
         .expect(404)
-        expect(dados._body.message).toEqual('Id de Usuário não encontrado!')
+        expect(dados._body.message).toEqual('Usuário não encontrado!')
     })
 })
 
 describe("/DELETE/ID em Usuários", () =>{
     it("Deve retornar erro de usuário não encontrado!", async () =>{
         const dados = await request(app)
-        .delete(`/usuarios/6476d5c8900ad134fbcd18c2`)
+        .delete(`/usuarios/${idUsuario}d`)
         .set('Accept', 'aplication/json')
         .set('Authorization', `Bearer ${token}`)
         .expect('content-type', /json/)
         .expect(404)
-        expect(dados._body.message).toEqual("Usuário não Localizado!")
+        expect(dados._body.message).toEqual("Usuário não encontrado!")
     })
 
     it("Deve Excluir um Usuário!", async () =>{

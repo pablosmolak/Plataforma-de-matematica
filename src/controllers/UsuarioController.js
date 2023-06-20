@@ -188,7 +188,7 @@ class UsuarioController {
                 })
             })
             .catch((err) => {
-                console.log(err)
+                //console.log(err)
                 return res.status(404).json({error: true,code: 404, message:"Usuário não encontrado!"})
             })
 
