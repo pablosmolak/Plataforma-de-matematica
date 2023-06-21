@@ -13,24 +13,14 @@ const router = express.Router()
  *        - Grupos
  *      security:
  *        - bearerAuth: []
- *      description: Esta função é responsável por criar um Grupo no banco de dados, verificando previamente se o usuário tem permissão para realizar a ação.
+ *      description: Esta função é responsável por criar um Grupo no banco de dados, verificando previamente se o usuário tem permissão para realizar a ação
  *      summary: Cadastra um novo Grupo
  *      requestBody:
  *        required: true
  *        content:
  *          application/json:
  *            schema:
- *              type: object
- *              properties:
- *                nome:
- *                  type: string
- *                  example: Administradores de Cursos
- *                descricao:
- *                  type: string
- *                  example: grupos de usuarios administradores de cursos
- *                ativo:
- *                  type: boolean
- *                  example: true  
+ *              $ref: '#/components/schemas/Grupos' 
  *      responses:
  *        201:
  *          description: Grupo cadastrado com sucesso
@@ -43,12 +33,7 @@ const router = express.Router()
  *          content:
  *            application/json:
  *              schema:
- *                type: object
- *                properties:
- *                  docs:
- *                    type: array
- *                    items:
- *                      $ref: '#/components/schemas/Error'
+ *                $ref: '#/components/schemas/Error'
  *        422:
  *          description: Erro ao cadastrar o Grupo
  *          content:
@@ -73,7 +58,7 @@ const router = express.Router()
  *      summary: Lista todos os Grupos
  *      security:
  *        - bearerAuth: []
- *      description: Esta função é responsável por buscar uma lista de Grupos no banco de dados, verificando previamente se o usuário tem permissão para realizar a ação.
+ *      description: Esta função é responsável por buscar uma lista de Grupos no banco de dados, verificando previamente se o usuário tem permissão para realizar a ação
  *      parameters:
  *        - in: query
  *          name: Nome
@@ -151,7 +136,7 @@ const router = express.Router()
  *        - Grupos
  *      security:
  *        - bearerAuth: []
- *      description: Esta função é responsável por buscar um Grupo por ID no banco de dados, verificando previamente se o usuário tem permissão para realizar a ação. 
+ *      description: Esta função é responsável por buscar um Grupo por ID no banco de dados, verificando previamente se o usuário tem permissão para realizar a ação 
  *      parameters:
  *        - in: path
  *          name: id
@@ -165,23 +150,13 @@ const router = express.Router()
  *          content:
  *            application/json:
  *              schema:
- *                type: object
- *                properties:
- *                  docs:
- *                    type: array
- *                    items:
- *                      $ref: '#/components/schemas/Grupos'
+ *                $ref: '#/components/schemas/Grupos'
  *        401:
  *          description: O usuário não tem permissão para realizar a operação.
  *          content:
  *            application/json:
  *              schema:
- *                type: object
- *                properties:
- *                  docs:
- *                    type: array
- *                    items:
- *                      $ref: '#/components/schemas/Error'
+ *                $ref: '#/components/schemas/Error'
  *        404: 
  *          description: Grupo não encontrado
  *          content:
@@ -206,7 +181,7 @@ const router = express.Router()
  *        - Grupos
  *      security:
  *        - bearerAuth: []
- *      description: Esta função é responsável por atualizar um Grupo existente no banco de dados, verificando previamente se o usuário tem permissão para realizar a ação.
+ *      description: Esta função é responsável por atualizar um Grupo existente no banco de dados, verificando previamente se o usuário tem permissão para realizar a ação
  *      requestBody:
  *        required: true
  *        content:
@@ -237,12 +212,7 @@ const router = express.Router()
  *          content:
  *            application/json:
  *              schema:
- *                type: object
- *                properties:
- *                  docs:
- *                    type: array
- *                    items:
- *                      $ref: '#/components/schemas/Error'
+ *                $ref: '#/components/schemas/Error'
  *        422:
  *          description: Erro ao atualizar o Grupo
  *          content:
@@ -266,19 +236,14 @@ const router = express.Router()
  *          content:
  *            application/json:
  *              schema:
- *                type: object
- *                properties:
- *                  docs:
- *                    type: array
- *                    items:
- *                      $ref: '#/components/schemas/Error'
+ *                $ref: '#/components/schemas/Error'
  *    delete:
- *      summary: Exclui um Grupo existente no banco de dados.
+ *      summary: Exclui um Grupo existente no banco de dados
  *      tags:
  *        - Grupos
  *      security:
  *        - bearerAuth: []
- *      description: Esta função é responsável por excluir um Grupo existente no banco de dados, verificando previamente se o usuário tem permissão para realizar a ação.
+ *      description: Esta função é responsável por excluir um Grupo existente no banco de dados, verificando previamente se o usuário tem permissão para realizar a ação
  *      parameters:
  *        - in: path
  *          name: id
@@ -286,7 +251,6 @@ const router = express.Router()
  *          required: true
  *          schema:
  *            type: string
- *            format: string
  *      responses:
  *        200:
  *          description: Grupo excluído com sucesso
@@ -304,12 +268,7 @@ const router = express.Router()
  *          content:
  *            application/json:
  *              schema:
- *                type: object
- *                properties:
- *                  docs:
- *                    type: array
- *                    items:
- *                      $ref: '#/components/schemas/Error'
+ *                $ref: '#/components/schemas/Error'
  *        404:
  *          description: Grupo não encontrado
  *          content:
@@ -323,7 +282,7 @@ const router = express.Router()
  *              schema:
  *                 $ref: '#/components/schemas/Error'
  *        500:
- *          description: Erro interno do servidor.
+ *          description: Erro interno do servidor
  *          content:
  *            application/json:
  *              schema:

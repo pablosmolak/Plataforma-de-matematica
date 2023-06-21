@@ -91,7 +91,7 @@ class UsuarioController {
                 }
                 
                 const grupo = await grupos.findOne({nome: "Alunos"})
-                usuario.grupos = {_id: grupo}
+                usuario.grupos = {_id: grupo._id}
                 
                 let senhaHash = bcrypt.hashSync(usuario.senha,8);
                 usuario.senha = senhaHash;

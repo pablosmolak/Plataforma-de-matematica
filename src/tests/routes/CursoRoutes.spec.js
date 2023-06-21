@@ -114,7 +114,7 @@ describe ('/GET/ID em Cursos', () => {
         expect(dados._body.modulo).toEqual('Equação de 2° Grau');
     })
 
-    it.skip("Deve retornar uma lista de Cursos filtrada por modulo", async () =>{
+    it("Deve retornar uma lista de Cursos filtrada por modulo", async () =>{
         const dados = await request(app)
         .get('/cursos?modulo=equação')
         .set('Authorization', `Bearer ${token}`)

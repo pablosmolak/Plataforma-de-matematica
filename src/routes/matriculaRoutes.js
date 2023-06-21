@@ -15,7 +15,7 @@ const router = express.Router()
  *      summary: Cadastra uma nova Matrícula
  *      security:
  *        - bearerAuth: []
- *      description: Esta função é responsável por criar um Curso no banco de dados, verificando previamente se o usuário tem permissão para realizar a ação.       
+ *      description: Esta função é responsável por criar um Curso no banco de dados, verificando previamente se o usuário tem permissão para realizar a ação      
  *      requestBody:
  *        required: true
  *        content:

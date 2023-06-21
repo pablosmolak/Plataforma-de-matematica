@@ -38,33 +38,33 @@ import autenticacao from "./AutenticacaoRoutes.js"
  *             _id: 
  *               type: string
  *               example: "6424d518ceb55d37fcbf8b4c"
- *        rotas:
- *           type: object
- *           properties:
- *             _id: 
- *               type: string
- *               example: "63759607e0a9fb91607a8c6d"
- *             rota:
- *               type: string
- *               example: "/grupos"
- *             ativo: 
- *               type: boolean
- *               example: true
- *             verbo_get:
- *               type: boolean
- *               example: true
- *             verbo_post:  
- *               type: boolean
- *               example: true
- *             verbo_put:
- *               type: boolean
- *               example: true
- *             verbo_patch:
- *               type: boolean
- *               example: true
- *             verbo_delete:
- *               type: boolean
- *               example: true
+ *     Rotas:
+ *       type: object
+ *       properties:
+ *         _id: 
+ *           type: string
+ *           example: "63759607e0a9fb91607a8c6d"
+ *         rota:
+ *           type: string
+ *           example: "/grupos"
+ *         ativo: 
+ *           type: boolean
+ *           example: true
+ *         verbo_get:
+ *           type: boolean
+ *           example: true
+ *         verbo_post:  
+ *           type: boolean
+ *           example: true
+ *         verbo_put:
+ *           type: boolean
+ *           example: true
+ *         verbo_patch:
+ *           type: boolean
+ *           example: true
+ *         verbo_delete:
+ *           type: boolean
+ *           example: true
  * 
  *     Grupo:
  *       type: object
@@ -211,7 +211,18 @@ import autenticacao from "./AutenticacaoRoutes.js"
  *          type: integer
  *        message:
  *         type: string
- *  
+ *     Grupos:
+ *       type: object
+ *       properties:
+ *         nome:
+ *           type: String
+ *           example: Administradores de Cursos
+ *         descricao:
+ *           type: String
+ *           example: Grupos de administradores
+ *         ativo:
+ *           type: boolean
+ *           example: true 
  */
 
 

@@ -1,7 +1,6 @@
 import matriculas from "../models/Matricula.js"
 import usuarios from "../models/Usuario.js";
 import cursos from "../models/Curso.js"
-import usuario from "../models/Usuario.js";
 import AuthPermissao from "../middleware/AuthPermissao.js"
 
 class MatriculaController {
@@ -72,13 +71,14 @@ class MatriculaController {
 
             const id = req.params.id
 
-            await matriculas.findById(id).then(async (matricula) => {
+            matriculas.findById(id).then(async (matricula) => {
                 let matri = JSON.parse(JSON.stringify(matricula))
-                matri.usuario = await usuario.find({_id: {$in: matri.usuario}}).lean()
+                matri.usuario = await usuarios.find({_id: {$in: matri.usuario}}).lean()
                 matri.cursos = await cursos.find({_id: {$in: matri.cursos}}).lean()
                 return res.status(200).send(matri)
             })
             .catch((err) => {
+                //console.log(err)
                 return res.status(404).json({error: true, code: 404, message: "Matrícula não encontrada!"})
             })
         }
@@ -94,27 +94,24 @@ class MatriculaController {
 
             if(await AuthPermissao.verificarPermissao('matriculas', 'post', req, res) !== false){
                 return
-            }
-
+            }   
+           
             let matricula = new matriculas(req.body)
             
             const data = new Date(await Date.now())
-
-            console.log(data)
-
-            matricula.cursos[0] = {dataInicio:data}
+            matricula.cursos[0].dataInicio= data
 
             matricula.save().then(() => {
                  res.status(201).send(matricula.toJSON())
             })
             .catch((err) =>{
-                console.log(err)
+                //console.log(err)
                 return res.status(422).json({error: true, code: 422, message: "Erro nos dados, confira e repita!"})
             })  
         }
         
         catch (err){
-            console.error(err)
+            //console.error(err)
             return res.status(500).json({error: true, code: 500, message: "Erro interno do Servidor!"})
         }
     }
@@ -134,7 +131,7 @@ class MatriculaController {
                 })
                 .catch((err) => {
                     //console.log(err) <------------verificar
-                    return res.status(500).json({ error: true, code: 500, message: "Erro nos dados, confira e repita!" })
+                    return res.status(422).json({ error: true, code: 422, message: "Erro nos dados, confira e repita!" })
                 })
             })
             .catch((err) => {
@@ -171,7 +168,7 @@ class MatriculaController {
             })
 
         } catch(err){
-            console.error(err)
+            //console.error(err)
             return res.status(500).json({error: true, code: 500, message: "Erro interno do Servidor!"})
         }
     }

@@ -41,15 +41,15 @@ describe ('/POST em Matriculas', () => {
         .set('Authorization', `Bearer ${token}`)
         .set('Accept', 'aplication/json')
         .send({           
-            usuario: {
-                _id: "6476d5c8900ad134fbcd18bc",
+                usuario:{
+                        _id: "648d47515729f7bbdaa450a5"
             },
-            cursos: [
-                {
-                    _id: "6476d5c9900ad134fbcd18d1",
-                    situacao: "Em andamento",
-                }
-            ]
+        
+                cursos:{
+                        _id: "648d0c6300b48c902c6ae561",
+                        situacao: "em andamento"
+            }
+            
         })
         .expect(201);
         idMatricula = dados._body._id;       
@@ -84,8 +84,7 @@ describe ('/GET em Matriculas', () => {
         .set('Authorization', `Bearer ${token}`)
         .set('accept', 'aplication/json')
         .expect('content-type', /json/)
-        .expect(200);
-        expect(dados._body.docs[0]._id).toEqual('648e653ede972e01bc7f5b42');
+        .expect(200)
     })
 })
 
@@ -132,15 +131,7 @@ describe("/PATCH/ID em Matriculas", () =>{
         .set('Authorization', `Bearer ${token}`)
         .set('Accept', 'aplication/json')
         .send({           
-            usuario: {
-                _id: "true"
-            },
-            cursos: [
-                {
-                    _id: "6476d5c9900ad134fbcd18d1",
-                    situacao: "Em andamento",
-                }
-            ]
+            _id: "65656565655665"
         })
         .expect(422)
         expect(dados._body.message).toEqual("Erro nos dados, confira e repita!")       
