@@ -27,9 +27,9 @@ const router = express.Router()
  *          content:
  *            application/json:
  *              schema:
- *                $ref: '#/components/schemas/Grupos'
+ *                $ref: '#/components/schemas/Grupo'
  *        401:
- *          description: O usuário não tem permissão para realizar a operação.
+ *          description: O usuário não tem permissão para realizar a operação
  *          content:
  *            application/json:
  *              schema:
@@ -86,7 +86,7 @@ const router = express.Router()
  *                  docs:
  *                    type: array
  *                    items:
- *                      $ref: '#/components/schemas/Grupos'
+ *                      $ref: '#/components/schemas/Grupo'
  *                  totalDocs:
  *                    type: integer
  *                  limit:
@@ -106,22 +106,17 @@ const router = express.Router()
  *                  nextPage:
  *                    type: integer
  *        401:
- *          description: O usuário não tem permissão para realizar a operação.
+ *          description: O usuário não tem permissão para realizar a operação
  *          content:
  *            application/json:
  *              schema:
- *                type: object
- *                properties:
- *                  docs:
- *                    type: array
- *                    items:
- *                      $ref: '#/components/schemas/Error'
+ *                $ref: '#/components/schemas/Error'
  *        498:
  *          description: Erros de Token
  *          content:
  *            application/json:
  *              schema:
- *                 $ref: '#/components/schemas/Error'
+ *                $ref: '#/components/schemas/Error'
  *        500:
  *          description: Erro Interno do Servidor
  *          content:
@@ -150,9 +145,9 @@ const router = express.Router()
  *          content:
  *            application/json:
  *              schema:
- *                $ref: '#/components/schemas/Grupos'
+ *                $ref: '#/components/schemas/Grupo'
  *        401:
- *          description: O usuário não tem permissão para realizar a operação.
+ *          description: O usuário não tem permissão para realizar a operação
  *          content:
  *            application/json:
  *              schema:
@@ -168,7 +163,7 @@ const router = express.Router()
  *          content:
  *            application/json:
  *              schema:
- *                 $ref: '#/components/schemas/Error'
+ *                $ref: '#/components/schemas/Error'
  *        500:
  *          description: Erro interno do Servidor
  *          content:
@@ -176,7 +171,7 @@ const router = express.Router()
  *              schema:
  *                $ref: '#/components/schemas/Error'              
  *    patch:
- *      summary: Atualiza atributos de um Grupo existente no banco de dados.
+ *      summary: Atualiza atributos de um Grupo existente no banco de dados
  *      tags:
  *        - Grupos
  *      security:
@@ -197,18 +192,13 @@ const router = express.Router()
  *            type: string
  *      responses:
  *        201:
- *          description: Usuário atualizado com sucesso 
+ *          description: Grupo atualizado com sucesso 
  *          content:
  *            application/json:
  *              schema:
- *                type: object
- *                properties:
- *                  docs:
- *                    type: array
- *                    items:
- *                      $ref: '#/components/schemas/Usuario'
+ *                $ref: '#/components/schemas/Grupo'
  *        401:
- *          description: O usuário não tem permissão para realizar a operação.
+ *          description: O usuário não tem permissão para realizar a operação
  *          content:
  *            application/json:
  *              schema:
@@ -247,7 +237,7 @@ const router = express.Router()
  *      parameters:
  *        - in: path
  *          name: id
- *          description: ID do Grupo a ser eliminado
+ *          description: ID do Grupo a ser excluido
  *          required: true
  *          schema:
  *            type: string
@@ -264,7 +254,7 @@ const router = express.Router()
  *                  message:
  *                    type: string
  *        401:
- *          description: O usuário não tem permissão para realizar a operação.
+ *          description: O usuário não tem permissão para realizar a operação
  *          content:
  *            application/json:
  *              schema:

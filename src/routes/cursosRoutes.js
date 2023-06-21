@@ -14,8 +14,7 @@ const router = express.Router();
  *        - Cursos
  *      security:
  *        - bearerAuth: [] 
- *      description: Esta função é responsável por criar um Curso no banco de dados, verificando previamente se o usuário tem permissão para realizar a ação.
- *      summary: Cadastra um novo Curso
+ *      description: Esta função é responsável por criar um Curso no banco de dados, verificando previamente se o usuário tem permissão para realizar a ação
  *      requestBody:
  *        required: true
  *        content:
@@ -34,8 +33,7 @@ const router = express.Router();
  *                  example: Medio
  *                professor:
  *                  type: string
- *                  example: "Smolak Teacher"    
- *  
+ *                  example: "Smolak Teacher"      
  *      responses:
  *        201:
  *          description: Curso cadastrado com sucesso
@@ -44,7 +42,7 @@ const router = express.Router();
  *              schema:
  *                $ref: '#/components/schemas/Cursos'
  *        401:
- *          description: O usuário não tem permissão para realizar a operação.
+ *          description: O usuário não tem permissão para realizar a operação
  *          content:
  *            application/json:
  *              schema:
@@ -73,7 +71,7 @@ const router = express.Router();
  *      summary: Lista todos os Cursos
  *      security:
  *        - bearerAuth: []
- *      description: Esta função é responsável por buscar um Curso existente no banco de dados, verificando previamente se o usuário tem permissão para realizar a ação.
+ *      description: Esta função é responsável por buscar uma lista de Cursos existentes no banco de dados, verificando previamente se o usuário tem permissão para realizar a ação
  *      parameters:
  *        - in: query
  *          name: Módulo
@@ -121,7 +119,7 @@ const router = express.Router();
  *                  nextPage:
  *                    type: integer
  *        401:
- *          description: O usuário não tem permissão para realizar a operação.
+ *          description: O usuário não tem permissão para realizar a operação
  *          content:
  *            application/json:
  *              schema:
@@ -146,7 +144,7 @@ const router = express.Router();
  *        - Cursos
  *      security:
  *        - bearerAuth: []
- *      description: Esta função é responsável por buscar um Curso existente no banco de dados por ID, verificando previamente se o usuário tem permissão para realizar a ação.
+ *      description: Esta função é responsável por buscar um Curso existente no banco de dados por ID, verificando previamente se o usuário tem permissão para realizar a ação
  *      parameters:
  *        - in: path
  *          name: id
@@ -162,7 +160,7 @@ const router = express.Router();
  *              schema:
  *                $ref: '#/components/schemas/Cursos'
  *        401:
- *          description: O usuário não tem permissão para realizar a operação.
+ *          description: O usuário não tem permissão para realizar a operação
  *          content:
  *            application/json:
  *              schema:
@@ -191,7 +189,7 @@ const router = express.Router();
  *        - Cursos
  *      security:
  *        - bearerAuth: []
- *      description: Esta função é responsável por atualizar um Curso existente no banco de dados, verificando previamente se o usuário tem permissão para realizar a ação.
+ *      description: Esta função é responsável por atualizar um Curso existente no banco de dados, verificando previamente se o usuário tem permissão para realizar a ação
  *      requestBody:
  *        required: true
  *        content:
@@ -221,7 +219,7 @@ const router = express.Router();
  *                    example: Curso atualizado com sucesso!
  *                      
  *        401:
- *          description: O usuário não tem permissão para realizar a operação.
+ *          description: O usuário não tem permissão para realizar a operação
  *          content:
  *            application/json:
  *              schema:                  
@@ -266,7 +264,7 @@ const router = express.Router();
  *            type: string
  *      responses:
  *        200:
- *          description: Usuário excluído com sucesso
+ *          description: Curso excluído com sucesso
  *          content:
  *            application/json:
  *              schema:
@@ -277,13 +275,13 @@ const router = express.Router();
  *                  message:
  *                    type: string
  *        401:
- *          description: O usuário não tem permissão para realizar a operação.
+ *          description: O usuário não tem permissão para realizar a operação
  *          content:
  *            application/json:
  *              schema:
  *                $ref: '#/components/schemas/Error'
  *        404:
- *          description: Usuário não encontrado
+ *          description: Curso não encontrado
  *          content:
  *            application/json:
  *              schema:
@@ -295,7 +293,7 @@ const router = express.Router();
  *              schema:
  *                 $ref: '#/components/schemas/Error'
  *        500:
- *          description: Erro interno do servidor.
+ *          description: Erro interno do servidor
  *          content:
  *            application/json:
  *              schema:

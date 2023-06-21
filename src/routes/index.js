@@ -223,7 +223,30 @@ import autenticacao from "./AutenticacaoRoutes.js"
  *         ativo:
  *           type: boolean
  *           example: true 
- */
+ *     Matriculas:
+ *       type: object
+ *       properties:
+ *         usuario:
+ *           type: object
+ *           properties:
+ *             _id:
+ *               type: string
+ *               example: 648cd5b783856695f7f92523
+ *         cursos:
+ *           type: array
+ *           items:
+ *             type: object
+ *             properties:
+ *               _id: 
+ *                 type: string
+ *                 example: 648cd5b783856695f7f92555 
+ *               situacao:
+ *                 type: string
+ *                 example: em andamento
+ *               ativo:        
+ *                 type: boolean
+ *                 example: true    
+ */      
 
 
 const routes = (app) => {

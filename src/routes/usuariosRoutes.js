@@ -11,6 +11,7 @@ const router = express.Router()
  *    post: 
  *      tags:
  *        - Usuários
+ *      description: Esta função é responsável por criar um Usuário
  *      summary: Cadastra um novo Usuário
  *      requestBody:
  *        required: true
@@ -41,29 +42,12 @@ const router = express.Router()
  *            application/json:
  *              schema:
  *                $ref: '#/components/schemas/Usuario'
- *        401:
- *          description: O usuário não tem permissão para realizar a operação.
- *          content:
- *            application/json:
- *              schema:
- *                type: object
- *                properties:
- *                  docs:
- *                    type: array
- *                    items:
- *                      $ref: '#/components/schemas/Error'
  *        422:
  *          description: Erro ao cadastrar o Usuário
  *          content:
  *            application/json:
  *              schema:
  *                $ref: '#/components/schemas/Error'
- *        498:
- *          description: Erros de Token
- *          content:
- *            application/json:
- *              schema:
- *                 $ref: '#/components/schemas/Error'
  *        500:
  *          description: Erro interno do servidor
  *          content:
@@ -73,9 +57,10 @@ const router = express.Router()
  *    get:
  *      tags:
  *        - Usuários
- *      summary: Lista todos os usuários
+ *      summary: Lista todos os Usuários
  *      security:
  *        - bearerAuth: []
+ *      description: Esta função é responsável por buscar umalista de Usuários existentes no banco de dados, verificando previamente se o usuário tem permissão para realizar a ação
  *      parameters:
  *        - in: query
  *          name: Nome
@@ -123,7 +108,7 @@ const router = express.Router()
  *                  nextPage:
  *                    type: integer
  *        401:
- *          description: O usuário não tem permissão para realizar a operação.
+ *          description: O usuário não tem permissão para realizar a operação
  *          content:
  *            application/json:
  *              schema:
@@ -147,12 +132,13 @@ const router = express.Router()
  *                $ref: '#/components/schemas/Error'
  *  /usuarios/{id}:
  *    get:
- *      summary: Usuario encontrado por ID
+ *      summary: Lista um Usuário encontrado por ID
  *      operationId: getUsuarioPorId
  *      tags:
  *        - Usuários
  *      security:
  *        - bearerAuth: []
+ *      description: Esta função é responsável por buscar um Usuário por ID no banco de dados, verificando previamente se o usuário tem permissão para realizar a ação
  *      parameters:
  *        - in: path
  *          name: id
@@ -166,25 +152,15 @@ const router = express.Router()
  *          content:
  *            application/json:
  *              schema:
- *                type: object
- *                properties:
- *                  docs:
- *                    type: array
- *                    items:
- *                      $ref: '#/components/schemas/Usuario'
+ *                $ref: '#/components/schemas/Usuario'
  *        401:
- *          description: O usuário não tem permissão para realizar a operação.
+ *          description: O usuário não tem permissão para realizar a operação
  *          content:
  *            application/json:
  *              schema:
- *                type: object
- *                properties:
- *                  docs:
- *                    type: array
- *                    items:
- *                      $ref: '#/components/schemas/Error'
+ *                $ref: '#/components/schemas/Error'
  *        404: 
- *          description: ID inválido ou não encontrado
+ *          description: Usuário não encontrado
  *          content:
  *            application/json:
  *              schema:
@@ -202,12 +178,12 @@ const router = express.Router()
  *              schema:
  *                $ref: '#/components/schemas/Error'              
  *    patch:
- *      summary: Atualiza atributos de um usuário existente no banco de dados.
+ *      summary: Atualiza atributos de um Usuário existente no banco de dados
  *      tags:
  *        - Usuários
  *      security:
  *        - bearerAuth: []
- *      description: Esta função é responsável por atualizar um usuário existente no banco de dados, verificando previamente se o usuário tem permissão para realizar a ação.
+ *      description: Esta função é responsável por atualizar um Usuário existente no banco de dados, verificando previamente se o usuário tem permissão para realizar a ação.
  *      requestBody:
  *        required: true
  *        content:
@@ -234,16 +210,11 @@ const router = express.Router()
  *                    items:
  *                      $ref: '#/components/schemas/Usuario'
  *        401:
- *          description: O usuário não tem permissão para realizar a operação.
+ *          description: O usuário não tem permissão para realizar a operação
  *          content:
  *            application/json:
  *              schema:
- *                type: object
- *                properties:
- *                  docs:
- *                    type: array
- *                    items:
- *                      $ref: '#/components/schemas/Error'
+ *                $ref: '#/components/schemas/Error'
  *        404: 
  *          description: ID inválido ou não encontrado
  *          content:
@@ -261,27 +232,21 @@ const router = express.Router()
  *          content:
  *            application/json:
  *              schema:
- *                type: object
- *                properties:
- *                  docs:
- *                    type: array
- *                    items:
- *                      $ref: '#/components/schemas/Error'
+ *                $ref: '#/components/schemas/Error'
  *    delete:
- *      summary: Exclui um usuário existente no banco de dados.
+ *      summary: Exclui um Usuário existente no banco de dados
  *      tags:
  *        - Usuários
  *      security:
  *        - bearerAuth: []
- *      description: Esta função é responsável por excluir um usuário existente no banco de dados, verificando previamente se o usuário tem permissão para realizar a ação
+ *      description: Esta função é responsável por excluir um Usuário existente no banco de dados, verificando previamente se o usuário tem permissão para realizar a ação
  *      parameters:
  *        - in: path
  *          name: id
- *          description: ID do usuário a ser excluido
+ *          description: ID do Usuário a ser excluido
  *          required: true
  *          schema:
  *            type: string
- *            format: string
  *      responses:
  *        200:
  *          description: Usuário excluído com sucesso
@@ -295,16 +260,11 @@ const router = express.Router()
  *                  message:
  *                    type: string
  *        401:
- *          description: O usuário não tem permissão para realizar a operação.
+ *          description: O usuário não tem permissão para realizar a operação
  *          content:
  *            application/json:
  *              schema:
- *                type: object
- *                properties:
- *                  docs:
- *                    type: array
- *                    items:
- *                      $ref: '#/components/schemas/Error'
+ *                $ref: '#/components/schemas/Error'
  *        404:
  *          description: Usuário não encontrado
  *          content:

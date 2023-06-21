@@ -15,32 +15,16 @@ const router = express.Router()
  *      summary: Cadastra uma nova Matrícula
  *      security:
  *        - bearerAuth: []
- *      description: Esta função é responsável por criar um Curso no banco de dados, verificando previamente se o usuário tem permissão para realizar a ação      
+ *      description: Esta função é responsável por criar uma Matrícula no banco de dados, verificando previamente se o usuário tem permissão para realizar a ação      
  *      requestBody:
  *        required: true
  *        content:
  *          application/json:
  *            schema:
- *              type: object
- *              properties:
- *                nome:
- *                  type: string
- *                  example: Pablo Smolak
- *                user:
- *                  type: string
- *                  example: smolak.dev
- *                email:
- *                  type: string
- *                  example: smolak.dev@gmail.com
- *                senha:
- *                  type: string
- *                  example: 80028922
- *                telefone:
- *                  type: sting
- *                  example: 984227163   
+ *              $ref: '#/components/schemas/Matriculas'   
  *      responses:
  *        201:
- *          description: Matricula cadastrada com sucesso
+ *          description: Matrícula cadastrada com sucesso
  *          content:
  *            application/json:
  *              schema:
@@ -50,12 +34,7 @@ const router = express.Router()
  *          content:
  *            application/json:
  *              schema:
- *                type: object
- *                properties:
- *                  docs:
- *                    type: array
- *                    items:
- *                      $ref: '#/components/schemas/Error'
+ *                $ref: '#/components/schemas/Error'
  *        422:
  *          description: Erro ao cadastrar a Matrícula
  *          content:
@@ -67,7 +46,7 @@ const router = express.Router()
  *          content:
  *            application/json:
  *              schema:
- *                 $ref: '#/components/schemas/Error'
+ *                $ref: '#/components/schemas/Error'
  *        500:
  *          description: Erro interno do servidor
  *          content:
@@ -80,12 +59,8 @@ const router = express.Router()
  *      summary: Lista todos as Matrículas
  *      security:
  *        - bearerAuth: []
+ *      description: Esta função é responsável por buscar uma lista de Matrículas existentes no banco de dados, verificando previamente se o usuário tem permissão para realizar a ação
  *      parameters:
- *        - in: query
- *          name: Nome
- *          schema:
- *            type: string
- *          description: Nome do usuário para filtrar
  *        - in: query
  *          name: page
  *          schema:
@@ -102,47 +77,37 @@ const router = express.Router()
  *          content:
  *            application/json:
  *              schema:
- *                type: object
- *                properties:
- *                  docs:
- *                    type: array
- *                    items:
- *                      $ref: '#/components/schemas/Usuario'
- *                  totalDocs:
- *                    type: integer
- *                  limit:
- *                    type: integer
- *                  totalPages:
- *                    type: integer
- *                  page:
- *                    type: integer
- *                  pagingCounter:
- *                    type: integer
- *                  hasPrevPage:
- *                    type: boolean
- *                  hasNextPage:
- *                    type: boolean
- *                  prevPage:
- *                    type: integer
- *                  nextPage:
- *                    type: integer
+ *                $ref: '#/components/schemas/Matriculas'
+ *                totalDocs:
+ *                  type: integer
+ *                limit:
+ *                  type: integer
+ *                totalPages:
+ *                  type: integer
+ *                page:
+ *                  type: integer
+ *                pagingCounter:
+ *                  type: integer
+ *                hasPrevPage:
+ *                  type: boolean
+ *                hasNextPage:
+ *                  type: boolean
+ *                prevPage:
+ *                  type: integer
+ *                nextPage:
+ *                  type: integer
  *        401:
- *          description: O usuário não tem permissão para realizar a operação.
+ *          description: O usuário não tem permissão para realizar a operação
  *          content:
  *            application/json:
  *              schema:
- *                type: object
- *                properties:
- *                  docs:
- *                    type: array
- *                    items:
- *                      $ref: '#/components/schemas/Error'
+ *                $ref: '#/components/schemas/Error'
  *        498:
  *          description: Erros de Token
  *          content:
  *            application/json:
  *              schema:
- *                 $ref: '#/components/schemas/Error'
+ *                $ref: '#/components/schemas/Error'
  *        500:
  *          description: Erro Interno do Servidor
  *          content:
@@ -157,6 +122,7 @@ const router = express.Router()
  *        - Matrículas
  *      security:
  *        - bearerAuth: []
+ *      description: Esta função é responsável por buscar uma Matrícula por ID existente no banco de dados, verificando previamente se o usuário tem permissão para realizar a ação
  *      parameters:
  *        - in: path
  *          name: id
@@ -170,25 +136,15 @@ const router = express.Router()
  *          content:
  *            application/json:
  *              schema:
- *                type: object
- *                properties:
- *                  docs:
- *                    type: array
- *                    items:
- *                      $ref: '#/components/schemas/Usuario'
+ *                $ref: '#/components/schemas/Matriculas'
  *        401:
- *          description: O usuário não tem permissão para realizar a operação.
+ *          description: O usuário não tem permissão para realizar a operação
  *          content:
  *            application/json:
  *              schema:
- *                type: object
- *                properties:
- *                  docs:
- *                    type: array
- *                    items:
- *                      $ref: '#/components/schemas/Error'
+ *                $ref: '#/components/schemas/Error'
  *        404: 
- *          description: ID inválido ou não encontrado
+ *          description: Matrícula não Encontrada
  *          content:
  *            application/json:
  *              schema:
@@ -206,50 +162,47 @@ const router = express.Router()
  *              schema:
  *                $ref: '#/components/schemas/Error'              
  *    patch:
- *      summary: Atualiza atributos de uma Matrícula existente no banco de dados.
+ *      summary: Atualiza atributos de uma Matrícula existente no banco de dados
  *      tags:
  *        - Matrículas
  *      security:
  *        - bearerAuth: []
- *      description: Esta função é responsável por atualizar um usuário existente no banco de dados, verificando previamente se o usuário tem permissão para realizar a ação.
+ *      description: Esta função é responsável por atualizar uma Matrícula existente no banco de dados, verificando previamente se o usuário tem permissão para realizar a ação
  *      requestBody:
  *        required: true
  *        content:
  *          application/json:
  *            schema:
- *              $ref: '#/components/schemas/Usuario'
+ *              $ref: '#/components/schemas/Matriculas'
  *      parameters:
  *        - in: path
  *          name: id
- *          description: ID do Usuário a ser atualizado
+ *          description: ID da Matrícula a ser atualizada
  *          required: true
  *          schema:
  *            type: string
  *      responses:
  *        201:
- *          description: Usuário atualizado com sucesso 
+ *          description: Matrícula atualizada com sucesso 
  *          content:
  *            application/json:
  *              schema:
  *                type: object
  *                properties:
- *                  docs:
- *                    type: array
- *                    items:
- *                      $ref: '#/components/schemas/Usuario'
+ *                  code:
+ *                    type: integer
+ *                    example: 201
+ *                  message:
+ *                    type: string
+ *                    example: Matrícula atualizada com sucesso!
  *        401:
- *          description: O usuário não tem permissão para realizar a operação.
+ *          description: O usuário não tem permissão para realizar a operação
  *          content:
  *            application/json:
  *              schema:
- *                type: object
- *                properties:
- *                  docs:
- *                    type: array
- *                    items:
- *                      $ref: '#/components/schemas/Error'
+ *                $ref: '#/components/schemas/Error'
  *        404: 
- *          description: ID inválido ou não encontrado
+ *          description: Matrícula não encontrada
  *          content:
  *            application/json:
  *              schema:
@@ -265,19 +218,14 @@ const router = express.Router()
  *          content:
  *            application/json:
  *              schema:
- *                type: object
- *                properties:
- *                  docs:
- *                    type: array
- *                    items:
- *                      $ref: '#/components/schemas/Error'
+ *                $ref: '#/components/schemas/Error'
  *    delete:
  *      summary: Exclui uma Matrícula existente no banco de dados.
  *      tags:
  *        - Matrículas
  *      security:
  *        - bearerAuth: []
- *      description: Esta função é responsável por eliminar um usuário existente no banco de dados, verificando previamente se o usuário tem permissão para realizar a ação.
+ *      description: Esta função é responsável por excluir uma Matrícula existente no banco de dados, verificando previamente se o usuário tem permissão para realizar a ação
  *      parameters:
  *        - in: path
  *          name: id
@@ -300,16 +248,11 @@ const router = express.Router()
  *                    type: string
  *                    example: Matricula excluída com sucesso!
  *        401:
- *          description: O usuário não tem permissão para realizar a operação.
+ *          description: O usuário não tem permissão para realizar a operação
  *          content:
  *            application/json:
  *              schema:
- *                type: object
- *                properties:
- *                  docs:
- *                    type: array
- *                    items:
- *                      $ref: '#/components/schemas/Error'
+ *                $ref: '#/components/schemas/Error'
  *        404:
  *          description: Matrícula não encontrada
  *          content:

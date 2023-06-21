@@ -10,6 +10,7 @@ const router = express.Router()
  *    post:
  *      tags:
  *          - Login
+ *      description: Esta função é responsável por Logar um Usuário no Sistema
  *      summary: Faz o login do usuário
  *      requestBody:
  *        content:
