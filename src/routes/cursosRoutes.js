@@ -22,7 +22,7 @@ const router = express.Router();
  *            schema:
  *              type: object
  *              properties:
- *                Módulo:
+ *                modulo:
  *                  type: string
  *                  example: Equação de 1° grau
  *                descricao:
