@@ -23,6 +23,10 @@ const swaggerOptions = {
         {
           url: `http://localhost:${process.env.PORT}`, 
           description: "API em desenvolvimento",
+        },
+        {
+          url: `https://docker-${process.env.PORT}.app.fslab.dev`, 
+          description: "API em desenvolvimento",
         }
       ],
       tags: [
