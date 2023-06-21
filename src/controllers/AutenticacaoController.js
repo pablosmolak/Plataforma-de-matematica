@@ -11,7 +11,7 @@ class AutenticacaoController {
         
 
         if(!userExist){
-            return res.status(400).json({error: true, code:400,message: 'Usuário inexistente!'})
+            return res.status(404).json({error: true, code:404,message: 'Usuário inexistente!'})
 
         }
         if(! (await bcript.compare(senha, userExist.senha))){

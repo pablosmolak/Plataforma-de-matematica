@@ -38,7 +38,7 @@ describe('/POST em login', () => {
             user: "dev1",
             senha: "123"
         })
-        .expect(400)
+        .expect(404)
         expect(dados._body.message).toEqual('Usuário inexistente!')
     })
 
