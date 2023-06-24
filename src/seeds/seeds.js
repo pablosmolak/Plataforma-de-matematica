@@ -76,7 +76,7 @@ const grupos = [];
 
 // função para retornar o nome de alguns grupos fictícios
 // criar uma constante com 100 grupos diferentes
-const grupos_array = ['Administrador', 'CAED']
+const grupos_array = ['Administrador', 'Alunos']
 
 // const grupos_array = [ 'Administrador', 'Gerente', 'Supervisor', 'Operador', 'Vendedor']
 

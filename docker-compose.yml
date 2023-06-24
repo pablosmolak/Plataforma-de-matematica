@@ -17,4 +17,4 @@ services:
       - EXPIREIN=1m
 
 volumes:
-  vol-banco:
+  vol-banco:
